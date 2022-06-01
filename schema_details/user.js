@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const UserSchema = new mongoose.Schema({
-    Name: { type: String, required: true, minlength: 3 },
+    name: { type: String, required: true, minlength: 3 },
     email: { type: String, required: true, unique: true },
     rollnum: { type: Number, required: true, unique: true },
     mobileNumber: { type: String, required: true, maxlength: 10, minlength: 10, unique: true },
@@ -12,6 +14,13 @@ const UserSchema = new mongoose.Schema({
     isverified: { type: Boolean, default: false },
     otp_val: { type: Number }
 });
+
+UserSchema.pre("save", async function(next){
+    if(this.isModified("password")){
+      this.password= await bcrypt.hash(this.password,saltRounds);
+    }
+    next();
+  })
 
 const User = new mongoose.model("User",UserSchema);
 module.exports = User;

@@ -9,9 +9,11 @@
   "author": "yash",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.18.1",
     "mongoose": "^6.3.5",
     "nodemon": "^2.0.16",
+    "router": "^1.3.7",
     "validator": "^13.7.0"
   }
 }
