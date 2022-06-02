@@ -1,6 +1,9 @@
+require('dotenv').config()
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const jwt = require("jsonwebtoken");
+
 
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true, minlength: 3 },
@@ -12,9 +15,29 @@ const UserSchema = new mongoose.Schema({
     branch: { type: String, required: true },
     gender: { type: String, required: true },
     isverified: { type: Boolean, default: false },
-    otp_val: { type: Number }
+    otp_val: { type: Number },
 });
 
+// token generate---------
+UserSchema.methods.generateAuthToken = async function(){
+  try {
+    const pay_load = {_id:this._id};
+    const token = jwt.sign(pay_load, process.env.TOKEN_SECRET_KEY); 
+    this.tokens = this.tokens.concat({token:token})
+      await this.save();
+    // console.log(token);
+    const token_verify = jwt.verify(token,process.env.TOKEN_SECRET_KEY);
+    const token_obj={
+      id:token_verify,
+      token:token
+    }
+    return token_obj;
+  } catch (err) {
+    res.status(400).send(err);
+  }
+}
+
+// passwaord incryption------------
 UserSchema.pre("save", async function(next){
     if(this.isModified("password")){
       this.password= await bcrypt.hash(this.password,saltRounds);
