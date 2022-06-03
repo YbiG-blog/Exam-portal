@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
     year: { type: Number, required: true, min: 1, max: 4 },
     branch: { type: String, required: true },
     gender: { type: String, required: true },
-    isverified: { type: Boolean, default: false },
+    is_admin: { type: Number, default:0 },
     otp_val: { type: Number },
 });
 
@@ -23,8 +23,6 @@ UserSchema.methods.generateAuthToken = async function(){
   try {
     const pay_load = {_id:this._id};
     const token = jwt.sign(pay_load, process.env.TOKEN_SECRET_KEY); 
-    this.tokens = this.tokens.concat({token:token})
-      await this.save();
     // console.log(token);
     const token_verify = jwt.verify(token,process.env.TOKEN_SECRET_KEY);
     const token_obj={
