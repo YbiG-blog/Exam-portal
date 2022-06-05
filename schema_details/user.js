@@ -8,14 +8,20 @@ const jwt = require("jsonwebtoken");
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true, minlength: 3 },
     email: { type: String, required: true, unique: true },
-    rollnum: { type: Number, required: true, unique: true },
-    mobileNumber: { type: String, required: true, maxlength: 10, minlength: 10, unique: true },
+    studentNum: { type: Number, required: true, unique: true },
+    rollNum: { type: Number, required: true, unique: true },
+    mobileNum: { type: Number, required: true, maxlength: 10, minlength: 10, unique: true },
     password: { type: String, minlength: 8 },
     year: { type: Number, required: true, min: 1, max: 4 },
     branch: { type: String, required: true },
     gender: { type: String, required: true },
-    is_admin: { type: Number, default:0 },
-    otp_val: { type: Number },
+    isHosteler: { type: Boolean, default: false, required: true },
+    startTime: { type: String, required:true},
+    currentTime:{ type: String, required:true},
+    endTime: { type: String, required:true},
+    hasAppeared: { type: String, required:true, default: false },
+    isAdmin: { type: Boolean, default: false },
+    lang:{type: String}
 });
 
 // token generate---------
@@ -35,7 +41,7 @@ UserSchema.methods.generateAuthToken = async function(){
   }
 }
 
-// passwaord incryption------------
+// password encryption------------
 UserSchema.pre("save", async function(next){
     if(this.isModified("password")){
       this.password= await bcrypt.hash(this.password,saltRounds);
