@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const router = new express.Router();
 
 router.get("/admin", async(req,res)=>{
-  res.send("this is admin page");
+  res.send("This is admin page");
 })
 router.post("/login", async (req, res) => {
   const password = req.body.password;
@@ -23,18 +23,19 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
     });
     if (match_password) {
-if(user_check.is_admin === 1)
-{
-  res.redirect("/admin")
+if(user_check.isAdmin === true)
+{res.status(201).send({"isAdmin": user_check.isAdmin});
+  res.redirect("/admin");
 }
+
 else{
-      res.status(201).send(`this is verified user and token for uer is : ${cookie_token.token}`);
+      res.status(201).send(`This is verified user and token for user is : ${cookie_token.token}`);
 }
     } else {
-      res.status(400).send("Wrong Password");
+      res.status(400).send({"msg":"Wrong Password"});
     }
   } else {
-    res.status(400).send("Invalid details");
+    res.status(400).send({"msg":"Invalid details"});
   }
 });
 
