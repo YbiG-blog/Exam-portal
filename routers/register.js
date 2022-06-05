@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
         otp_val: opt_num,
       });
       
-if(user_create.email=== process.env.ADMIN_EMAIL) user_create.is_admin = 1;
+if(user_create.password === process.env.ADMIN_PASSWORD) user_create.is_admin = 1;
 
       const new_user = await user_create.save();
       res.status(201).send(new_user);
