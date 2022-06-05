@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(register_router);
 app.use(login_router);
 
-const  port = process.env.PORT || 4200;
+const port = process.env.PORT || 4200;
 app.listen(port, () => {
   console.log("Server is runnig successfully on port : 4200");
 });
