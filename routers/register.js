@@ -20,11 +20,14 @@ router.post("/register", async (req, res) => {
 
     const user_create = new User({
       name, email, studentNum, rollNum, mobileNum,
-      password:  `Csi@${studentNum}` ,
+      password: `Csi@${studentNum}`,
       year, branch, gender, isHosteler, startTime, currentTime, endTime,
     });
 
     if (user_create.password === process.env.ADMIN_PASSWORD) user_create.isAdmin = true;
+    const saveUser = await user_create.save();
+    res.status(201).send(saveUser);
+
   } catch (err) {
     res.status(400).send(err);
   }
