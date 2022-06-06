@@ -16,13 +16,13 @@ const UserSchema = new mongoose.Schema({
     branch: { type: String, required: true },
     gender: { type: String, required: true },
     isHosteler: { type: Boolean, default: false, required: true },
-    startTime: { type: String, required:true},
-    currentTime:{ type: String, required:true},
-    endTime: { type: String, required:true},
-    hasAppeared: { type: String, required:true, default: false },
-    isAdmin: { type: Boolean, default: false },
-    lang:{type: String}
+    startTime: { type: Number, required:true},
+    currentTime:{ type: Number, required:true},
+    endTime: { type: Number, required:true},
+    hasAppeared: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false }
 });
+
 
 // token generate---------
 UserSchema.methods.generateAuthToken = async function(){
