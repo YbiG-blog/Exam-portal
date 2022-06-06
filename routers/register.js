@@ -11,7 +11,20 @@ router.get("/register", async (req, res) => {
 });
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, studentNum, rollNum, mobileNum, year, branch, gender, isHosteler, startTime, currentTime, endTime, } = await req.body;
+    const {
+      name,
+      email,
+      studentNum,
+      rollNum,
+      mobileNum,
+      year,
+      branch,
+      gender,
+      isHosteler,
+      startTime,
+      currentTime,
+      endTime,
+    } = await req.body;
     const userExist = await User.findOne({ rollNum });
 
     if (userExist) {
@@ -19,15 +32,26 @@ router.post("/register", async (req, res) => {
     }
 
     const user_create = new User({
-      name, email, studentNum, rollNum, mobileNum,
+      name,
+      email,
+      studentNum,
+      rollNum,
+      mobileNum,
       password: `Csi@${studentNum}`,
-      year, branch, gender, isHosteler, startTime, currentTime, endTime,
+      year,
+      branch,
+      gender,
+      isHosteler,
+      startTime,
+      currentTime,
+      endTime,
+      hasAppeared,
     });
 
-    if (user_create.password === process.env.ADMIN_PASSWORD) user_create.isAdmin = true;
+    if (user_create.password === process.env.ADMIN_PASSWORD)
+      user_create.isAdmin = true;
     const saveUser = await user_create.save();
     res.status(201).send(saveUser);
-
   } catch (err) {
     res.status(400).send(err);
   }
