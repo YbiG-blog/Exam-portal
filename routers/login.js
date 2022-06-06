@@ -32,10 +32,10 @@ else{
       res.status(201).send(`This is verified user and token for user is : ${cookie_token.token}`);
 }
     } else {
-      res.status(400).send({"msg":"Wrong Password"});
+      res.status(401).send({"msg":"Wrong Password"});
     }
   } else {
-    res.status(400).send({"msg":"Invalid details"});
+    res.status(401).send({"msg":"Invalid details"});
   }
 });
 
