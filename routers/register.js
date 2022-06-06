@@ -21,9 +21,7 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-      startTime,
-      currentTime,
-      endTime,
+      startTime
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
 
@@ -42,10 +40,7 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-      startTime,
-      currentTime,
-      endTime,
-      hasAppeared,
+      startTime
     });
 
     if (user_create.password === process.env.ADMIN_PASSWORD)
@@ -53,6 +48,7 @@ router.post("/register", async (req, res) => {
     const saveUser = await user_create.save();
     res.status(201).send(saveUser);
   } catch (err) {
+    console.log(err);
     res.status(400).send(err);
   }
 });

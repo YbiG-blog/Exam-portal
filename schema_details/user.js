@@ -17,8 +17,6 @@ const UserSchema = new mongoose.Schema({
     gender: { type: String, required: true },
     isHosteler: { type: Boolean, default: false, required: true },
     startTime: { type: Number, required:true},
-    currentTime:{ type: Number, required:true},
-    endTime: { type: Number, required:true},
     hasAppeared: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false }
 });
