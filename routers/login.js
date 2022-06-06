@@ -8,8 +8,8 @@ router.get("/admin", async(req,res)=>{
 })
 router.post("/login", async (req, res) => {
   const password = req.body.password;
-  const email = req.body.email;
-  const user_check = await User.findOne({ email: email });
+  const studentNum = req.body.studentNum;
+  const user_check = await User.findOne({ studentNum: studentNum });
   if (user_check) {
     const user_password = user_check.password;
     const match_password = await bcrypt.compare(password, user_password);
