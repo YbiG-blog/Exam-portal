@@ -21,7 +21,7 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-      startTime
+      startTime,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
 
@@ -40,14 +40,7 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-<<<<<<< HEAD
       startTime,
-      currentTime,
-      endTime,
-      // hasAppeared,
-=======
-      startTime
->>>>>>> 1560586887f9896f2ed52b49b80e08e0be8d69be
     });
 
     if (user_create.password === process.env.ADMIN_PASSWORD)
@@ -55,7 +48,6 @@ router.post("/register", async (req, res) => {
     const saveUser = await user_create.save();
     res.status(201).send(saveUser);
   } catch (err) {
-    console.log(err);
     res.status(400).send(err);
   }
 });
@@ -96,3 +88,19 @@ router.put("/update", async (req, res) => {
 });
 
 module.exports = router;
+
+// {
+//         "name": "Parkhi Garg",
+//         "email": "parkhigarg27@gmail.com",
+//         "studentNum":2011103,
+//         "rollNum": 2000270110123,
+//         "mobileNum": 7668043605,
+//         "year": 2,
+//         "branch": "CSIT",
+//         "gender": "female",
+//         "isHosteler":true,
+//         "startTime":10,
+//         "currentTime":15,
+//         "endTime":20
+
+// }
