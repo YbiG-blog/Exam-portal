@@ -45,7 +45,7 @@ router.post("/register", async (req, res) => {
       startTime,
       currentTime,
       endTime,
-      hasAppeared,
+      // hasAppeared,
     });
 
     if (user_create.password === process.env.ADMIN_PASSWORD)
