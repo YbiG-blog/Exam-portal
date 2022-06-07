@@ -1,24 +1,30 @@
 const express = require("express");
 const Feedback_Ins = require("../schema_details/instruction_feedback");
 const router = new express.Router();
-const Language = Feedback_Ins.Language;
+const atob=require("atob");
+//const Language = Feedback_Ins.Language;
 const Feedback = Feedback_Ins.Feedback;
+const verify=require("../middleware/auth");
+const User = require("../schema_details/user");
 
 
 //instruction
-router.post("/instruction", async (req, res) => {
-    try {
-        const {language} = await req.body;
-        const insLanguage = new Language({
-            language:language,
-        });
+router.patch("/instruction",verify,async (req, res) => {
+    try {const token=req.cookies.jwt_csi;
+        const dec=token.split(".")[1];
+const decode=JSON.parse(atob(dec));
+console.log(dec);
+await User.findByIdAndUpdate(decode, {$set: {
+    lang: req.body.lang
+  }});
+  
 
-        const saveLanguage = await insLanguage.save();
-        res.status(201).send("successfully done");
+  res.status(200).send({"msg":"Language added successfully"});
+     
 
     } catch (err) {
         console.log(err);
-        res.status(400).send(error);
+        res.status(500).send(err);
     }
 });
 //feedback

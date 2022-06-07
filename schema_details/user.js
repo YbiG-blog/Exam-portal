@@ -19,34 +19,32 @@ const UserSchema = new mongoose.Schema({
     startTime: { type: Number, required:true},
     hasAppeared: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
+    lang: {type: String},
     userNumCount: { type:Number, default: 0 }
 });
 
 
 // token generate---------
-UserSchema.methods.generateAuthToken = async function(){
+UserSchema.methods.generateAuthToken = async function () {
   try {
-    const pay_load = {_id:this._id};
-    const token = jwt.sign(pay_load, process.env.TOKEN_SECRET_KEY); 
+    const pay_load = { _id: this._id };
+    const token = jwt.sign(pay_load, process.env.TOKEN_SECRET_KEY);
     // console.log(token);
-    const token_verify = jwt.verify(token,process.env.TOKEN_SECRET_KEY);
-    const token_obj={
-      id:token_verify,
-      token:token
-    }
-    return token_obj;
+   // const token_verify = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
+   
+    return token;
   } catch (err) {
     res.status(400).send(err);
   }
 }
 
 // password encryption------------
-UserSchema.pre("save", async function(next){
-    if(this.isModified("password")){
-      this.password= await bcrypt.hash(this.password,saltRounds);
-    }
-    next();
-  })
+UserSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, saltRounds);
+  }
+  next();
+})
 
-const User = new mongoose.model("User",UserSchema);
+const User = new mongoose.model("User", UserSchema);
 module.exports = User;
