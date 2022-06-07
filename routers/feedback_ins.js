@@ -9,7 +9,7 @@ const User = require("../schema_details/user");
 
 
 //instruction
-router.post("/instruction",async (req, res) => {
+router.post("/instruction",verify,async (req, res) => {
     try {const token=req.cookies.jwt_csi;
         const dec=token.split(".")[1];
 const decode=JSON.parse(atob(dec));
