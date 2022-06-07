@@ -2,6 +2,7 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const login_router = require("./routers/login");
 const register_router = require("./routers/register");
+const feedbackIns = require("./routers/feedback_ins")
 require("./data_connection/data");
 
 const app = express();
@@ -17,8 +18,9 @@ app.use(cookieParser());
 // routers -------------------
 app.use("/",register_router);
 app.use("/",login_router);
+app.use("/",feedbackIns);
 
-const  port = process.env.PORT || 4200;
+const port = process.env.PORT || 4200;
 app.listen(port, () => {
   console.log("Server is running successfully on port : 4200");
 });
