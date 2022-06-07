@@ -12,13 +12,11 @@ const User = require("../schema_details/user");
 router.post("/instruction",async (req, res) => {
     try {const token=req.cookies.jwt_csi;
         const dec=token.split(".")[1];
-const decode='629ca510f08d0084efae6812';
-console.log(decode);
-await User.findByIdAndUpdate({decode}, {$set: {
+const decode=JSON.parse(atob(dec));
+console.log(dec);
+await User.findByIdAndUpdate(decode, {$set: {
     lang: req.body.lang
-  }},(err)=>{
-    console.log(err);
-  });
+  }});
   
 
   res.status(200).send({"msg":"Language added successfully"});
@@ -26,7 +24,7 @@ await User.findByIdAndUpdate({decode}, {$set: {
 
     } catch (err) {
         console.log(err);
-        res.status(400).send(err);
+        res.status(500).send(err);
     }
 });
 //feedback
