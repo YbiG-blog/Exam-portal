@@ -3,9 +3,9 @@ const User = require("../schema_details/user");
 const bcrypt = require("bcrypt");
 const router = new express.Router();
 
-router.get("/admin", async(req,res)=>{
+router.get("/admin", async (req, res) => {
   res.send("This is admin page");
-})
+});
 router.post("/login", async (req, res) => {
   const password = req.body.password;
   const studentNum = req.body.studentNum;
@@ -23,19 +23,21 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
     });
     if (match_password) {
-if(user_check.isAdmin === true)
-{res.status(201).send({"isAdmin": user_check.isAdmin});
-  res.redirect("/admin");
-}
-
-else{
-      res.status(201).send(`This is verified user and token for user is : ${cookie_token.token}`);
-}
+      if (user_check.isAdmin === true) {
+        res.status(201).send({ isAdmin: user_check.isAdmin });
+        res.redirect("/admin");
+      } else {
+        res
+          .status(201)
+          .send(
+            `This is verified user and token for user is : ${cookie_token.token}`
+          );
+      }
     } else {
-      res.status(400).send({"msg":"Wrong Password"});
+      res.status(400).send({ msg: "Wrong Password" });
     }
   } else {
-    res.status(400).send({"msg":"Invalid details"});
+    res.status(400).send({ msg: "Invalid details" });
   }
 });
 

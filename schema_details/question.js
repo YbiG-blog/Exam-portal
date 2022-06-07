@@ -1,8 +1,9 @@
-require('dotenv').config()
+require("dotenv").config();
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
+
 	userId: {
 		type: Schema.Types.ObjectId,
 		ref: "User"
@@ -16,16 +17,9 @@ const questionSchema = new Schema({
     // question_id : { type: Number, required: true} 
 })
 
-const Question = new mongoose.model("Question",questionSchema);
+
+
+const Question = new mongoose.model("Question", questionSchema);
+
 
 module.exports = Question;
-
-
-
-
-
-
-
-
-
-

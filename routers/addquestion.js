@@ -8,6 +8,7 @@ router.get("/addquestion", async (req, res) => {
   res.send("Add question");
 });
 
+
 const options = ['A', 'B', 'C', 'D'];
 const correctans = 'B';
 // post request
@@ -34,10 +35,6 @@ router.post("/addquestion", async (req, res) => {
     res.status(201).send(savequestion);
   } catch (err) {
       console.log(err);
-    res.status(400).send(err);
-  }
-
-  // option fields : option and iscorrect
-});
 
 module.exports = router;
+
