@@ -18,7 +18,8 @@ const UserSchema = new mongoose.Schema({
     isHosteler: { type: Boolean, default: false, required: true },
     startTime: { type: Number, required:true},
     hasAppeared: { type: Boolean, default: false },
-    isAdmin: { type: Boolean, default: false }
+    isAdmin: { type: Boolean, default: false },
+    userNumCount: { type:Number, default: 0 }
 });
 
 
