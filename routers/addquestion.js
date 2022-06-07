@@ -34,7 +34,7 @@ router.post("/addquestion", async (req, res) => {
     const savequestion = await question_create.save();
     res.status(201).send(savequestion);
   } catch (err) {
-      console.log(err);
+      console.log(err);}});
 
 module.exports = router;
 
