@@ -19,7 +19,8 @@ const UserSchema = new mongoose.Schema({
     startTime: { type: Number, required:true},
     hasAppeared: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
-    lang: {type: String}
+    lang: {type: String},
+    userNumCount: { type:Number, default: 0 }
 });
 
 

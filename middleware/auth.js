@@ -12,15 +12,15 @@ return res.status(401).send({"msg":"Access Denied"});
 
 
 const token_verify=jwt.verify(token, process.env.TOKEN_SECRET_KEY);
-if(token_verify)
-{res.status(201).send({"msg":"Token verified"});
+if(!token_verify)
+{
+return res.status(400).send({"msg":"Token not verified"});
+}
+
 req.user=token_verify;
 
-next();
-}
-else{
-    res.status(400).send({"msg":"Token not verified"});
-}
+next()
+
 
 }
 
