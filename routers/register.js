@@ -22,8 +22,6 @@ router.post("/register", async (req, res) => {
       gender,
       isHosteler,
       startTime,
-      currentTime,
-      endTime,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
 
@@ -43,9 +41,6 @@ router.post("/register", async (req, res) => {
       gender,
       isHosteler,
       startTime,
-      currentTime,
-      endTime,
-      hasAppeared,
     });
 
     if (user_create.password === process.env.ADMIN_PASSWORD)
@@ -93,3 +88,19 @@ router.put("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+// {
+//         "name": "Parkhi Garg",
+//         "email": "parkhigarg27@gmail.com",
+//         "studentNum":2011103,
+//         "rollNum": 2000270110123,
+//         "mobileNum": 7668043605,
+//         "year": 2,
+//         "branch": "CSIT",
+//         "gender": "female",
+//         "isHosteler":true,
+//         "startTime":10,
+//         "currentTime":15,
+//         "endTime":20
+
+// }

@@ -3,16 +3,14 @@ const User = require("../schema_details/user");
 const bcrypt = require("bcrypt");
 const router = new express.Router();
 
-
-router.get("/admin",async(req,res)=>{
-res.status(200).send({"msg":"This is admin page"});
-
+router.get("/admin", async (req, res) => {
+  res.send("This is admin page");
 });
 router.post("/login", async (req, res) => {
   
   const password = req.body.password;
-  const email = req.body.email;
-  const user_check = await User.findOne({ email: email });
+  const studentNum = req.body.studentNum;
+  const user_check = await User.findOne({ studentNum: studentNum });
   if (user_check) {
     const user_password = user_check.password;
     const match_password = await bcrypt.compare(password, user_password);
@@ -26,19 +24,21 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
     });
     if (match_password) {
-if(user_check.isAdmin === true)
-{res.status(201).send({"isAdmin": user_check.isAdmin});
-  res.redirect("/admin");
-}
-
-else{
-      res.status(201).send(`This is registered user and token for user is : ${cookie_token}`);
-}
+      if (user_check.isAdmin === true) {
+        res.status(201).send({ isAdmin: user_check.isAdmin });
+        res.redirect("/admin");
+      } else {
+        res
+          .status(201)
+          .send(
+            `This is verified user and token for user is : ${cookie_token.token}`
+          );
+      }
     } else {
-      res.status(401).send({"msg":"Wrong Password"});
+      res.status(400).send({ msg: "Wrong Password" });
     }
   } else {
-    res.status(401).send({"msg":"Invalid details"});
+    res.status(400).send({ msg: "Invalid details" });
   }
 });
 

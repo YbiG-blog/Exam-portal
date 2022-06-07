@@ -1,6 +1,7 @@
 const express = require("express");
 const Feedback_Ins = require("../schema_details/instruction_feedback");
 const router = new express.Router();
+const atob=require("atob");
 //const Language = Feedback_Ins.Language;
 const Feedback = Feedback_Ins.Feedback;
 const verify=require("../middleware/auth");
@@ -8,16 +9,19 @@ const User = require("../schema_details/user");
 
 
 //instruction
-router.put("/instruction", verify,async (req, res) => {
-    try {const id=(req.headers['id']);
-console.log(id);
-    await User.findByIdAndUpdate(id, {
-            lang: req.body.lang,
-          },(err)=>{
-            console.log(err);
-          });
+router.post("/instruction",async (req, res) => {
+    try {const token=req.cookies.jwt_csi;
+        const dec=token.split(".")[1];
+const decode='629ca510f08d0084efae6812';
+console.log(decode);
+await User.findByIdAndUpdate({decode}, {$set: {
+    lang: req.body.lang
+  }},(err)=>{
+    console.log(err);
+  });
+  
 
-          res.status(200).send({"msg":"Language added successfully"});
+  res.status(200).send({"msg":"Language added successfully"});
      
 
     } catch (err) {
