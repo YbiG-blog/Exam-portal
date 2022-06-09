@@ -8,9 +8,8 @@ router.get("/addquestion", async (req, res) => {
   res.send("Add question");
 });
 
-
-const options = ['A', 'B', 'C', 'D'];
-const correctans = 'B';
+const options = ["A", "B", "C", "D"];
+const correctans = "B";
 // post request
 router.post("/addquestion", async (req, res) => {
   try {
@@ -19,7 +18,7 @@ router.post("/addquestion", async (req, res) => {
       question,
       category,
       //   options:options,
-      correctAnswer: correctans
+      correctAnswer: correctans,
     });
 
     for (let i = 0; i < options.length; i++) {
@@ -28,18 +27,14 @@ router.post("/addquestion", async (req, res) => {
         question_create.iscorrect = true;
         break;
       }
-        
     }
 
     const savequestion = await question_create.save();
     res.status(201).send(savequestion);
   } catch (err) {
-<<<<<<< HEAD
     console.log(err);
   }
-=======
-      console.log(err);}});
->>>>>>> 4166baa2cea95010fc1d0d8d753ef34680c368ce
+  console.log(err);
+});
 
 module.exports = router;
-
