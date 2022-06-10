@@ -17,7 +17,6 @@ router.post("/addquestion", async (req, res) => {
     const question_create = new Question({
       question,
       category,
-      //   options:options,
       correctAnswer: correctans,
     });
 
@@ -28,7 +27,6 @@ router.post("/addquestion", async (req, res) => {
         break;
       }
     }
-
     const savequestion = await question_create.save();
     res.status(201).send(savequestion);
   } catch (err) {

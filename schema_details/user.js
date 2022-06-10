@@ -9,14 +9,9 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   studentNum: { type: Number, required: true, unique: true },
   rollNum: { type: Number, required: true, unique: true },
-  mobileNum: {
-    type: Number,
-    required: true,
-    maxlength: 10,
-    minlength: 10,
-    unique: true,
-  },
-  password: { type: String, minlength: 8 },
+  mobileNum: { type: Number, required: true, maxlength: 10, minlength: 10, unique: true, },
+  password: { type: String },
+  adminPassword: { type: String },
   year: { type: Number, required: true, min: 1, max: 4 },
   branch: { type: String, required: true },
   gender: { type: String, required: true },
@@ -46,6 +41,9 @@ UserSchema.methods.generateAuthToken = async function () {
 UserSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, saltRounds);
+  }
+  if (this.isModified("adminPassword")) {
+    this.adminPassword = await bcrypt.hash(this.adminPassword, saltRounds);
   }
   next();
 });
