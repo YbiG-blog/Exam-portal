@@ -36,15 +36,13 @@ router.post("/register", async (req, res) => {
       rollNum,
       mobileNum,
       password: `Csi@${studentNum}`,
+      adminPassword: `Admin@${studentNum}`,
       year,
       branch,
       gender,
       isHosteler,
       startTime,
     });
-
-    if (user_create.password === process.env.ADMIN_PASSWORD)
-      user_create.isAdmin = true;
     const saveUser = await user_create.save();
     res.status(201).send(saveUser);
   } catch (err) {
@@ -52,40 +50,40 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//getting the user
+// getting the user
 
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const user = await User.findbyId(req.params.id);
-//     res.status(200).json(user);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findbyId(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
-// // delete a user
+// delete a user
 
-// router.delete("/:id", async (req, res) => {
-//   try {
-//     const user = await User.findByIdAndDelete(req.params.id);
-//     res.status(200).json("Account deleted");
-//   } catch (err) {
-//     return res.status(400).json(err);
-//   }
-// });
+router.delete("/:id", async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("Account deleted");
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+});
 
-// // Update a user
+// Update a user
 
-// router.put("/:id", async (req, res) => {
-//   try {
-//     const user = await User.findByIdAndUpdate(req.params.id, {
-//       $set: req.body,
-//     });
-//     res.status(200).json("Account got updated");
-//   } catch (err) {
-//     return res.status(400).json(err);
-//   }
-// });
+router.put("/:id", async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    });
+    res.status(200).json("Account got updated");
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+});
 
 module.exports = router;
 
