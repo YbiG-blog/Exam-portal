@@ -3,14 +3,20 @@ const express = require("express");
 const login_router = require("./routers/login");
 const register_router = require("./routers/register");
 
-const feedbackIns = require("./routers/feedback_ins")
-
+const feedbackIns = require("./routers/feedback_ins");
 
 const addquestion = require("./routers/addquestion");
 require("./data_connection/data");
+const cors = require("cors");
 
 const app = express();
 
+app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.get("/", (req, res) => {
   res.send("Hi,the API is working.");
 });
