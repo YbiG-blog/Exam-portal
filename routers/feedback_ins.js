@@ -23,7 +23,7 @@ await User.findByIdAndUpdate(decode, {$set: {
      
 
     } catch (err) {
-        console.log(err);
+       // console.log(err);
         res.status(500).send(err);
     }
 });

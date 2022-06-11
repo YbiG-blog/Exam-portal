@@ -15,17 +15,17 @@ router.post("/login", async (req, res) => {
     const user_password = user_check.password;
     const match_password = await bcrypt.compare(password, user_password);
 
-    const cookie_token = await user_check.generateAuthToken();
-    console.log(cookie_token);
+    if (match_password) {const cookie_token = await user_check.generateAuthToken();
+      console.log(cookie_token);
+  
+      //add cookie
+      res.cookie("jwt_csi", cookie_token, {secure:true,
+        expires: new Date(Date.now() + 864000000),
+        httpOnly: true,
+      });
 
-    //add cookie
-    res.cookie("jwt_csi", cookie_token, {secure:true,
-      expires: new Date(Date.now() + 864000000),
-      httpOnly: true,
-    });
-    if (match_password) {
       if (user_check.isAdmin === true) {
-        res.status(201).send({ isAdmin: user_check.isAdmin });
+        res.status(201).send({ "isAdmin": user_check.isAdmin });
         res.redirect("/admin");
       } else {
         res
