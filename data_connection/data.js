@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose
   .connect(
-   PROCESS.ENV.MONGO_DATA_BASE,
+  process.env.MONGO_DATA_BASE,
     {
       useNewUrlParser: true,
     }

@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
   } else {
     res.status(400).send({ msg: "Invalid details" });
   }
-} catch (err) {
+}} catch (err) {
    console.log(err); 
 }
 });
