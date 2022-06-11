@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
 	userId: {
-		type: Schema.Types.ObjectId,
+		type: Schema.Types.ObjectId,                      
 		ref: "User"
-	  },
-	question: { type: String, required: true },
+	  },                                                     
+	question: { type: String, required: true },              
 	category: { type: String, required: true },
 	correctAnswer: { type: String},
 	visited_ques :{type: Boolean, default:false},
