@@ -36,15 +36,13 @@ router.post("/register", async (req, res) => {
       rollNum,
       mobileNum,
       password: `Csi@${studentNum}`,
+      adminPassword: `Admin@${studentNum}`,
       year,
       branch,
       gender,
       isHosteler,
       startTime,
     });
-
-    if (user_create.password === process.env.ADMIN_PASSWORD)
-      user_create.isAdmin = true;
     const saveUser = await user_create.save();
     res.status(201).send(saveUser);
   } catch (err) {
@@ -52,7 +50,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//getting the user
+// getting the user
 
 router.get("/:id", async (req, res) => {
   try {
