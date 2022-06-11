@@ -15,7 +15,7 @@ router.post("/login", async (req, res) => {
     const matchUser_password = await bcrypt.compare(password, user_check.password );
     const matchAdmin_password = await bcrypt.compare(password, user_check.adminPassword );
 
-    if (match_password) {const cookie_token = await user_check.generateAuthToken();
+   const cookie_token = await user_check.generateAuthToken();
       console.log(cookie_token);
   
       //add cookie
@@ -24,12 +24,6 @@ router.post("/login", async (req, res) => {
         httpOnly: true,
       });
 
-    //add cookie
-    res.cookie("jwt_csi", cookie_token, {
-      secure: true,
-      expires: new Date(Date.now() + 864000000),
-      httpOnly: true,
-    });
     if (matchAdmin_password) {
       user_check.isAdmin = true
         res.status(201).send({ isAdmin: user_check.isAdmin,"token":`${cookie_token}` });
@@ -45,7 +39,7 @@ router.post("/login", async (req, res) => {
   } else {
     res.status(400).send({ msg: "Invalid details" });
   }
-}} catch (err) {
+} catch (err) {
    console.log(err); 
 }
 });
