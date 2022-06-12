@@ -11,6 +11,7 @@ router.get("/addquestion", async (req, res) => {try{
   for(let i=0;i< quesArray.length; i++){
     const quesArray_add=new Question({
       question: quesArray[i].question,
+      quesid: 2022*i,
       category: quesArray[i].category,
       option1: quesArray[i].option1,
       option2: quesArray[i].option2,
@@ -52,13 +53,6 @@ router.post("/addquestion", async (req, res) => {
       option4
     });
 
-    /*for (let i = 0; i < options.length; i++) {
-      const element = options[i];
-      if (element == correctans) {
-        question_create.iscorrect = true;
-        break;
-      }
-    }*/
   await question_create.save();
     res.status(201).send({"msg":"Question added successfully"});
   } catch (err) {
