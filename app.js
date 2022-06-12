@@ -3,9 +3,9 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const login_router = require("./routers/login");
 const register_router = require("./routers/register");
+const allusers = require("./routers/getallusers");
 
-const feedbackIns = require("./routers/feedback_ins")
-
+const feedbackIns = require("./routers/feedback_ins");
 
 const addquestion = require("./routers/addquestion");
 require("./data_connection/data");
@@ -14,19 +14,23 @@ const cors = require("cors");
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 //app.use(cors());
 //app.options('*', cors());
-app.use((req ,res ,next)=>{
-    res.setHeader("Access-Control-Allow-Origin","*");
-    res.setHeader("Access-Control-Allow-Methods","OPTION,GET,POST,PUT,PATCH,DELETE");
-    res.setHeader('Access-Control-Allow-Headers', "X-Requested-With,content-type");
-    res.setHeader("Access-Control-Allow-Credentials",true);
-    next();
-})
-
-
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "OPTION,GET,POST,PUT,PATCH,DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 /*app.use(
   cors({
@@ -46,6 +50,7 @@ app.use(cookieParser());
 app.use("/", register_router);
 app.use("/", login_router);
 app.use("/", feedbackIns);
+app.use("/", allusers);
 
 app.use("/", addquestion);
 //app.use(cors(corsOptions));
