@@ -39,6 +39,7 @@ router.post("/login", async (req, res) => {
           // `This is verified user and token for user is : ${cookie_token}`
           message: "User login succesfully",
           cookie_token: cookie_token,
+          isAdmin: "false",
         });
       } else {
         res.status(400).send({ msg: "Wrong Password" });
