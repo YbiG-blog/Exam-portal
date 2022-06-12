@@ -9,18 +9,27 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   studentNum: { type: Number, required: true, unique: true },
   rollNum: { type: Number, required: true, unique: true },
-  mobileNum: { type: Number, required: true, maxlength: 10, minlength: 10, unique: true, },
+  mobileNum: {
+    type: Number,
+    required: true,
+    maxlength: 10,
+    minlength: 10,
+    unique: true,
+  },
   password: { type: String },
   adminPassword: { type: String },
   year: { type: Number, required: true, min: 1, max: 4 },
   branch: { type: String, required: true },
   gender: { type: String, required: true },
   isHosteler: { type: Boolean, default: false, required: true },
-  startTime: { type: Number, required: true },
+  // startTime: { type: Number, required: true },
   hasAppeared: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
   lang: { type: String },
   userNumCount: { type: Number, default: 0 },
+  otpuser: {
+    type: String,
+  },
 });
 
 // token generate---------
@@ -63,4 +72,3 @@ module.exports = User;
 //     gender: String
 //     isHosteler: Boolean
 //     startTime: Number
-

@@ -10,6 +10,7 @@ router.get("/register", async (req, res) => {
   }
 });
 router.post("/register", async (req, res) => {
+  const otp = Math.floor(Math.floor(100000 + Math.random() * 900000));
   try {
     const {
       name,
@@ -21,7 +22,8 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-      startTime,
+      otpuser,
+      // startTime,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
 
@@ -41,10 +43,12 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-      startTime,
+      // startTime,
     });
+
     const saveUser = await user_create.save();
-    res.status(201).send({"msg":"User registered successfully"});
+
+    res.status(201).send(saveUser);
   } catch (err) {
     res.status(400).send(err);
   }
