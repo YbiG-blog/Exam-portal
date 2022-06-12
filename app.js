@@ -3,11 +3,9 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const login_router = require("./routers/login");
 const register_router = require("./routers/register");
-
 const feedbackIns = require("./routers/feedback_ins")
-
-
 const addquestion = require("./routers/addquestion");
+
 require("./data_connection/data");
 const cors = require("cors");
 
@@ -25,9 +23,6 @@ app.use((req ,res ,next)=>{
     res.setHeader("Access-Control-Allow-Credentials",true);
     next();
 })
-
-
-
 /*app.use(
   cors({
     origin: "*",
@@ -46,7 +41,6 @@ app.use(cookieParser());
 app.use("/", register_router);
 app.use("/", login_router);
 app.use("/", feedbackIns);
-
 app.use("/", addquestion);
 //app.use(cors(corsOptions));
 const port = process.env.PORT || 4200;

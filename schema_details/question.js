@@ -8,9 +8,8 @@ const questionSchema = new Schema({
 	  },                                                     
 	question: { type: String, required: true },              
 	category: { type: String, required: true },
-	correctAnswer: { type: String},
-	visited_ques :{type: Boolean, default:false},
-	not_visited_ques :{type: Boolean, default:false},
+	userAnswer: { type: String},
+	isCorrect:{type: Boolean},
 	mark_for_review :{type: Boolean, default:false},
 	save_and_next :{type: Boolean, default:false}
 })
