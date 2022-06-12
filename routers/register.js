@@ -1,6 +1,8 @@
 const express = require("express");
 const User = require("../schema_details/user");
 const router = new express.Router();
+
+
 router.get("/register", async (req, res) => {
   try {
     const Usersdata = await User.find();

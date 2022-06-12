@@ -4,10 +4,9 @@ const express = require("express");
 const login_router = require("./routers/login");
 const register_router = require("./routers/register");
 const allusers = require("./routers/getallusers");
-
 const feedbackIns = require("./routers/feedback_ins");
+const addquestion_router = require("./routers/addquestion");
 
-const addquestion = require("./routers/addquestion");
 require("./data_connection/data");
 const cors = require("cors");
 
@@ -51,8 +50,7 @@ app.use("/", register_router);
 app.use("/", login_router);
 app.use("/", feedbackIns);
 app.use("/", allusers);
-
-app.use("/", addquestion);
+app.use("/question/", addquestion_router);
 //app.use(cors(corsOptions));
 const port = process.env.PORT || 4200;
 app.listen(port, () => {
