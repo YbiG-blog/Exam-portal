@@ -35,9 +35,9 @@ router.post("/login", async (req, res) => {
 
       if (matchAdmin_password) {
         user_check.isAdmin = true;
-        res.status(201).send({ isAdmin: "true", token: `${cookie_token}` });
+        res.status(200).send({ isAdmin: "true", token: `${cookie_token}` });
       } else if (matchUser_password) {
-        res.status(201).send({
+        res.status(200).send({
           message: "User login succesfully",
           cookie_token: cookie_token,
           isAdmin: "false",
