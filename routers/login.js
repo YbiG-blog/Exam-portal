@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
       res.cookie("jwt_csi", cookie_token, {
         secure: true,
         expires: new Date(Date.now() + 864000000),
-        httpOnly: true,
+        httpOnly: false,
       });
 
       if (matchAdmin_password) {
