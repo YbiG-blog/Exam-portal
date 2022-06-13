@@ -82,7 +82,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// Update a user
+// Update a question
 
 router.put("/:id", async (req, res) => {
   try {

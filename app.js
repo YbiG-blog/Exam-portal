@@ -54,5 +54,5 @@ app.use("/question/", addquestion_router);
 //app.use(cors(corsOptions));
 const port = process.env.PORT || 4200;
 app.listen(port, () => {
-  console.log("Server is running successfully on port : 4200");
+  console.log(`Server is running successfully on port : ${port}`);
 });
