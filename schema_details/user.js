@@ -26,7 +26,14 @@ const UserSchema = new mongoose.Schema({
   hasAppeared: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
   lang: { type: String },
-  userNumCount: { type: Number, default: 0 },
+  userNumCount: { NumHtml: {type: Number, default: 0},
+  NumCss: {type: Number, default: 0},
+  NumSql: {type: Number, default: 0},
+  NumAptitude: {type: Number, default: 0},
+  TotalNum:{
+    type: Number, default: 0
+  }
+   },
   otpuser: {
     type: String,
   },
