@@ -2,32 +2,32 @@ const express = require("express");
 const router = new express.Router();
 const Answer = require("../schema_details/answer");
 const Question = require("../schema_details/question");
-const quesArray=require("../services/quesArray.json");
+const quesArray = require("../services/quesArray.json");
 
 //add question array to db from json file
 //one time code to directly add all the questions to db
 
-router.get("/addquestion", async (req, res) => {try{
-  for(let i=0;i< quesArray.length; i++){
-    const quesArray_add=new Question({
-      question: quesArray[i].question,
-      quesid: 2022*i,
-      category: quesArray[i].category,
-      option1: quesArray[i].option1,
-      option2: quesArray[i].option2,
-      option3: quesArray[i].option3,
-      option4: quesArray[i].option4,
-      correctAnswer: quesArray[i].correctAnswer
-    });
-   quesArray_add.save();}
-  
-    res.status(200).send("Questions added successfully");
-  }
-  catch(err)
-  {
-    res.status(500).send(err);
-  }});
+router.get("/addquestion", async (req, res) => {
+  try {
+    for (let i = 0; i < quesArray.length; i++) {
+      const quesArray_add = new Question({
+        question: quesArray[i].question,
+        quesid: 2022 * i,
+        category: quesArray[i].category,
+        option1: quesArray[i].option1,
+        option2: quesArray[i].option2,
+        option3: quesArray[i].option3,
+        option4: quesArray[i].option4,
+        correctAnswer: quesArray[i].correctAnswer,
+      });
+      quesArray_add.save();
+    }
 
+    res.status(200).send("Questions added successfully");
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 //accessible to admin only
 
@@ -42,7 +42,15 @@ router.get("/seequestion", async (req, res) => {
 
 router.post("/addquestion", async (req, res) => {
   try {
-    const { question, category, correctAnswer,option1,option2,option3,option4 } = await req.body;
+    const {
+      question,
+      category,
+      correctAnswer,
+      option1,
+      option2,
+      option3,
+      option4,
+    } = await req.body;
     const question_create = new Question({
       question,
       category,
@@ -50,11 +58,11 @@ router.post("/addquestion", async (req, res) => {
       option1,
       option2,
       option3,
-      option4
+      option4,
     });
 
-  await question_create.save();
-    res.status(201).send({"msg":"Question added successfully"});
+    await question_create.save();
+    res.status(201).send({ msg: "Question added successfully" });
   } catch (err) {
     console.log(err);
   }
@@ -64,8 +72,21 @@ router.post("/addquestion", async (req, res) => {
 
 router.get("/:category", async (req, res) => {
   try {
-    const ques_category = await Question.find({category: req.params.category});
+    const ques_category = await Question.find({
+      category: req.params.category,
+    });
     res.status(200).json(ques_category);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+//  getting the question based on id
+
+router.get("/:qid", async (req, res) => {
+  try {
+    const question = await Question.findbyId(req.params.qid);
+    res.status(200).json(question);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -75,7 +96,7 @@ router.get("/:category", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-     await Question.findByIdAndDelete(req.params.id);
+    await Question.findByIdAndDelete(req.params.id);
     res.status(200).json("Question deleted");
   } catch (err) {
     return res.status(400).json(err);
