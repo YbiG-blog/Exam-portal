@@ -1,7 +1,8 @@
+// otp and confirmation mail remaining in registration page
+
 const express = require("express");
 const User = require("../schema_details/user");
 const router = new express.Router();
-
 
 router.get("/register", async (req, res) => {
   try {
@@ -25,7 +26,6 @@ router.post("/register", async (req, res) => {
       gender,
       isHosteler,
       otpuser,
-      // startTime,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
 
@@ -45,7 +45,6 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-      // startTime,
     });
 
     const saveUser = await user_create.save();
@@ -93,6 +92,7 @@ router.put("/:id", async (req, res) => {
 
 module.exports = router;
 
+// sample data
 // {
 //         "name": "Parkhi Garg",
 //         "email": "parkhigarg27@gmail.com",
@@ -106,5 +106,4 @@ module.exports = router;
 //         "startTime":10,
 //         "currentTime":15,
 //         "endTime":20
-
 // }

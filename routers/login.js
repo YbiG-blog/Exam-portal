@@ -1,3 +1,5 @@
+// login is completed
+
 const express = require("express");
 const User = require("../schema_details/user");
 const bcrypt = require("bcrypt");
@@ -36,7 +38,6 @@ router.post("/login", async (req, res) => {
         res.status(201).send({ isAdmin: "true", token: `${cookie_token}` });
       } else if (matchUser_password) {
         res.status(201).send({
-          // `This is verified user and token for user is : ${cookie_token}`
           message: "User login succesfully",
           cookie_token: cookie_token,
           isAdmin: "false",

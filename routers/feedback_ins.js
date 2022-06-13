@@ -7,6 +7,7 @@ const verify = require("../middleware/auth");
 const User = require("../schema_details/user");
 
 //instruction
+// ---- access denied problem need to be solved
 router.patch("/instruction", verify, async (req, res) => {
   try {
     const token = req.cookies.jwt_csi;
@@ -15,6 +16,8 @@ router.patch("/instruction", verify, async (req, res) => {
     console.log(dec);
     await User.findByIdAndUpdate(decode, {
       $set: {
+        loginAt: new Date(),
+        hasAppeared: true,
         lang: req.body.lang,
       },
     });

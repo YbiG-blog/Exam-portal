@@ -22,18 +22,23 @@ const UserSchema = new mongoose.Schema({
   branch: { type: String, required: true },
   gender: { type: String, required: true },
   isHosteler: { type: Boolean, default: false, required: true },
-  // startTime: { type: Number, required: true },
   hasAppeared: { type: Boolean, default: false },
+  loginAt: {
+    type: Date,
+    default: null,
+  },
   isAdmin: { type: Boolean, default: false },
   lang: { type: String },
-  userNumCount: { NumHtml: {type: Number, default: 0},
-  NumCss: {type: Number, default: 0},
-  NumSql: {type: Number, default: 0},
-  NumAptitude: {type: Number, default: 0},
-  TotalNum:{
-    type: Number, default: 0
-  }
-   },
+  userNumCount: {
+    NumHtml: { type: Number, default: 0 },
+    NumCss: { type: Number, default: 0 },
+    NumSql: { type: Number, default: 0 },
+    NumAptitude: { type: Number, default: 0 },
+    TotalNum: {
+      type: Number,
+      default: 0,
+    },
+  },
   otpuser: {
     type: String,
   },
