@@ -59,7 +59,9 @@ router.post("/addquestion", async (req, res) => {
     });
 
     await question_create.save();
-    res.status(201).send({ msg: "Question added successfully" });
+    res
+      .status(201)
+      .send({ msg: "Question added successfully", question_create });
   } catch (error) {
     res.status(400).json(error);
   }
