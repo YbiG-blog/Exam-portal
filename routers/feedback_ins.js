@@ -10,9 +10,10 @@ const User = require("../schema_details/user");
 // ---- access denied problem need to be solved
 router.patch("/instruction", verify, async (req, res) => {
   try {
-    const token = req.cookies.jwt_csi;
+    const token = req.body.cookie_token;
+
     const dec = token.split(".")[1];
-    const decode = JSON.parse(atob(dec));
+   const decode = JSON.parse(atob(dec));
     console.log(dec);
     await User.findByIdAndUpdate(decode, {
       $set: {
@@ -25,7 +26,7 @@ router.patch("/instruction", verify, async (req, res) => {
     res.status(200).send({ msg: "Language added successfully" });
   } catch (err) {
     console.log(err);
-    res.status(500).send(err);
+    res.status(500).send("err");
   }
 });
 //feedback
