@@ -10,7 +10,7 @@ const User = require("../schema_details/user");
 // ---- access denied problem need to be solved
 router.patch("/instruction", verify, async (req, res) => {
   try {
-    const token = req.headers['cookie_token'];
+    const token = req.body.cookie_token;
 
     const dec = token.split(".")[1];
    const decode = JSON.parse(atob(dec));
