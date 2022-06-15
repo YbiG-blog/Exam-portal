@@ -55,10 +55,7 @@ router.post("/addquestion", async (req, res) => {
       question,
       category,
       correctAnswer,
-      option1,
-      option2,
-      option3,
-      option4,
+      options: [option1, option2, option3, option4],
     });
 
     await question_create.save();

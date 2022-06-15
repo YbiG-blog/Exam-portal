@@ -16,7 +16,7 @@ router.patch("/instruction", verify, async (req, res) => {
     console.log(dec);
     await User.findByIdAndUpdate(decode, {
       $set: {
-        loginAt: new Date(),
+        loginAt: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
         hasAppeared: true,
         lang: req.body.lang,
       },
