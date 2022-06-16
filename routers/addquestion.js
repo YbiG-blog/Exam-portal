@@ -43,21 +43,18 @@ router.get("/seequestion", async (req, res) => {
 
 router.post("/addquestion", async (req, res) => {
   try {
-    const {
+    const { question, category, options } = await req.body;
+    let question_create = new Question({
       question,
       category,
-      correctAnswer,
-      option1,
-      option2,
-      option3,
-      option4,
-    } = await req.body;
-    const question_create = new Question({
-      question,
-      category,
-      correctAnswer,
-      options: [option1, option2, option3, option4],
+      options,
     });
+    // for (let i of req.body.options) {
+    //   const question_create = new Question({
+    //     question,
+    //     category,
+    //     options
+    //   });
 
     await question_create.save();
     res
@@ -105,7 +102,7 @@ router.delete("/:id", async (req, res) => {
 
 // Update a question
 
-router.put("/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   try {
     await Question.findByIdAndUpdate(req.params.id, {
       $set: req.body,
