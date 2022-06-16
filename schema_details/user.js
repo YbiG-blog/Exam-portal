@@ -39,9 +39,9 @@ const UserSchema = new mongoose.Schema({
       default: 0,
     },
   },
-  otpuser: {
-    type: String,
-  },
+  // otpuser: {
+  //   type: String,
+  // },
 });
 
 // token generate---------

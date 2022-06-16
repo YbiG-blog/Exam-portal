@@ -1,11 +1,65 @@
 [
   {
-    "question": "Which tag is used to insert images?",
+    "_id": "62ab76ef0f4d5483cb55f97b",
+    "question": "ques 2?",
     "category": "HTML",
-    "option1": "<p>",
-    "option2": "<img>",
-    "option3": "<i>",
-    "option4": "<image>",
-    "correctAnswer": "option2"
+    "options": [
+      {
+        "value": "qwerty",
+        "Oid": 564,
+        "isCorrect": false,
+        "_id": "62ab76ef0f4d5483cb55f97c"
+      },
+      {
+        "value": "test",
+        "Oid": 562,
+        "isCorrect": false,
+        "_id": "62ab76ef0f4d5483cb55f97d"
+      },
+      {
+        "value": "test",
+        "Oid": 563,
+        "isCorrect": false,
+        "_id": "62ab76ef0f4d5483cb55f97e"
+      },
+      {
+        "value": "qwerty",
+        "Oid": 564,
+        "isCorrect": false,
+        "_id": "62ab76ef0f4d5483cb55f97f"
+      }
+    ],
+    "__v": 0
+  },
+  {
+    "_id": "62ab76f50f4d5483cb55f981",
+    "question": "ques 3?",
+    "category": "HTML",
+    "options": [
+      {
+        "value": "qwerty",
+        "Oid": 564,
+        "isCorrect": false,
+        "_id": "62ab76f50f4d5483cb55f982"
+      },
+      {
+        "value": "test",
+        "Oid": 562,
+        "isCorrect": false,
+        "_id": "62ab76f50f4d5483cb55f983"
+      },
+      {
+        "value": "test",
+        "Oid": 563,
+        "isCorrect": false,
+        "_id": "62ab76f50f4d5483cb55f984"
+      },
+      {
+        "value": "qwerty",
+        "Oid": 564,
+        "isCorrect": false,
+        "_id": "62ab76f50f4d5483cb55f985"
+      }
+    ]
   }
 ]
