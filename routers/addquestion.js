@@ -3,6 +3,7 @@ const router = new express.Router();
 const Answer = require("../schema_details/answer");
 const Question = require("../schema_details/question");
 const quesArray = require("../services/quesArray.json");
+const options = require("../schema_details/optionschema");
 
 //add question array to db from json file
 //one time code to directly add all the questions to db
@@ -115,3 +116,30 @@ router.put("/:id", async (req, res) => {
   }
 });
 module.exports = router;
+
+// router.post("/addquestion", async (req, res) => {
+//   try {
+//     const {
+//       question,
+//       category,
+//       correctAnswer,
+//       option1,
+//       option2,
+//       option3,
+//       option4,
+//     } = await req.body;
+//     const question_create = new Question({
+//       question,
+//       category,
+//       correctAnswer,
+//       options: [option1, option2, option3, option4],
+//     });
+
+//     await question_create.save();
+//     res
+//       .status(201)
+//       .send({ msg: "Question added successfully", question_create });
+//   } catch (error) {
+//     res.status(400).json(error);
+//   }
+// });

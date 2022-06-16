@@ -1,18 +1,11 @@
-[{"question": "Which tag is used to insert images?",
-    "category":"HTML",
-    "option1":"<p>",
-    "option2":"<img>",
-    "option3":"<i>",
-    "option4":"<image>",
-    "correctAnswer":"option2"
-
-},
-{"question": "Which of the following CSS selectors are used to specify a group of elements?",
-    "category":"CSS",
-    "option1":"tag",
-    "option2":"id",
-    "option3":"class",
-    "option4":"both class and tag",
-    "correctAnswer":"option3"
-
-}]
+[
+  {
+    "question": "Which tag is used to insert images?",
+    "category": "HTML",
+    "option1": "<p>",
+    "option2": "<img>",
+    "option3": "<i>",
+    "option4": "<image>",
+    "correctAnswer": "option2"
+  }
+]

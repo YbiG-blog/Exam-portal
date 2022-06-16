@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
   /*questionId: {
-		type: Schema.Types.ObjectId,
-		ref: "User"
-	  },	*/
+    type: Schema.Types.ObjectId,
+    ref: "User"
+    },	*/
   question: { type: String, required: true, unique: true },
   quesid: { type: Number, unique: true },
   category: { type: String, required: true },
