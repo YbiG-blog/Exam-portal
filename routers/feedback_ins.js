@@ -7,13 +7,13 @@ const verify = require("../middleware/auth");
 const User = require("../schema_details/user");
 
 //instruction
-// ---- access denied problem need to be solved
+
 router.patch("/instruction", verify, async (req, res) => {
   try {
     const token = req.body.cookie_token;
 
     const dec = token.split(".")[1];
-   const decode = JSON.parse(atob(dec));
+    const decode = JSON.parse(atob(dec));
     console.log(dec);
     await User.findByIdAndUpdate(decode, {
       $set: {
@@ -29,25 +29,33 @@ router.patch("/instruction", verify, async (req, res) => {
     res.status(500).send("err");
   }
 });
+
 //feedback
-router.post("/feedback", async (req, res) => {
+
+router.post("/addfeedback", async (req, res) => {
   try {
-    const { question1, question2, question3, question4, queryText } =
-      await req.body;
-
-    const feedbackData = new Feedback({
-      question1,
-      question2,
-      question3,
-      question4,
+    const { question, queryText, options } = await req.body;
+    let feedbackques_create = new Feedback_Ins({
+      question,
       queryText,
+      options,
     });
+    await feedbackques_create.save();
+    res.status(201).send({
+      msg: " Feedback Question added successfully",
+      feedbackques_create,
+    });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
-    const saveFeedback = await feedbackData.save();
-    res.status(201).send("successfully done");
+router.get("/seefeedbackques", async (req, res) => {
+  try {
+    const feedbackQuestionsData = await Feedback_Ins.find();
+    res.status(201).send(feedbackQuestionsData);
   } catch (err) {
-    console.log(err);
-    res.status(400).send(error);
+    res.status(400).send(err);
   }
 });
 
