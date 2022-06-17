@@ -50,7 +50,8 @@ router.post("/addfeedback", async (req, res) => {
   }
 });
 
-router.get("/seefeedbackques", async (req, res) => {
+
+router.get("/feed/seefeedbackques", async (req, res) => {
   try {
     const feedbackQuestionsData = await Feedback_Ins.find();
     res.status(201).send(feedbackQuestionsData);
