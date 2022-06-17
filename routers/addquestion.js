@@ -3,7 +3,6 @@ const router = new express.Router();
 const Answer = require("../schema_details/answer");
 const Question = require("../schema_details/question");
 const quesArray = require("../services/quesArray.json");
-const options = require("../schema_details/optionschema");
 
 //add question array to db from json file
 //one time code to directly add all the questions to db
