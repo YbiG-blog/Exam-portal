@@ -7,10 +7,6 @@ const feedbackSchema = new Schema({
     ref: "User",
   },
   question: { type: String, required: true, unique: true },
-  // question1: { type: Number, required: true, min: 1, max: 5 },
-  // question2: { type: Number, required: true, min: 1, max: 5 },
-  // question3: { type: Number, required: true, min: 1, max: 5 },
-  // question4: { type: Number, required: true, min: 1, max: 5 },
   options: [
     {
       Oid: {
