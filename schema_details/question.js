@@ -20,7 +20,7 @@ const questionSchema = new Schema({
       isCorrect: {
         default: false,
         type: Boolean,
-        require: true,
+        // require: true,
       },
     },
   ],
