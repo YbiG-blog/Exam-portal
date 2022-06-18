@@ -9,6 +9,10 @@ const feedbackSchema = new Schema({
   question: { type: String, required: true, unique: true },
   options: [
     {
+      value: {
+        type: Number,
+        default: "0",
+      },
       Oid: {
         type: Number,
         required: true,
