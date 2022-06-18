@@ -1,8 +1,6 @@
-// otp and confirmation mail remaining in registration page
-
 const express = require("express");
-const User = require("../schema_details/user");
 const router = new express.Router();
+const User = require("../schema_details/user");
 
 router.get("/register", async (req, res) => {
   try {
@@ -57,35 +55,38 @@ router.post("/register", async (req, res) => {
 
 // getting the user
 
-router.get("/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   try {
-    const user = await User.findbyId(req.params.id);
+    const user = await User.findById(req.params.id);
     res.status(200).json(user);
   } catch (err) {
+    console.log(err);
     res.status(400).json(err);
   }
 });
 
 // delete a user
 
-router.delete("/:id", async (req, res) => {
+router.delete("/user/:id", async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     res.status(200).json("Account deleted");
   } catch (err) {
+    console.log(err);
     return res.status(400).json(err);
   }
 });
 
 // Update a user
 
-router.put("/:id", async (req, res) => {
+router.patch("/user/:id", async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, {
       $set: req.body,
     });
     res.status(200).json("Account got updated");
   } catch (err) {
+    console.log(err);
     return res.status(400).json(err);
   }
 });
