@@ -1,6 +1,5 @@
 const express = require("express");
 const router = new express.Router();
-const Answer = require("../schema_details/answer");
 const Question = require("../schema_details/question");
 const quesArray = require("../services/quesArray.json");
 
@@ -54,6 +53,15 @@ router.post("/addquestion", async (req, res) => {
     //     category,
     //     options
     //   });
+//     { "question":"what is?",
+// "category":"python",
+// "options":[{"value":"poiu",
+// "Oid":"45659",
+// "isCorrect":false},
+// {"value":"qwert",
+// "Oid":"789",
+// "isCorrect":true}
+// ]}
 
     await question_create.save();
     res
@@ -114,29 +122,3 @@ router.patch("/:id", async (req, res) => {
 });
 module.exports = router;
 
-// router.post("/addquestion", async (req, res) => {
-//   try {
-//     const {
-//       question,
-//       category,
-//       correctAnswer,
-//       option1,
-//       option2,
-//       option3,
-//       option4,
-//     } = await req.body;
-//     const question_create = new Question({
-//       question,
-//       category,
-//       correctAnswer,
-//       options: [option1, option2, option3, option4],
-//     });
-
-//     await question_create.save();
-//     res
-//       .status(201)
-//       .send({ msg: "Question added successfully", question_create });
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// });

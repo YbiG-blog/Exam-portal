@@ -2,7 +2,6 @@ const express = require("express");
 const Feedback_Ins = require("../schema_details/instruction_feedback");
 const router = new express.Router();
 const atob = require("atob");
-const Feedback = Feedback_Ins.Feedback;
 const verify = require("../middleware/auth");
 const User = require("../schema_details/user");
 
