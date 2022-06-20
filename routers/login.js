@@ -12,6 +12,7 @@ router.post("/login", async (req, res) => {
   try {
     const password = req.body.password;
     const studentNum = req.body.studentNum;
+
     const user_check = await User.findOne({ studentNum: studentNum });
     if (user_check) {
       const matchUser_password = await bcrypt.compare(
@@ -41,6 +42,7 @@ router.post("/login", async (req, res) => {
           message: "User logged in successfully",
           cookie_token: cookie_token,
           isAdmin: "false",
+          hasAppeared: "false",
         });
       } else {
         res.status(400).send({ msg: "Wrong Password" });
