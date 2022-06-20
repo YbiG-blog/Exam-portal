@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const Answer = require("../schema_details/answer");
+const Question = require("../schema_details/question");
 const User = require("../schema_details/user");
 const atob = require("atob");
 const verify = require("../middleware/auth");
@@ -20,7 +21,9 @@ router.post("/answer",verify,async (req,res)=>{
              markRev,
              saveNext
         });
+        
         await answer_create.save();
+
 
         res
           .status(201)
@@ -33,12 +36,9 @@ router.post("/answer",verify,async (req,res)=>{
 
 
 router.get("/seeanswer",async (req,res)=>{
-    try {const token = req.body.cookie_token;
+    try {const Userid = req.body.Userid;
 
-        const dec = token.split(".")[1];
-        const decode = JSON.parse(atob(dec));  //contains userId
-        console.log(dec);
-        const AnswerData = await Answer.find({userId: decode}).populate('userId','name studentNum branch score loginAt');
+        const AnswerData = await Answer.find({userId:Userid}).populate('userId','name studentNum branch score loginAt');
         res.status(201).send(AnswerData);
       } catch (err) {
         res.status(400).send(err);

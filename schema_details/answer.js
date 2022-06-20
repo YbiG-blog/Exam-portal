@@ -6,10 +6,10 @@ const answerSchema = new Schema({
 		type: Schema.Types.ObjectId,                      
 		ref: "User"
 	  },        
-    // questionId: {
-	// 	type: Schema.Types.ObjectId,
-	// 	ref: "Question"
-	//   },                               
+    questionId: {
+		type: Schema.Types.ObjectId,
+		ref: "Question"
+	  },                               
 	question: { type: String, required: true, unique: true },
 	category: { type: String, required: true },  
 	userAnswer:{type:String, required:true} ,     
