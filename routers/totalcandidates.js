@@ -11,8 +11,7 @@ const db = require("../data_connection/data");
 
 // router.get("/totalcandidates", async (req, res) => {
 //   try {
-//     db.users.aggregate([{ $count: "myCount" }]);
-//     console.log(count);
+//     console.log(db.users.countDocuments());
 //     res.status(200).send({ msg: "done" });
 //   } catch (error) {
 //     console.log(error);

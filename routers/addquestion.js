@@ -53,15 +53,15 @@ router.post("/addquestion", async (req, res) => {
     //     category,
     //     options
     //   });
-//     { "question":"what is?",
-// "category":"python",
-// "options":[{"value":"poiu",
-// "Oid":"45659",
-// "isCorrect":false},
-// {"value":"qwert",
-// "Oid":"789",
-// "isCorrect":true}
-// ]}
+    //     { "question":"what is?",
+    // "category":"python",
+    // "options":[{"value":"poiu",
+    // "Oid":"45659",
+    // "isCorrect":false},
+    // {"value":"qwert",
+    // "Oid":"789",
+    // "isCorrect":true}
+    // ]}
 
     await question_create.save();
     res
@@ -82,6 +82,7 @@ router.get("/:category", async (req, res) => {
     });
     res.status(200).json(ques_category);
   } catch (err) {
+    console.log(err);
     res.status(400).json(err);
   }
 });
@@ -121,4 +122,3 @@ router.patch("/:id", async (req, res) => {
   }
 });
 module.exports = router;
-

@@ -13,7 +13,7 @@ router.post("/answer", verify, async (req, res) => {
     const decode = JSON.parse(atob(dec)); //contains userId
     console.log(dec);
 
-    const { question, category, userAnswer, markRev, saveNext } =
+    const { question, category, userAnswer, markRev, saveNext, Qid } =
       await req.body;
     let answer_create = new Answer({
       userId: decode,
@@ -22,6 +22,7 @@ router.post("/answer", verify, async (req, res) => {
       userAnswer,
       markRev,
       saveNext,
+      Qid,
     });
     await answer_create.save();
 
@@ -33,11 +34,6 @@ router.post("/answer", verify, async (req, res) => {
 
 router.get("/seeanswer", async (req, res) => {
   try {
-    const token = req.body.cookie_token;
-
-    const dec = token.split(".")[1];
-    const decode = JSON.parse(atob(dec)); //contains userId
-    console.log(dec);
     const AnswerData = await Answer.find({ userId: decode }).populate(
       "userId",
       "name studentNum branch score loginAt"

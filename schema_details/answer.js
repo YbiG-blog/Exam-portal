@@ -6,8 +6,8 @@ const answerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-
-  question: { type: String, required: true, unique: true },
+  Qid: { type: String, required: true },
+  question: { type: String, required: true },
   category: { type: String, required: true },
   userAnswer: { type: String, required: true },
   isCorrect: { type: Boolean, default: false },
