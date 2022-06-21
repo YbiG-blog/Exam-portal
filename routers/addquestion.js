@@ -8,21 +8,21 @@ const quesArray = require("../services/quesArray.json");
 
 router.get("/addquestion", async (req, res) => {
   try {
-    for (let i = 0; i < quesArray.length; i++) {
-      const quesArray_add = new Question({
-        question: quesArray[i].question,
-        quesid: 2022 * i,
-        category: quesArray[i].category,
-        option1: quesArray[i].option1,
-        option2: quesArray[i].option2,
-        option3: quesArray[i].option3,
-        option4: quesArray[i].option4,
-        correctAnswer: quesArray[i].correctAnswer,
-      });
-      quesArray_add.save();
-    }
+    // for (let i = 0; i < quesArray.length; i++) {
+    //   const quesArray_add = new Question({
+    //     question: quesArray[i].question,
+    //     quesid: 2022 * i,
+    //     category: quesArray[i].category,
+    //     option1: quesArray[i].option1,
+    //     option2: quesArray[i].option2,
+    //     option3: quesArray[i].option3,
+    //     option4: quesArray[i].option4,
+    //     correctAnswer: quesArray[i].correctAnswer,
+    //   });
+    //   quesArray_add.save();
+    // }
 
-    res.status(200).send("Questions added successfully");
+    res.status(200).send("Api working !");
   } catch (err) {
     res.status(500).send(err);
   }
