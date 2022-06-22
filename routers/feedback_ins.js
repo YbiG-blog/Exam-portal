@@ -70,7 +70,7 @@ router.patch("/feedback/:id", async (req, res) => {
     return res.status(400).json(err);
   }
 });
-
+// get all feedback question
 router.get("/feed/seefeedbackques", async (req, res) => {
   try {
     const feedbackQuestionsData = await Feedback_Ins.find();
