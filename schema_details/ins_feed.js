@@ -19,7 +19,7 @@ const feedbackSchema = new Schema({
       },
     },
   ],
-  queryText: { type: String, required: true },
+  queryText: { type: String },
 });
 const Feedback = new mongoose.model("Feedback", feedbackSchema);
 

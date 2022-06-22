@@ -1,5 +1,5 @@
 const express = require("express");
-const Feedback_Ins = require("../schema_details/instruction_feedback");
+const Feedback_Ins = require("../schema_details/ins_feed");
 const router = new express.Router();
 const atob = require("atob");
 const verify = require("../middleware/auth");
@@ -60,7 +60,7 @@ router.delete("/feedback/:id", async (req, res) => {
   }
 });
 
-// Update a question
+// Update a feedback question
 
 router.patch("/feedback/:id", async (req, res) => {
   try {
@@ -72,6 +72,7 @@ router.patch("/feedback/:id", async (req, res) => {
     return res.status(400).json(err);
   }
 });
+
 // get all feedback question
 
 router.get("/feed/seefeedbackques", async (req, res) => {
