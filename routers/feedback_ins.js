@@ -49,6 +49,8 @@ router.post("/addfeedback", async (req, res) => {
   }
 });
 
+// delete an feedback id
+
 router.delete("/feedback/:id", async (req, res) => {
   try {
     await Feedback_Ins.findByIdAndDelete(req.params.id);
@@ -71,6 +73,7 @@ router.patch("/feedback/:id", async (req, res) => {
   }
 });
 // get all feedback question
+
 router.get("/feed/seefeedbackques", async (req, res) => {
   try {
     const feedbackQuestionsData = await Feedback_Ins.find();

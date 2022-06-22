@@ -33,7 +33,7 @@ router.get("/addquestion", async (req, res) => {
 router.get("/seequestion", async (req, res) => {
   try {
     const QuestionsData = await Question.find();
-    res.status(201).send(QuestionsData);
+    res.status(201).send({ results: QuestionsData });
   } catch (err) {
     res.status(400).send(err);
   }

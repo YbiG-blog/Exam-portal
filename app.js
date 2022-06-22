@@ -9,7 +9,7 @@ const addquestion_router = require("./routers/addquestion");
 const allquestions = require("./routers/getallquestion");
 const answer = require("./routers/answer");
 const totalcandidates = require("./routers/totalcandidates");
-
+const response_ans = require("./routers/feedbackans");
 require("./data_connection/data");
 const cors = require("cors");
 
@@ -57,6 +57,7 @@ app.use("/ans", answer);
 app.use("/question/", addquestion_router);
 app.use("/all/", allquestions);
 app.use("/total/", totalcandidates);
+app.use("/response/", response_ans);
 //app.use(cors(corsOptions));
 const port = process.env.PORT || 4200;
 app.listen(port, () => {
