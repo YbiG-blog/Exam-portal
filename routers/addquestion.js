@@ -22,18 +22,16 @@ router.get("/addquestion", async (req, res) => {
     //   quesArray_add.save();
     // }
 
-    res.status(200).send("Api working !");
+    res.status(200).send("Api working!");
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
-//accessible to admin only
-
 router.get("/seequestion", async (req, res) => {
   try {
     const QuestionsData = await Question.find();
-    res.status(201).send(QuestionsData);
+    res.status(201).send({result: QuestionsData});
   } catch (err) {
     res.status(400).send(err);
   }

@@ -6,7 +6,7 @@ const User = require("../schema_details/user");
 const atob = require("atob");
 const verify = require("../middleware/auth");
 
-router.post("/answer", verify, async (req, res) => {
+router.put("/answer", verify, async (req, res) => {
   try {
     const token = req.body.cookie_token;
 
@@ -26,27 +26,29 @@ router.post("/answer", verify, async (req, res) => {
       Qid,
     });
     await answer_create.save();
-    //working on matching the correct answer
-//    const quesFound=Question.findById(Qid);
-//    //currently working on it
+   // working on matching the correct answer
+//    const quesFound=await Question.findById(Qid);
 //     if(quesFound)
-//     {console.log("quesFound");
-//     console.log(quesFound.options);
-// for(const i=0; i<quesFound.options.length;i++)
-//      { if(userAnswer==quesFound.options[i].value)
-//       {
-//         if(isCorrect)
+//     {
+    
+// for(let i=0; i<quesFound.options.length;i++)
+//      { if(userAnswer===quesFound.options[i].value)
+//       {console.log(userAnswer);
+//         console.log(quesFound.options[i].value);
+//         if(quesFound.options[i].isCorrect===true)
 //         {
-//           Answer.findByIdAndUpdate(Qid,
+//          await Answer.findByIdAndUpdate(Qid,
 //             {$set:{isCorrect: true}});
+//             res.status(201).json(Answer.findById(Qid));
+          
 //         }
 
 //       }}
-//     }
+    //}
 
-    res.status(201).send({ msg: "Response added successfully", answer_create });
+   // res.status(201).send({ msg: "Response added successfully", answer_create });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).send(error);
   }
 });
 
