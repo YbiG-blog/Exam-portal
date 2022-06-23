@@ -33,11 +33,11 @@ router.patch("/instruction", verify, async (req, res) => {
 
 router.post("/addfeedback", async (req, res) => {
   try {
-    const { question, queryText, options } = await req.body;
+    const { question, queryText } = await req.body;
     let feedbackques_create = new Feedback_Ins({
       question,
       queryText,
-      options,
+      // options,
     });
     await feedbackques_create.save();
     res.status(201).send({
@@ -78,7 +78,7 @@ router.patch("/feedback/:id", async (req, res) => {
 router.get("/feed/seefeedbackques", async (req, res) => {
   try {
     const feedbackQuestionsData = await Feedback_Ins.find();
-    res.status(201).send(feedbackQuestionsData);
+    res.status(201).json(feedbackQuestionsData);
   } catch (err) {
     res.status(400).send(err);
   }

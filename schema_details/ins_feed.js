@@ -7,18 +7,22 @@ const feedbackSchema = new Schema({
     ref: "User",
   },
   question: { type: String, required: true, unique: true },
-  options: [
-    {
-      value: {
-        type: Number,
-        default: "0",
-      },
-      Oid: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
+  value: {
+    type: Number,
+    default: "0",
+  },
+  // options: [
+  //   {
+  //     value: {
+  //       type: Number,
+  //       default: "0",
+  //     },
+  //     Oid: {
+  //       type: Number,
+  //       required: true,
+  //     },
+  //   },
+  // ],
   queryText: { type: String },
 });
 const Feedback = new mongoose.model("Feedback", feedbackSchema);
