@@ -74,7 +74,7 @@ router.patch("/feedback/:id", async (req, res) => {
 router.get("/feed/seefeedbackques", async (req, res) => {
   try {
     const feedbackQuestionsData = await Feedback_Ins.find();
-    res.status(201).json(feedbackQuestionsData);
+    res.status(201).send({result:feedbackQuestionsData});
   } catch (err) {
     res.status(400).send(err);
   }
