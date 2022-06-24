@@ -6,7 +6,7 @@ const User = require("../schema_details/user");
 const atob = require("atob");
 const verify = require("../middleware/auth");
 
-router.put("/all/answer", verify, async (req, res) => {
+router.put("/answer", verify, async (req, res) => {
   try {
     const token = req.body.cookie_token;
 
