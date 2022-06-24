@@ -53,7 +53,7 @@ app.use("/", register_router);
 app.use("/", login_router);
 app.use("/", feedbackIns);
 app.use("/all/", allusers);
-app.use("/ans", answer);
+app.use("/ans/", answer);
 app.use("/question/", addquestion_router);
 app.use("/all/", allquestions);
 // app.use("/total/", totalcandidates);

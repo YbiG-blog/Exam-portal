@@ -26,6 +26,10 @@ const answerschema = new Schema({
       },
     },
   ],
+  feedtext: {
+    type: String,
+    required: true,
+  },
 });
 
 const FeedbackAnswer = new mongoose.model("FeedbackAnswer", answerschema);
