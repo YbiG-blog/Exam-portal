@@ -8,6 +8,8 @@ const router = new express.Router();
 router.get("/admin", async (req, res) => {
   res.send("This is admin page");
 });
+
+// login route
 router.post("/login", async (req, res) => {
   try {
     const password = req.body.password;

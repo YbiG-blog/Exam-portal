@@ -90,7 +90,7 @@ router.get("/:category", async (req, res) => {
 router.get("/:qid", async (req, res) => {
   try {
     const question = await Question.findbyId(req.params.qid);
-    res.status(200).json({ result: question });
+    res.status(200).json(question);
   } catch (err) {
     res.status(400).json(err);
   }
