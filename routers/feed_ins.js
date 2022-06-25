@@ -1,5 +1,5 @@
 const express = require("express");
-const Feedback_Ins = require("../schema_details/instruction_feedback");
+const Feedback_Ins = require("../schema_details/ins_feed");
 const router = new express.Router();
 const atob = require("atob");
 const verify = require("../middleware/auth");
@@ -33,11 +33,11 @@ router.patch("/instruction", verify, async (req, res) => {
 
 router.post("/addfeedback", async (req, res) => {
   try {
-    const { question, queryText, options } = await req.body;
+    const { question, queryText } = await req.body;
     let feedbackques_create = new Feedback_Ins({
       question,
       queryText,
-      options,
+      // options,
     });
     await feedbackques_create.save();
     res.status(201).send({
@@ -49,11 +49,36 @@ router.post("/addfeedback", async (req, res) => {
   }
 });
 
+// delete an feedback id
+
+router.delete("/feedback/:id", async (req, res) => {
+  try {
+    await Feedback_Ins.findByIdAndDelete(req.params.id);
+    res.status(200).json(" Feedback Question deleted");
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+});
+
+// Update a feedback question
+
+router.patch("/feedback/:id", async (req, res) => {
+  try {
+    await Feedback_Ins.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    });
+    res.status(200).json(" Feedback Question got updated");
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+});
+
+// get all feedback question
 
 router.get("/feed/seefeedbackques", async (req, res) => {
   try {
     const feedbackQuestionsData = await Feedback_Ins.find();
-    res.status(201).send(feedbackQuestionsData);
+    res.status(201).json(feedbackQuestionsData);
   } catch (err) {
     res.status(400).send(err);
   }

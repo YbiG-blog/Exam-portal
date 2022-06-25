@@ -8,32 +8,30 @@ const quesArray = require("../services/quesArray.json");
 
 router.get("/addquestion", async (req, res) => {
   try {
-    for (let i = 0; i < quesArray.length; i++) {
-      const quesArray_add = new Question({
-        question: quesArray[i].question,
-        quesid: 2022 * i,
-        category: quesArray[i].category,
-        option1: quesArray[i].option1,
-        option2: quesArray[i].option2,
-        option3: quesArray[i].option3,
-        option4: quesArray[i].option4,
-        correctAnswer: quesArray[i].correctAnswer,
-      });
-      quesArray_add.save();
-    }
+    // for (let i = 0; i < quesArray.length; i++) {
+    //   const quesArray_add = new Question({
+    //     question: quesArray[i].question,
+    //     quesid: 2022 * i,
+    //     category: quesArray[i].category,
+    //     option1: quesArray[i].option1,
+    //     option2: quesArray[i].option2,
+    //     option3: quesArray[i].option3,
+    //     option4: quesArray[i].option4,
+    //     correctAnswer: quesArray[i].correctAnswer,
+    //   });
+    //   quesArray_add.save();
+    // }
 
-    res.status(200).send("Questions added successfully");
+    res.status(200).send("Api working!");
   } catch (err) {
     res.status(500).send(err);
   }
 });
 
-//accessible to admin only
-
 router.get("/seequestion", async (req, res) => {
   try {
     const QuestionsData = await Question.find();
-    res.status(201).send(QuestionsData);
+    res.status(201).send({ result: QuestionsData });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -80,7 +78,7 @@ router.get("/:category", async (req, res) => {
     const ques_category = await Question.find({
       category: req.params.category,
     });
-    res.status(200).json(ques_category);
+    res.status(200).json({ result: ques_category });
   } catch (err) {
     console.log(err);
     res.status(400).json(err);

@@ -9,6 +9,8 @@ const Total_admin_data = require("../schema_details/totaldata");
 router.get("/admin", async (req, res) => {
   res.send("This is admin page");
 });
+
+// login route
 router.post("/login", async (req, res) => {
   try {
     const password = req.body.password;
@@ -55,5 +57,9 @@ router.post("/login", async (req, res) => {
     console.log(err);
   }
 });
+
+//logout router
+
+router.post("/logout", async (req, res) => {});
 
 module.exports = router;
