@@ -56,6 +56,8 @@ app.use("/all/", allusers);
 app.use("/ans/", answer);
 app.use("/question/", addquestion_router);
 app.use("/all/", allquestions);
+app.use("/", totalcandidates);
+
 // app.use("/total/", totalcandidates);
 app.use("/response/", response_ans);
 //app.use(cors(corsOptions));
