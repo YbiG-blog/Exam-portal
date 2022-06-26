@@ -4,7 +4,6 @@ const express = require("express");
 const User = require("../schema_details/user");
 const bcrypt = require("bcrypt");
 const router = new express.Router();
-const Total_admin_data = require("../schema_details/totaldata");
 
 router.get("/admin", async (req, res) => {
   res.send("This is admin page");
@@ -36,7 +35,7 @@ router.post("/login", async (req, res) => {
         expires: new Date(Date.now() + 864000000),
         httpOnly: false,
       });
-      Total_admin_data.total_attendees+=1;
+
       if (matchAdmin_password) {
         user_check.isAdmin = true;
         res.status(200).send({ isAdmin: "true", token: `${cookie_token}` });
