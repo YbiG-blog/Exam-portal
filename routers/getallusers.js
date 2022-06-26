@@ -3,7 +3,7 @@ const User = require("../schema_details/user");
 
 const router = new express.Router();
 
-router.get("/alluser", async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     const alluser = await User.find();
 

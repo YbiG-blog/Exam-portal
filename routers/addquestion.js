@@ -72,7 +72,6 @@ router.post("/addquestion", async (req, res) => {
 
 // getting the questions based on category
 
-//
 router.get("/:category", async (req, res) => {
   try {
     const ques_category = await Question.find({

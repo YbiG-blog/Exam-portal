@@ -1,7 +1,6 @@
 const express = require("express");
 const router = new express.Router();
 const User = require("../schema_details/user");
-const Total_admin_data = require("../schema_details/totaldata");
 
 router.get("/register", async (req, res) => {
   try {
@@ -24,7 +23,6 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-      // otpuser,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
 
@@ -45,7 +43,6 @@ router.post("/register", async (req, res) => {
       gender,
       isHosteler,
     });
-    Total_admin_data. total_registration+=1;
     const saveUser = await user_create.save();
 
     res.status(201).send(saveUser);
