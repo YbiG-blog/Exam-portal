@@ -35,11 +35,12 @@ router.post("/login", async (req, res) => {
         expires: new Date(Date.now() + 864000000),
         httpOnly: false,
       });
-
       if (matchAdmin_password) {
         user_check.isAdmin = true;
+        user_check.login_user = true;
         res.status(200).send({ isAdmin: "true", token: `${cookie_token}` });
       } else if (matchUser_password) {
+        user_check.login_user = true;
         res.status(200).send({
           message: "User logged in successfully",
           cookie_token: cookie_token,

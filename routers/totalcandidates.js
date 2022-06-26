@@ -15,10 +15,10 @@ router.get("/total", async(req,res)=>{
         const total_registration = await User.find().countDocuments();
         const  total_ques_uploaded = await Question.find().countDocuments();
         const total_feedback_ques = await Feedback_Ins.find().countDocuments();
-        console.log(total_registration);
-        console.log(total_ques_uploaded);
-        console.log(total_feedback_ques);
-        const result = {total_registration, total_ques_uploaded,total_feedback_ques};
+        const current_active_users = await User.find({ hasAppeared: true }).countDocuments();
+        const total_attendees = await User.find({ login_user : true }).countDocuments();
+        const result = {total_registration, total_ques_uploaded,total_feedback_ques, current_active_users, total_attendees};
+        console.log(result);
         res.status(200).json({ result });
         return;
       } catch (err) {
