@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
+  login_user : { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
   lang: { type: String },
   userNumCount: {

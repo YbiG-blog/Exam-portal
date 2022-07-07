@@ -11,7 +11,6 @@ const answer = require("./routers/answer");
 const totalcandidates = require("./routers/totalcandidates");
 const response_ans = require("./routers/feedresponse");
 require("./data_connection/data");
-const cors = require("cors");
 
 const app = express();
 
@@ -53,10 +52,13 @@ app.use("/", register_router);
 app.use("/", login_router);
 app.use("/", feedbackIns);
 app.use("/all/", allusers);
-app.use("/ans", answer);
+app.use("/ans/", answer);
 app.use("/question/", addquestion_router);
 app.use("/all/", allquestions);
-app.use("/total/", totalcandidates);
+app.use("/admin", totalcandidates);
+
+// app.use("/total/", totalcandidates);
+
 app.use("/response/", response_ans);
 //app.use(cors(corsOptions));
 const port = process.env.PORT || 4200;

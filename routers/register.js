@@ -23,7 +23,6 @@ router.post("/register", async (req, res) => {
       branch,
       gender,
       isHosteler,
-      // otpuser,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
 

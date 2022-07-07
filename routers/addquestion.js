@@ -31,7 +31,7 @@ router.get("/addquestion", async (req, res) => {
 router.get("/seequestion", async (req, res) => {
   try {
     const QuestionsData = await Question.find();
-    res.status(201).send({result: QuestionsData});
+    res.status(201).send({ result: QuestionsData });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -72,13 +72,12 @@ router.post("/addquestion", async (req, res) => {
 
 // getting the questions based on category
 
-//
 router.get("/:category", async (req, res) => {
   try {
     const ques_category = await Question.find({
       category: req.params.category,
     });
-    res.status(200).json(ques_category);
+    res.status(200).json({ result: ques_category });
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
