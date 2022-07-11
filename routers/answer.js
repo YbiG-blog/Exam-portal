@@ -26,27 +26,24 @@ router.put("/answer", verify, async (req, res) => {
       Qid,
     });
     await answer_create.save();
-    // working on matching the correct answer
-    //    const quesFound=await Question.findById(Qid);
-    //     if(quesFound)
-    //     {
+    //working on matching the correct answer
+       const quesFound=await Question.findById(Qid);
+        if(quesFound)
+        {
+    for(let i=0; i<4;i++)
+         { if(userAnswer==quesFound.options[i].Oid)
+          {
+            if(quesFound.options[i].isCorrect===true)
+            {
+             await Answer.findOneAndUpdate(Qid,
+                {$set:{isCorrect: true}});
+                console.log("Correct Answer");
+            }
 
-    // for(let i=0; i<quesFound.options.length;i++)
-    //      { if(userAnswer===quesFound.options[i].value)
-    //       {console.log(userAnswer);
-    //         console.log(quesFound.options[i].value);
-    //         if(quesFound.options[i].isCorrect===true)
-    //         {
-    //          await Answer.findByIdAndUpdate(Qid,
-    //             {$set:{isCorrect: true}});
-    //             res.status(201).json(Answer.findById(Qid));
-
-    //         }
-
-    //       }}
-    //}
-
-    res.status(201).send({ msg: "Response added successfully", answer_create });
+          }}
+    }
+  
+   await res.status(201).send({ msg: "Answer added successfully"});
   } catch (error) {
     res.status(500).send(error);
   }
