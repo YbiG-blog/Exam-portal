@@ -32,8 +32,8 @@ router.put("/answer", verify, async (req, res) => {
       for (let i = 0; i < 4; i++) {
         if (userAnswer == quesFound.options[i].Oid) {
           if (quesFound.options[i].isCorrect === true) {
-            await Answer.findOneAndUpdate(Qid, { $set: { isCorrect: true } });
-            console.log("Correct Answer");
+           await Answer.findOneAndUpdate({_id:answer_create._id}, { $set: { isCorrect: true } });
+           console.log("Correct answer");
           }
         }
       }
