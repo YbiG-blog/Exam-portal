@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
-  login_user : { type: Boolean, default: false },
+  login_user: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
   lang: { type: String },
   userNumCount: {
@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
       type: Number,
       default: 0,
     },
-  }
+  },
 });
 
 // token generate---------
