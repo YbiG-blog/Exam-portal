@@ -26,28 +26,20 @@ router.put("/answer", verify, async (req, res) => {
       Qid,
     });
     await answer_create.save();
-    
-       const quesFound=await Question.findById(Qid);
-        if(quesFound)
-        {
-    for(let i=0; i<4;i++)
-         { if(userAnswer==quesFound.options[i].Oid)
-          {
-            if(quesFound.options[i].isCorrect===true)
-            {
-             await Answer.findOneAndUpdate(Qid,
-                {$set:{isCorrect: true}});
-                console.log("Correct Answer");
-                // if (quesFound.category === "HTML")
-                // {  await User.findOneAndUpdate(decode,
-                //   {$set:{userNumCount:{NumHtml:1}}});
-                //   console.log("Score added");}
-            }
-
-          }}
+   
+    const quesFound = await Question.findById(Qid);
+    if (quesFound) {
+      for (let i = 0; i < 4; i++) {
+        if (userAnswer == quesFound.options[i].Oid) {
+          if (quesFound.options[i].isCorrect === true) {
+            await Answer.findOneAndUpdate(Qid, { $set: { isCorrect: true } });
+            console.log("Correct Answer");
+          }
+        }
+      }
     }
-  
-   await res.status(201).send({ msg: "Answer added successfully"});
+
+    await res.status(201).send({ msg: "Answer added successfully" });
   } catch (error) {
     res.status(500).send(error);
   }
