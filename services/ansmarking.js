@@ -14,7 +14,7 @@ let NumHtml = 0,
   NumLang=0,
   TotalNum = 0;
 
-router.get("/quesansdata", verify, async (req, res) => {
+router.patch("/quesansdata", verify, async (req, res) => {
   try { const token = req.body.cookie_token;
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec)); //contains Userid
@@ -26,44 +26,42 @@ router.get("/quesansdata", verify, async (req, res) => {
    { if (findAns[i].category === "HTML" || findAns[i].category === "html") {
             if (findAns[i].isCorrect=== true) {
               NumHtml += 1;
-              await User.findOneAndUpdate(decode,
-                {$set:{userNumCount: {NumHtml: NumHtml}}});
             }
           }
       else if (findAns[i].category === "CSS" || findAns[i].category === "css") {
             if (findAns[i].isCorrect=== true) {
               NumCss += 1;
-              await User.findOneAndUpdate(decode,
-                {$set:{userNumCount: {NumCss: NumCss}}});
             }
           }
      
      else if (findAns[i].category === "SQL" || findAns[i].category === "sql") {
             if (findAns[i].isCorrect=== true) {
               NumSql += 1;
-              await User.findOneAndUpdate(decode,
-                {$set:{userNumCount: {NumSql: NumSql}}});
             }
           }
     else if (findAns[i].category === "APTITUDE" || findAns[i].category === "aptitude") {
               if (findAns[i].isCorrect=== true) {
                 NumAptitude += 1;
-                await User.findOneAndUpdate(decode,
-                  {$set:{userNumCount: {NumAptitude: NumAptitude}}});
               }
             }
     else if (findAns[i].category === "C" || findAns[i].category === "C++" || findAns[i].category === "JAVA" || findAns[i].category === "PYTHON") {
               if (findAns[i].isCorrect=== true) {
                 NumLang += 1;
-                await User.findOneAndUpdate(decode,
-                  {$set:{userNumCount: {NumLang: NumLang}}});
+                
               }
             }  
   }
   TotalNum = NumHtml + NumCss + NumAptitude + NumSql+ NumLang;
   await User.findOneAndUpdate(decode,
-    {$set:{userNumCount: {TotalNum: TotalNum}}});
-    console.log("Total sum added");} catch (err) {
+    {$set:{userNumCount: {NumHtml: NumHtml,NumCss: NumCss,NumSql: NumSql, NumAptitude: NumAptitude,NumLang: NumLang, TotalNum: TotalNum}}});
+  
+    console.log("Total sum added");
+    NumHtml = 0,
+    NumCss = 0,
+    NumSql = 0,
+    NumAptitude = 0,
+    NumLang=0,
+    TotalNum = 0;} catch (err) {
     res.status(400).send(err);
   }
 });
