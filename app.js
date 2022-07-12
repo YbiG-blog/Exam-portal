@@ -10,6 +10,7 @@ const allquestions = require("./routers/getallquestion");
 const answer = require("./routers/answer");
 const totalcandidates = require("./routers/totalcandidates");
 const response_ans = require("./routers/feedresponse");
+const ansMarking = require("./services/ansmarking");
 require("./data_connection/data");
 
 const app = express();
@@ -56,6 +57,7 @@ app.use("/ans/", answer);
 app.use("/question/", addquestion_router);
 app.use("/all/", allquestions);
 app.use("/admin", totalcandidates);
+app.use("/",ansMarking);
 
 // app.use("/total/", totalcandidates);
 
