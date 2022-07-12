@@ -26,7 +26,7 @@ router.put("/answer", verify, async (req, res) => {
       Qid,
     });
     await answer_create.save();
-    //working on matching the correct answer
+    
        const quesFound=await Question.findById(Qid);
         if(quesFound)
         {
@@ -38,6 +38,10 @@ router.put("/answer", verify, async (req, res) => {
              await Answer.findOneAndUpdate(Qid,
                 {$set:{isCorrect: true}});
                 console.log("Correct Answer");
+                // if (quesFound.category === "HTML")
+                // {  await User.findOneAndUpdate(decode,
+                //   {$set:{userNumCount:{NumHtml:1}}});
+                //   console.log("Score added");}
             }
 
           }}

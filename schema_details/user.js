@@ -35,14 +35,12 @@ const UserSchema = new mongoose.Schema({
     NumCss: { type: Number, default: 0 },
     NumSql: { type: Number, default: 0 },
     NumAptitude: { type: Number, default: 0 },
+    NumLang: { type: Number, default: 0 },
     TotalNum: {
       type: Number,
       default: 0,
     },
-  },
-  // otpuser: {
-  //   type: String,
-  // },
+  }
 });
 
 // token generate---------
