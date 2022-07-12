@@ -14,7 +14,7 @@ router.put("/answer", verify, async (req, res) => {
     const decode = JSON.parse(atob(dec)); //contains Userid
     console.log(dec);
 
-    const { question, category, userAnswer, markRev, saveNext, Qid } =
+    const { question, category, userAnswer, markRev, saveNext, ansid, Qid } =
       await req.body;
     let answer_create = new Answer({
       userId: decode,
@@ -23,23 +23,27 @@ router.put("/answer", verify, async (req, res) => {
       userAnswer,
       markRev,
       saveNext,
+      ansid,
       Qid,
     });
     await answer_create.save();
-   
+
     const quesFound = await Question.findById(Qid);
     if (quesFound) {
       for (let i = 0; i < 4; i++) {
         if (userAnswer == quesFound.options[i].Oid) {
           if (quesFound.options[i].isCorrect === true) {
-           await Answer.findOneAndUpdate({_id:answer_create._id}, { $set: { isCorrect: true } });
-           console.log("Correct answer");
+            await Answer.findOneAndUpdate(
+              { _id: answer_create._id },
+              { $set: { isCorrect: true } }
+            );
+            console.log("Correct answer");
           }
         }
       }
     }
 
-    await res.status(201).send({ msg: "Answer added successfully" });
+    await res.status(201).send({ msg: "Answer added successfully", ansid });
   } catch (error) {
     res.status(500).send(error);
   }
