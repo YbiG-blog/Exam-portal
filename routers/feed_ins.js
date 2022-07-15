@@ -100,7 +100,7 @@ router.get("/logintime", async (req, res) => {
     res.status(200).json(time);
   } catch (err) {
     console.log(err);
-    res.status(500).send("err");
+    res.status(500).send(err);
   }
 });
 module.exports = router;
