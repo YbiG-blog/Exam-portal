@@ -85,7 +85,7 @@ router.get("/feed/seefeedbackques", async (req, res) => {
 });
 
 //login time
-router.get("/logintime", async (req, res) => {
+router.post("/logintime", async (req, res) => {
   try {
     const token = req.body.cookie_token;
     const dec = token.split(".")[1];
