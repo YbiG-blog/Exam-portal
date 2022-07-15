@@ -92,7 +92,7 @@ router.get("/logintime", async (req, res) => {
     const decode = JSON.parse(atob(dec));
     console.log(dec);
 
-    const time = await User.findById(decode, {
+    const time = await User.findById(decode._id, {
       loginAt: 1,
     });
     console.log(time);
