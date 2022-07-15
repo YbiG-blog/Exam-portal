@@ -6,7 +6,7 @@ const questionSchema = new Schema({
   question: { type: String, required: true, unique: true },
   // quesid: { type: Number, unique: true },
   category: { type: String, required: true },
-  // correctAnswer: { type: String, required: true },
+  // correctAnswer: { type: String, required: true }, Marked , save and next,mark for review ke liye
   options: [
     {
       value: {
