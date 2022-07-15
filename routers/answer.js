@@ -91,7 +91,7 @@ router.get("/flagresponse/:id", async (req, res) => {
     const ansd= findAns.saveNext;
     const mark= findAns.mark;
     const flagStatus = {ansmark,ansd,mark}
-    res.status(201).send(flagStatus);
+    res.status(200).send(flagStatus);
   } catch (err) {
     res.status(400).send(err);
   }
