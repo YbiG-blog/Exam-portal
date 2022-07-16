@@ -1,4 +1,5 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const login_router = require("./routers/login");
@@ -57,7 +58,7 @@ app.use("/ans/", answer);
 app.use("/question/", addquestion_router);
 app.use("/all/", allquestions);
 app.use("/admin", totalcandidates);
-app.use("/",ansMarking);
+app.use("/", ansMarking);
 
 // app.use("/total/", totalcandidates);
 
