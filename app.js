@@ -1,5 +1,4 @@
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const login_router = require("./routers/login");
@@ -21,20 +20,24 @@ app.use(express.urlencoded({ extended: true }));
 
 //app.use(cors());
 //app.options('*', cors());
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "OPTION,GET,POST,PUT,PATCH,DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "OPTION,GET,POST,PUT,PATCH,DELETE"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "X-Requested-With,content-type"
+//   );
+//   res.setHeader("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
-});
-
+  });
 /*app.use(
   cors({
     origin: "*",
@@ -58,7 +61,7 @@ app.use("/ans/", answer);
 app.use("/question/", addquestion_router);
 app.use("/all/", allquestions);
 app.use("/admin", totalcandidates);
-app.use("/", ansMarking);
+app.use("/",ansMarking);
 
 // app.use("/total/", totalcandidates);
 
