@@ -85,14 +85,14 @@ router.get("/feed/seefeedbackques", async (req, res) => {
 });
 
 //login time
-router.get("/logintime", async (req, res) => {
+router.post("/logintime", async (req, res) => {
   try {
     const token = req.body.cookie_token;
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec));
     console.log(dec);
 
-    const time = await User.findById(decode, {
+    const time = await User.findById(decode._id, {
       loginAt: 1,
     });
     console.log(time);
@@ -100,7 +100,26 @@ router.get("/logintime", async (req, res) => {
     res.status(200).json(time);
   } catch (err) {
     console.log(err);
-    res.status(500).send("err");
+    res.status(500).send(err);
+  }
+});
+
+router.post("/langselected", async (req, res) => {
+  try {
+    const token = req.body.cookie_token;
+    const dec = token.split(".")[1];
+    const decode = JSON.parse(atob(dec));
+    console.log(dec);
+
+    const language = await User.findById(decode._id, {
+      lang: 1,
+    });
+    console.log(language);
+
+    res.status(200).json(language);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
   }
 });
 module.exports = router;

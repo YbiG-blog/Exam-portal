@@ -48,9 +48,6 @@ UserSchema.methods.generateAuthToken = async function () {
   try {
     const pay_load = { _id: this._id };
     const token = jwt.sign(pay_load, process.env.TOKEN_SECRET_KEY);
-    // console.log(token);
-    // const token_verify = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
-
     return token;
   } catch (err) {
     res.status(400).send(err);

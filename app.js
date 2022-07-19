@@ -18,8 +18,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//app.use(cors());
-//app.options('*', cors());
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -57,7 +55,7 @@ app.use("/ans/", answer);
 app.use("/question/", addquestion_router);
 app.use("/all/", allquestions);
 app.use("/admin", totalcandidates);
-app.use("/",ansMarking);
+app.use("/", ansMarking);
 
 // app.use("/total/", totalcandidates);
 
