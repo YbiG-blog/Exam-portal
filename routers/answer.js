@@ -6,7 +6,7 @@ const User = require("../schema_details/user");
 const atob = require("atob");
 const verify = require("../middleware/auth");
 
-router.put("/answer", verify, async (req, res) => {
+router.post("/answer", verify, async (req, res) => {
   try {
     const token = req.body.cookie_token;
 
@@ -50,19 +50,7 @@ router.put("/answer", verify, async (req, res) => {
   }
 });
 
-router.get("/seeanswer/", async (req, res) => {
-  try {
-    const userId = req.body.userId;
 
-    const AnswerData = await Answer.find({ userId: userId }).populate(
-      "userId",
-      "name studentNum branch score loginAt"
-    );
-    res.status(201).send(AnswerData);
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
 router.patch("/updateflags/:id", async (req, res) => {
   try {
     const findAns = await Answer.findById(req.params.id);;

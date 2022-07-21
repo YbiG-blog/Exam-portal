@@ -88,16 +88,26 @@ router.patch("/quesansdata", verify, async (req, res) => {
 
 router.get("/leaderboard", async (req, res) => {
   try {
-    const lead = await User.find(
-      {},
-      { name: 1, studentNum: 1, branch: 1, userNumCount: 1, lang: 1 }
-    ).sort({ "userNumCount.TotalNum ": -1 });
+    const lead = await User.find({result:Answer.find({userId:_id})});
+    //sort({ "userNumCount.TotalNum ": -1 });
+    // const AnswerData = await Answer.find({ userId: userId }).populate(
+    //   "userId"
+    // );
     res.status(200).send(lead);
   } catch (error) {
     res.status(500).send(error);
   }
 });
+router.get("/seeanswer/", async (req, res) => {
+  try {
+    const userId = req.body.userId;
 
+    
+    res.status(201).send(AnswerData);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 // get candidate details
 
 router.get("/candidate", async (req, res) => {
