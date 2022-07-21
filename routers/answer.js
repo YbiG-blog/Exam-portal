@@ -43,8 +43,22 @@ router.put("/answer", verify, async (req, res) => {
         }
       }
     }
+    const Foundans = await Answer.findById(Qid);
+    if(Foundans)
+    {
+      let f1 = false,f2=false;
+      if(Foundans.ansid===1) {f1=true};
+      if (Foundans.ansid===3) {f2=true};
+      await Answer.findOneAndUpdate(
+       { _id: answer_create._id },
+       { $set: { 
+         markRev: f2,
+         saveNext: f1, 
+       } }
+     );
+    }
 
-    await res.status(201).send({ msg: "Answer added successfully", ansid });
+    await res.status(201).send({ msg: "Answer added successfully", ansid});
   } catch (error) {
     res.status(500).send(error);
   }
@@ -63,37 +77,43 @@ router.get("/seeanswer/", async (req, res) => {
     res.status(400).send(err);
   }
 });
-router.patch("/updateflags/:id", async (req, res) => {
-  try {
-    const findAns = await Answer.findById(req.params.id);;
-    let f = false;
-   if(findAns.ansid===1) {f=true};
-   if (findAns.ansid===2) {f=true};
-   if (findAns.ansid===3) {f=true};
+// router.patch("/updateflags/:id", async (req, res) => {
+//   try {
+//     const findAns = await Answer.findById(req.params.id);;
+//     let f = false;
+//    if(findAns.ansid===1) {f=true};
+//    if (findAns.ansid===3) {f=true};
 
-    const findAnsUpdate = await Answer.findByIdAndUpdate(req.params.id,{
-      $set: {
-        markRev: f,
-        saveNext: f,
-        mark: f,
-      }
+//     const findAnsUpdate = await Answer.findByIdAndUpdate(req.params.id,{
+//       $set: {
+//         markRev: f,
+//         saveNext: f,
+//       }
+//     });
+
+//     res.status(201).send(findAnsUpdate);
+   
+//     res.status(201).send();
+//   } catch (err) {
+//     res.status(400).send(err);
+//   }
+// });
+
+router.get("/:category", async (req, res) => {
+  try {
+    const ans_category = await Answer.find({
+      category: req.params.category,
     });
-
-    res.status(201).send(findAnsUpdate);
+ const markR = ans_category.markRev;
+ const saveN = ans_category.saveNext;
+ const result = {
+  markR,
+  saveN
+ }
+    res.status(200).json({ result });
   } catch (err) {
-    res.status(400).send(err);
-  }
-});
-router.get("/flagresponse/:id", async (req, res) => {
-  try {
-    const findAns = await Answer.findById(req.params.id);
-    const ansmark= findAns.markRev;
-    const ansd= findAns.saveNext;
-    const mark= findAns.mark;
-    const flagStatus = {ansmark,ansd,mark}
-    res.status(200).send(flagStatus);
-  } catch (err) {
-    res.status(400).send(err);
+    console.log(err);
+    res.status(400).json(err);
   }
 });
 module.exports = router;

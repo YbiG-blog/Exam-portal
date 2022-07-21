@@ -1,5 +1,6 @@
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
+const cors = require('cors');
 const express = require("express");
 const login_router = require("./routers/login");
 const register_router = require("./routers/register");
@@ -20,19 +21,19 @@ app.use(express.urlencoded({ extended: true }));
 
 //app.use(cors());
 //app.options('*', cors());
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "OPTION,GET,POST,PUT,PATCH,DELETE"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "X-Requested-With,content-type"
-//   );
-//   res.setHeader("Access-Control-Allow-Credentials", true);
-//   next();
-// });
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "OPTION,GET,POST,PUT,PATCH,DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -67,6 +68,7 @@ app.use("/",ansMarking);
 
 app.use("/response/", response_ans);
 //app.use(cors(corsOptions));
+
 const port = process.env.PORT || 4200;
 app.listen(port, () => {
   console.log(`Server is running successfully on port : ${port}`);
