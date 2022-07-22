@@ -23,7 +23,6 @@ router.put("/answer", verify, async (req, res) => {
       userAnswer,
       markRev,
       saveNext,
-      mark,
       ansid,
       Qid,
     });
@@ -43,7 +42,9 @@ router.put("/answer", verify, async (req, res) => {
         }
       }
     }
-    const Foundans = await Answer.findById(Qid);
+    
+    // console.log(answer_create._id);
+    const Foundans = await Answer.findById(answer_create._id);
     if(Foundans)
     {
       let f1 = false,f2=false;
@@ -64,7 +65,7 @@ router.put("/answer", verify, async (req, res) => {
   }
 });
 
-router.get("/seeanswer/", async (req, res) => {
+router.put("/seeanswer/", async (req, res) => {
   try {
     const userId = req.body.userId;
 
@@ -77,30 +78,14 @@ router.get("/seeanswer/", async (req, res) => {
     res.status(400).send(err);
   }
 });
-// router.patch("/updateflags/:id", async (req, res) => {
-//   try {
-//     const findAns = await Answer.findById(req.params.id);;
-//     let f = false;
-//    if(findAns.ansid===1) {f=true};
-//    if (findAns.ansid===3) {f=true};
 
-//     const findAnsUpdate = await Answer.findByIdAndUpdate(req.params.id,{
-//       $set: {
-//         markRev: f,
-//         saveNext: f,
-//       }
-//     });
-
-//     res.status(201).send(findAnsUpdate);
-   
-//     res.status(201).send();
-//   } catch (err) {
-//     res.status(400).send(err);
-//   }
-// });
-
-router.get("/:category", async (req, res) => {
+router.get("/:category",verify, async (req, res) => {
   try {
+    const token = req.body.cookie_token;
+    const dec = token.split(".")[1];
+    const decode = JSON.parse(atob(dec)); //contains Userid
+    console.log(dec);
+
     const ans_category = await Answer.find({
       category: req.params.category,
     });
