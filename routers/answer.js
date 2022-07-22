@@ -23,7 +23,6 @@ router.post("/answer", verify, async (req, res) => {
       userAnswer,
       markRev,
       saveNext,
-      mark,
       ansid,
       Qid,
     });
@@ -65,18 +64,24 @@ router.get("/seeanswer/", async (req, res) => {
 });
 router.patch("/updateflags/:id", async (req, res) => {
   try {
-    const findAns = await Answer.findById(req.params.id);;
+    const findAns = await Answer.findById(req.params.id);
     let f = false;
-   if(findAns.ansid===1) {f=true};
-   if (findAns.ansid===2) {f=true};
-   if (findAns.ansid===3) {f=true};
+    if (findAns.ansid === 1) {
+      f = true;
+    }
+    if (findAns.ansid === 2) {
+      f = true;
+    }
+    if (findAns.ansid === 3) {
+      f = true;
+    }
 
-    const findAnsUpdate = await Answer.findByIdAndUpdate(req.params.id,{
+    const findAnsUpdate = await Answer.findByIdAndUpdate(req.params.id, {
       $set: {
         markRev: f,
         saveNext: f,
         mark: f,
-      }
+      },
     });
 
     res.status(201).send(findAnsUpdate);
@@ -87,10 +92,10 @@ router.patch("/updateflags/:id", async (req, res) => {
 router.get("/flagresponse/:id", async (req, res) => {
   try {
     const findAns = await Answer.findById(req.params.id);
-    const ansmark= findAns.markRev;
-    const ansd= findAns.saveNext;
-    const mark= findAns.mark;
-    const flagStatus = {ansmark,ansd,mark}
+    const ansmark = findAns.markRev;
+    const ansd = findAns.saveNext;
+    const mark = findAns.mark;
+    const flagStatus = { ansmark, ansd, mark };
     res.status(200).send(flagStatus);
   } catch (err) {
     res.status(400).send(err);
