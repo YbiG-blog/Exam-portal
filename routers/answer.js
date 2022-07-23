@@ -62,7 +62,7 @@ router.put("/answer", verify, async (req, res) => {
   }
 });
 
-router.get("/seeanswer/", async (req, res) => {
+router.put("/seeanswer/", async (req, res) => {
   try {
     const userId = req.body.userId;
 
