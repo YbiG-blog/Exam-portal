@@ -82,6 +82,11 @@ router.patch("/updateflags/:id", async (req, res) => {
     if (findAns.ansid === 3) {
       f = true;
     }
+
+   } catch (err) {
+     res.status(400).send(err);
+   }
+ });
 // router.put("/seeanswer/", async (req, res) => {
 //   try {
 //     const userId = req.body.userId;
@@ -91,9 +96,4 @@ router.patch("/updateflags/:id", async (req, res) => {
 //       "name studentNum branch score loginAt"
 //     );
 //     res.status(201).send(AnswerData);
-//   } catch (err) {
-//     res.status(400).send(err);
-//   }
-// });
-
 module.exports = router;
