@@ -75,5 +75,24 @@ router.put("/seeanswer/", async (req, res) => {
     res.status(400).send(err);
   }
 });
+router.put("/flags",verify, async (req, res) => {
+  try {
+    const token = req.body.cookie_token;
+    const dec = token.split(".")[1];
+    const decode = JSON.parse(atob(dec)); //contains Userid
+    console.log(dec);
+    const ans_category = await Answer.find({ userId: decode });
+//  const markR = ans_category.markRev;
+//  const saveN = ans_category.saveNext;
+//  const result = {
+//   markR,
+//   saveN
+//  }
+    res.status(200).send(ans_category);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
 
 module.exports = router;
