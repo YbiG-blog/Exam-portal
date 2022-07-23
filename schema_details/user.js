@@ -3,8 +3,13 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
+const Schema = mongoose.Schema;
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
+  results: [{
+    type: Schema.Types.ObjectId,
+    ref: "Answer"
+  }],
   name: { type: String, required: true, minlength: 3 },
   email: { type: String, required: true, unique: true },
   studentNum: { type: Number, required: true, unique: true },

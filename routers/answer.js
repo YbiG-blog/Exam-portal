@@ -27,6 +27,11 @@ router.put("/answer", verify, async (req, res) => {
       Qid,
     });
     await answer_create.save();
+  
+ await User.findOneAndUpdate(
+  { _id: answer_create.userId },
+  { $push: { results: answer_create._id } }
+);
 
     const quesFound = await Question.findById(Qid);
     if (quesFound) {
@@ -42,6 +47,7 @@ router.put("/answer", verify, async (req, res) => {
         }
       }
     }
+
     const Foundans = await Answer.findById(answer_create._id);
     if (Foundans) {
       let f1 = false,
@@ -68,9 +74,21 @@ router.put("/answer", verify, async (req, res) => {
   }
 });
 
-router.put("/seeanswer/", async (req, res) => {
+
+router.patch("/updateflags/:id", async (req, res) => {
   try {
-    const userId = req.body.userId;
+    const findAns = await Answer.findById(req.params.id);
+    let f = false;
+    if (findAns.ansid === 1) {
+      f = true;
+    }
+    if (findAns.ansid === 2) {
+      f = true;
+    }
+    if (findAns.ansid === 3) {
+      f = true;
+    }
+
 
     const AnswerData = await Answer.find({ userId: userId }).populate(
       "userId",
@@ -105,4 +123,18 @@ router.put("/flags", verify, async (req, res) => {
   }
 });
 
+   } catch (err) {
+     res.status(400).send(err);
+   }
+ });
+// router.put("/seeanswer/", async (req, res) => {
+//   try {
+//     const userId = req.body.userId;
+
+
+//     const AnswerData = await Answer.find({ userId: userId }).populate(
+//       "userId",
+//       "name studentNum branch score loginAt"
+//     );
+//     res.status(201).send(AnswerData);
 module.exports = router;
