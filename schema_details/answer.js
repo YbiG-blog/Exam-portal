@@ -13,6 +13,9 @@ const answerSchema = new Schema({
   isCorrect: { type: Boolean, default: false },
   markRev: { type: Boolean, default: false },
   saveNext: { type: Boolean, default: false },
+
+  // mark: { type: Boolean, default: false },
+
   ansid: {
     type: Number,
     default: 2,

@@ -1,8 +1,11 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
+
+
+
 
 mongoose.connect(
     "mongodb+srv://yash7906:ybig2121@cluster0.gnqwd.mongodb.net/exma_portalDB",
+
     {
       useNewUrlParser: true,
     }
