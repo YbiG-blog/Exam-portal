@@ -11,9 +11,11 @@ const answerSchema = new Schema({
   category: { type: String, required: true },
   userAnswer: { type: String, required: true },
   isCorrect: { type: Boolean, default: false },
-  markRev: { type: Boolean, default: false },
-  saveNext: { type: Boolean, default: false },
-  // mark: { type: Boolean, default: false },
+  markRev: { type: Boolean, default: false }, // 3
+  saveNext: { type: Boolean, default: false }, // 1
+  // unvisited: { type: Boolean, default: true }, // 4
+  // visited: { type: Boolean, default: false },
+
   ansid: {
     type: Number,
     default: 2,
@@ -24,7 +26,7 @@ const Answer = new mongoose.model("Answer", answerSchema);
 
 module.exports = Answer;
 
-// 1 -> if question answered
-// 2 -> if question not answered and mark
-// 3 -> if mark for review
-// 4 -> if question not answered and move on to next
+// 1 -> if question answered  and click on save and next -> Green
+// 2 -> if question not answered  and move on to next -> red
+// 3 -> if question answerd and click on mark for review -> purple
+// 4 -> unvisited -> white
