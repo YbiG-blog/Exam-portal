@@ -19,7 +19,7 @@ router.get("/total", async (req, res) => {
       hasAppeared: true,
     }).countDocuments();
     const total_attendees = await User.find({
-      login_user : true,
+      hasAppeared: true,
     }).countDocuments();
     const result = {
       total_registration,
