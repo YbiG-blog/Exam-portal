@@ -28,7 +28,7 @@ router.put("/answer", verify, async (req, res) => {
     });
     await answer_create.save();
   
-const ansUser= await User.findOneAndUpdate(
+ await User.findOneAndUpdate(
   { _id: answer_create.userId },
   { $push: { results: answer_create._id } }
 );
@@ -48,7 +48,20 @@ const ansUser= await User.findOneAndUpdate(
       }
     }
 
-    console.log(ansUser);
+    const Foundans = await Answer.findById(answer_create._id);
+    if(Foundans)
+    {
+      let f1 = false,f2=false;
+      if(Foundans.ansid===1) {f1=true};
+      if (Foundans.ansid===3) {f2=true};
+      await Answer.findOneAndUpdate(
+       { _id: answer_create._id },
+       { $set: { 
+         markRev: f2,
+         saveNext: f1, 
+       } }
+     );
+    }
     await res.status(201).send({ msg: "Answer added successfully", ansid });
   } catch (error) {
     res.status(500).send(error);
@@ -69,30 +82,18 @@ router.patch("/updateflags/:id", async (req, res) => {
     if (findAns.ansid === 3) {
       f = true;
     }
+// router.put("/seeanswer/", async (req, res) => {
+//   try {
+//     const userId = req.body.userId;
 
-    const findAnsUpdate = await Answer.findByIdAndUpdate(req.params.id, {
-      $set: {
-        markRev: f,
-        saveNext: f,
-        mark: f,
-      },
-    });
+//     const AnswerData = await Answer.find({ userId: userId }).populate(
+//       "userId",
+//       "name studentNum branch score loginAt"
+//     );
+//     res.status(201).send(AnswerData);
+//   } catch (err) {
+//     res.status(400).send(err);
+//   }
+// });
 
-    res.status(201).send(findAnsUpdate);
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
-router.get("/flagresponse/:id", async (req, res) => {
-  try {
-    const findAns = await Answer.findById(req.params.id);
-    const ansmark = findAns.markRev;
-    const ansd = findAns.saveNext;
-    const mark = findAns.mark;
-    const flagStatus = { ansmark, ansd, mark };
-    res.status(200).send(flagStatus);
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
 module.exports = router;
