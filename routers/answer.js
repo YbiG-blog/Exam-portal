@@ -47,7 +47,8 @@ const ansUser= await User.findOneAndUpdate(
         }
       }
     }
-  
+
+    console.log(ansUser);
     await res.status(201).send({ msg: "Answer added successfully", ansid });
   } catch (error) {
     res.status(500).send(error);
