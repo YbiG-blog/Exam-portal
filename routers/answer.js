@@ -43,18 +43,24 @@ router.put("/answer", verify, async (req, res) => {
       }
     }
     const Foundans = await Answer.findById(answer_create._id);
-    if(Foundans)
-    {
-      let f1 = false,f2=false;
-      if(Foundans.ansid===1) {f1=true};
-      if (Foundans.ansid===3) {f2=true};
+    if (Foundans) {
+      let f1 = false,
+        f2 = false;
+      if (Foundans.ansid === 1) {
+        f1 = true;
+      }
+      if (Foundans.ansid === 3) {
+        f2 = true;
+      }
       await Answer.findOneAndUpdate(
-       { _id: answer_create._id },
-       { $set: { 
-         markRev: f2,
-         saveNext: f1, 
-       } }
-     );
+        { _id: answer_create._id },
+        {
+          $set: {
+            markRev: f2,
+            saveNext: f1,
+          },
+        }
+      );
     }
     await res.status(201).send({ msg: "Answer added successfully", ansid });
   } catch (error) {
@@ -75,20 +81,24 @@ router.put("/seeanswer/", async (req, res) => {
     res.status(400).send(err);
   }
 });
-router.put("/flags",verify, async (req, res) => {
+router.put("/flags", verify, async (req, res) => {
   try {
     const token = req.body.cookie_token;
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec)); //contains Userid
     console.log(dec);
     const ans_category = await Answer.find({ userId: decode });
-//  const markR = ans_category.markRev;
-//  const saveN = ans_category.saveNext;
-//  const result = {
-//   markR,
-//   saveN
-//  }
-    res.status(200).send(ans_category);
+    // flags status
+    const result = [];
+    for (let i = 0; i < ans_category.length; i++) {
+      let markRev = ans_category[i].markRev;
+      let saveNext = ans_category[i].saveNext;
+      let ans_id = ans_category[i]._id;
+      let ques_id = ans_category[i].Qid;
+      const obj_flag = { ans_id, ques_id, saveNext, markRev };
+      result.push(obj_flag);
+    }
+    res.status(200).send(result);
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
