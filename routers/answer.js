@@ -6,7 +6,7 @@ const User = require("../schema_details/user");
 const atob = require("atob");
 const verify = require("../middleware/auth");
 
-router.post("/answer", verify, async (req, res) => {
+router.put("/answer", verify, async (req, res) => {
   try {
     const token = req.body.cookie_token;
 
@@ -27,6 +27,11 @@ router.post("/answer", verify, async (req, res) => {
       Qid,
     });
     await answer_create.save();
+  
+const ansUser= await User.findOneAndUpdate(
+  { _id: answer_create.userId },
+  { $push: { results: answer_create._id } }
+);
 
     const quesFound = await Question.findById(Qid);
     if (quesFound) {
@@ -42,7 +47,7 @@ router.post("/answer", verify, async (req, res) => {
         }
       }
     }
-
+  
     await res.status(201).send({ msg: "Answer added successfully", ansid });
   } catch (error) {
     res.status(500).send(error);

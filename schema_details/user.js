@@ -6,10 +6,10 @@ const jwt = require("jsonwebtoken");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  result: {
+  results: [{
     type: Schema.Types.ObjectId,
     ref: "Answer"
-  },
+  }],
   name: { type: String, required: true, minlength: 3 },
   email: { type: String, required: true, unique: true },
   studentNum: { type: Number, required: true, unique: true },
