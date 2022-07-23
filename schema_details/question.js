@@ -24,6 +24,7 @@ const questionSchema = new Schema({
       },
     },
   ],
+  
 });
 const Question = new mongoose.model("Question", questionSchema);
 

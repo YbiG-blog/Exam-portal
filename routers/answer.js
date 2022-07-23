@@ -42,14 +42,30 @@ router.put("/answer", verify, async (req, res) => {
         }
       }
     }
+    
+    // console.log(answer_create._id);
+    const Foundans = await Answer.findById(answer_create._id);
+    if(Foundans)
+    {
+      let f1 = false,f2=false;
+      if(Foundans.ansid===1) {f1=true};
+      if (Foundans.ansid===3) {f2=true};
+      await Answer.findOneAndUpdate(
+       { _id: answer_create._id },
+       { $set: { 
+         markRev: f2,
+         saveNext: f1, 
+       } }
+     );
+    }
 
-    await res.status(201).send({ msg: "Answer added successfully", ansid });
+    await res.status(201).send({ msg: "Answer added successfully", ansid});
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
-router.get("/seeanswer/", async (req, res) => {
+router.put("/seeanswer/", async (req, res) => {
   try {
     const userId = req.body.userId;
 
@@ -62,8 +78,17 @@ router.get("/seeanswer/", async (req, res) => {
     res.status(400).send(err);
   }
 });
-router.patch("/updateflags/:id", async (req, res) => {
+
+router.get("/:category",verify, async (req, res) => {
   try {
+    const token = req.body.cookie_token;
+    const dec = token.split(".")[1];
+    const decode = JSON.parse(atob(dec)); //contains Userid
+    console.log(dec);
+
+    const ans_category = await Answer.find({
+      category: req.params.category,
+
     const findAns = await Answer.findById(req.params.id);
     let f = false;
     if (findAns.ansid === 1) {
@@ -82,11 +107,20 @@ router.patch("/updateflags/:id", async (req, res) => {
         saveNext: f,
         mark: f,
       },
-    });
 
-    res.status(201).send(findAnsUpdate);
+    });
+ const markR = ans_category.markRev;
+ const saveN = ans_category.saveNext;
+ const result = {
+  markR,
+  saveN
+ }
+    res.status(200).json({ result });
   } catch (err) {
-    res.status(400).send(err);
+
+    console.log(err);
+    res.status(400).json(err);
+   
   }
 });
 router.get("/flagresponse/:id", async (req, res) => {
@@ -99,6 +133,7 @@ router.get("/flagresponse/:id", async (req, res) => {
     res.status(200).send(flagStatus);
   } catch (err) {
     res.status(400).send(err);
+
   }
 });
 module.exports = router;
