@@ -13,9 +13,7 @@ const answerSchema = new Schema({
   isCorrect: { type: Boolean, default: false },
   markRev: { type: Boolean, default: false },
   saveNext: { type: Boolean, default: false },
-
   // mark: { type: Boolean, default: false },
-
   ansid: {
     type: Number,
     default: 2,
@@ -27,5 +25,6 @@ const Answer = new mongoose.model("Answer", answerSchema);
 module.exports = Answer;
 
 // 1 -> if question answered
-// 3 -> if question answered and mark
-// 2 -> unanswered
+// 2 -> if question not answered and mark
+// 3 -> if mark for review
+// 4 -> if question not answered and move on to next

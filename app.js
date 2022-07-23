@@ -1,6 +1,5 @@
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
-const cors = require('cors');
 const express = require("express");
 const login_router = require("./routers/login");
 const register_router = require("./routers/register");
@@ -20,6 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -34,6 +35,11 @@ app.use((req, res, next) => {
   next();
 });
 
+/*app.use(
+  cors({
+    origin: "*",
+  })
+);*/
 app.get("/", (req, res) => {
   res.send("Hi,the API is working.");
 });
@@ -58,7 +64,6 @@ app.use("/", ansMarking);
 
 app.use("/response/", response_ans);
 //app.use(cors(corsOptions));
-
 const port = process.env.PORT || 4200;
 app.listen(port, () => {
   console.log(`Server is running successfully on port : ${port}`);
