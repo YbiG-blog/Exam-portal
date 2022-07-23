@@ -86,14 +86,14 @@ router.patch("/quesansdata", verify, async (req, res) => {
   }
 });
 
-router.get("/leaderboard", async (req, res) => {
-  try {
-    const lead = await User.find(
-      {},
-      { name: 1, studentNum: 1, branch: 1, userNumCount: 1, lang: 1 }
-    ).sort({ "userNumCount.TotalNum ": -1 });
-    res.status(200).send(lead);
-  } catch (error) {
+router.get("/leaderboard",async (req,res)=>{try{
+
+  const leader=await User.find().populate("results").sort({"userNumCount.TotalNum":-1});
+  res.status(200).send(leader);
+  
+  }
+  
+  catch (error) {
     res.status(500).send(error);
   }
 });
