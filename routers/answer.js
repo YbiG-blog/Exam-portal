@@ -68,7 +68,16 @@ router.put("/answer", verify, async (req, res) => {
         }
       );
     }
-    await res.status(201).send({ msg: "Answer added successfully", ansid });
+    let msg="Answer added successfully";
+    if(ansid===1)
+    {
+      msg="Answer saved successfully";
+    }
+    else if(ansid==3)
+  {
+    msg="Answer marked and review successfully";
+  }
+    await res.status(201).send({msg,ansid });
   } catch (error) {
     res.status(500).send(error);
   }
