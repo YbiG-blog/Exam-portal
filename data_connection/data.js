@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 
-
-
-
-mongoose.connect(
-    "mongodb+srv://yash7906:ybig2121@cluster0.gnqwd.mongodb.net/exma_portalDB",
+//  "mongodb+srv://yash7906:ybig2121@cluster0.gnqwd.mongodb.net/exma_portalDB",
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_PASSWORD}@cluster0.gnqwd.mongodb.net/${process.env.DB}`,
 
     {
       useNewUrlParser: true,
