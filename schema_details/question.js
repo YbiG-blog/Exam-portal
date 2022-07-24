@@ -30,7 +30,7 @@ const questionSchema = new Schema({
   },
   selectedOpt:{
     type: String,
-    default: ""
+    default: "",
   }
 });
 const Question = new mongoose.model("Question", questionSchema);

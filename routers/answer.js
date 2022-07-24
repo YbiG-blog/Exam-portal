@@ -34,20 +34,21 @@ router.put("/answer", verify, async (req, res) => {
     const quesFound = await Question.findById(Qid);
     if (quesFound) {
       for (let i = 0; i < 4; i++) {
-        if (userAnswer == quesFound.options[i].Oid) {
+        if (userAnswer == quesFound.options[i].value) {
           if (quesFound.options[i].isCorrect === true) {
             await Answer.findOneAndUpdate(
               { _id: answer_create._id },
               { $set: { isCorrect: true } }
             );
-            // await Question.findOneAndUpdate(
-            //   { _id: Qid },
-            //   {
-            //     $set: {
-            //       selectedOpt: quesFound.options[i].value
-            //     },
-            //   }
-            // );
+            const selopt = quesFound.options[i].value;
+            await Question.findOneAndUpdate(
+              { _id: Qid },
+              {
+                $set: {
+                  selectedOpt: selopt
+                },
+              }
+            );
             console.log("Correct answer");
           }
         }
@@ -56,7 +57,7 @@ router.put("/answer", verify, async (req, res) => {
     const Foundans = await Answer.findById(answer_create._id);
     if (Foundans) {  
       const flag = Foundans.ansid ;
-      console.log(flag);
+      // console.log(flag);
       await Question.findOneAndUpdate(
         { _id: Qid },
         {
