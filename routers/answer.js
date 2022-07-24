@@ -47,32 +47,11 @@ router.put("/answer", verify, async (req, res) => {
         }
       }
     }
-
-    // const Foundans = await Answer.findById(answer_create._id);
-    // if (Foundans) {
-    //   let f1 = false,
-    //     f2 = false;
-    //   if (Foundans.ansid === 1) {
-    //     f1 = true;
-    //   }
-    //   if (Foundans.ansid === 3) {
-    //     f2 = true;
-    //   }
-    //   await Answer.findOneAndUpdate(
-    //     { _id: answer_create._id },
-    //     {
-    //       $set: {
-    //         markRev: f2,
-    //         saveNext: f1,
-    //       },
-    //     }
-    //   );
-    // }
     const Foundans = await Answer.findById(answer_create._id);
     if (Foundans) {
       let f1 = false,
         f2 = false,
-        f3=false;
+        f3 = false;
       if (Foundans.ansid === 1) {
         f1 = true;
       }
@@ -83,30 +62,25 @@ router.put("/answer", verify, async (req, res) => {
         f3 = true;
       }
       await Question.findOneAndUpdate(
-        { _id:Qid},
+        { _id: Qid },
         {
           $set: {
             markRev: f2,
             saveNext: f1,
-            mark: f3
+            mark: f3,
           },
         }
       );
     }
-    let msg="Answer added successfully";
-    if(ansid===1)
-    {
-      msg="Answer saved successfully";
+    let msg = "Answer added successfully";
+    if (ansid === 1) {
+      msg = "Answer saved successfully";
+    } else if (ansid === 3) {
+      msg = "marked and review successfully added";
+    } else if (ansid === 4) {
+      msg = "marked and not answered successfully added";
     }
-  else if(ansid===3)
-  {
-    msg="marked and review successfully added";
-  }
-  else if(ansid===4)
-  {
-    msg="marked and not answered successfully added";
-  }
-    await res.status(201).send({msg,ansid });
+    await res.status(201).send({ msg, ansid });
   } catch (error) {
     res.status(500).send(error);
   }
