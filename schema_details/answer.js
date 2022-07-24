@@ -11,8 +11,7 @@ const answerSchema = new Schema({
   category: { type: String, required: true },
   userAnswer: { type: String, required: true },
   isCorrect: { type: Boolean, default: false },
-  markRev: { type: Boolean, default: false },
-  saveNext: { type: Boolean, default: false },
+  //ch
   ansid: {
     type: Number,
     default: 2,
@@ -24,5 +23,6 @@ const Answer = new mongoose.model("Answer", answerSchema);
 module.exports = Answer;
 
 // 1 -> if question answered
-// 3 -> if mark for review
+// 3 -> if mark for review and answered
 // 2 -> not answered
+// 4 -> mark and not answered
