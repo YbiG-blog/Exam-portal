@@ -24,6 +24,9 @@ const questionSchema = new Schema({
       },
     },
   ],
+  markRev: { type: Boolean, default: false },
+  saveNext: { type: Boolean, default: false },
+  mark: { type: Boolean, default: false },
 });
 const Question = new mongoose.model("Question", questionSchema);
 

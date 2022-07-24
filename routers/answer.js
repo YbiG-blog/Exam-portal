@@ -48,22 +48,47 @@ router.put("/answer", verify, async (req, res) => {
       }
     }
 
+    // const Foundans = await Answer.findById(answer_create._id);
+    // if (Foundans) {
+    //   let f1 = false,
+    //     f2 = false;
+    //   if (Foundans.ansid === 1) {
+    //     f1 = true;
+    //   }
+    //   if (Foundans.ansid === 3) {
+    //     f2 = true;
+    //   }
+    //   await Answer.findOneAndUpdate(
+    //     { _id: answer_create._id },
+    //     {
+    //       $set: {
+    //         markRev: f2,
+    //         saveNext: f1,
+    //       },
+    //     }
+    //   );
+    // }
     const Foundans = await Answer.findById(answer_create._id);
     if (Foundans) {
       let f1 = false,
-        f2 = false;
+        f2 = false,
+        f3=false;
       if (Foundans.ansid === 1) {
         f1 = true;
       }
       if (Foundans.ansid === 3) {
         f2 = true;
       }
-      await Answer.findOneAndUpdate(
-        { _id: answer_create._id },
+      if (Foundans.ansid === 4) {
+        f3 = true;
+      }
+      await Question.findOneAndUpdate(
+        { _id:Qid},
         {
           $set: {
             markRev: f2,
             saveNext: f1,
+            mark: f3
           },
         }
       );
@@ -73,9 +98,13 @@ router.put("/answer", verify, async (req, res) => {
     {
       msg="Answer saved successfully";
     }
-    else if(ansid==3)
+  else if(ansid===3)
   {
-    msg="Answer marked and review successfully";
+    msg="marked and review successfully added";
+  }
+  else if(ansid===4)
+  {
+    msg="marked and not answered successfully added";
   }
     await res.status(201).send({msg,ansid });
   } catch (error) {
@@ -120,13 +149,5 @@ router.put("/flags", verify, async (req, res) => {
     res.status(400).json(err);
   }
 });
-// router.put("/seeanswer/", async (req, res) => {
-//   try {
-//     const userId = req.body.userId;
 
-//     const AnswerData = await Answer.find({ userId: userId }).populate(
-//       "userId",
-//       "name studentNum branch score loginAt"
-//     );
-//     res.status(201).send(AnswerData);
 module.exports = router;
