@@ -8,7 +8,7 @@ const User = require("../schema_details/user");
 //instruction
 
 router.patch("/instruction", verify, async (req, res) => {
-  try {
+  try {const isVerified=true;
     const token = req.body.cookie_token;
 
     const dec = token.split(".")[1];
@@ -22,7 +22,7 @@ router.patch("/instruction", verify, async (req, res) => {
       },
     });
 
-    res.status(200).send({ msg: "Language added successfully" });
+    res.status(200).send({ msg: "Language added successfully", isVerified });
   } catch (err) {
     console.log(err);
     res.status(500).send("err");

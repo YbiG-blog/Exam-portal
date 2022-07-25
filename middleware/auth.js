@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
     }
 
     req.user = token_verify;
-
+console.log("User verified");
     next();
   } catch (err) {
     res.status(501).send({ msg: `${err}` });
