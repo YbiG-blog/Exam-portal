@@ -7,7 +7,7 @@ const atob = require("atob");
 const verify = require("../middleware/auth");
 
 router.put("/answer", verify, async (req, res) => {
-  try {
+  try {const isVerified=true;
     const token = req.body.cookie_token;
 
     const dec = token.split(".")[1];
@@ -75,7 +75,7 @@ router.put("/answer", verify, async (req, res) => {
     } else if (ansid === 4) {
       msg = "marked and not answered successfully added";
     }
-    await res.status(201).send({ msg, ansid });
+    await res.status(201).send({ msg, ansid,isVerified});
   } catch (error) {
     res.status(500).send(error);
   }

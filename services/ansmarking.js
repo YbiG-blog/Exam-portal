@@ -15,7 +15,7 @@ let NumHtml = 0,
   TotalNum = 0;
 
 router.patch("/quesansdata", verify, async (req, res) => {
-  try {
+  try {const isVerified=true;
     const token = req.body.cookie_token;
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec)); //contains Userid
@@ -74,7 +74,7 @@ router.patch("/quesansdata", verify, async (req, res) => {
       },
     });
 
-    res.status(200).send({ msg: "Total sum added" });
+    res.status(200).send({ msg: "Total sum added",isVerified});
     (NumHtml = 0),
       (NumCss = 0),
       (NumSql = 0),
