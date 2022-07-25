@@ -34,7 +34,7 @@ router.put("/answer", verify, async (req, res) => {
     const quesFound = await Question.findById(Qid);
     if (quesFound) {
       for (let i = 0; i < 4; i++) {
-        if (userAnswer == quesFound.options[i].value) {
+        if (userAnswer === quesFound.options[i].Oid) {
           if (quesFound.options[i].isCorrect === true) {
             await Answer.findOneAndUpdate(
               { _id: answer_create._id },
