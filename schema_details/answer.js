@@ -9,8 +9,7 @@ const answerSchema = new Schema({
   Qid: { type: Schema.Types.ObjectId, ref: "Question" },
   question: { type: String, required: true },
   category: { type: String, required: true },
-  answer: { type: String },
-  userAnswer: { type: Number, required: true },
+  userAnswer: { type: Number, default: 200},
   isCorrect: { type: Boolean, default: false },
   //ch
   ansid: {
