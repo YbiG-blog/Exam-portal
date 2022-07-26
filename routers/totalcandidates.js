@@ -16,7 +16,7 @@ router.get("/total", async (req, res) => {
     const total_ques_uploaded = await Question.find().countDocuments();
     const total_feedback_ques = await Feedback_Ins.find().countDocuments();
     const current_active_users = await User.find({
-      hasAppeared: true,
+      hasAppeared: false,
     }).countDocuments();
     const total_attendees = await User.find({
       login_user: true,
