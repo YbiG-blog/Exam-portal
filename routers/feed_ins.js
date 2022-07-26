@@ -14,9 +14,13 @@ router.patch("/instruction", verify, async (req, res) => {
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec));
     console.log(dec);
+    let today = new Date();
+    let date =today.getDate() +'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+ let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+   
     await User.findByIdAndUpdate(decode, {
       $set: {
-        loginAt: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
+        loginAt:  time+ " "+ date  ,
         hasAppeared: true,
         lang: req.body.lang,
       },
