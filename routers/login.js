@@ -55,7 +55,7 @@ router.post("/login", async (req, res) => {
           message: "User logged in successfully",
           cookie_token: cookie_token,
           isAdmin: "false",
-          hasAppeared: "false",
+          hasAppeared: "true",
         });
       } else {
         res.status(400).send({ msg: "Wrong Password" });
