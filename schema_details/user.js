@@ -27,7 +27,7 @@ const UserSchema = new Schema({
   branch: { type: String, required: true },
   gender: { type: String, required: true },
   isHosteler: { type: Boolean, default: false, required: true },
-  hasAppeared: { type: Boolean, default: false },
+  hasAppeared: { type: Boolean, default: true },
   loginAt: {
     type: String,
     default: null,
