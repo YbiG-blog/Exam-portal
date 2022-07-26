@@ -61,8 +61,11 @@ router.patch("/quesansdata", verify, async (req, res) => {
       }
     }
     TotalNum = NumHtml + NumCss + NumAptitude + NumSql + NumLang;
+    let today = new Date();
+   let date =today.getDate() +'/'+(today.getMonth()+1)+'/'+today.getFullYear();
+ let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     await User.findOneAndUpdate(decode, {
-      $set: {
+      $set: { logoutAt: time+ " "+ date  ,
         userNumCount: {
           NumHtml: NumHtml,
           NumCss: NumCss,

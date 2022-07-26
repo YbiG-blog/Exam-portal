@@ -9,7 +9,6 @@ const verify = require("../middleware/auth");
 router.put("/answer", verify, async (req, res) => {
   try {const isVerified=true;
     const token = req.body.cookie_token;
-
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec)); //contains Userid
     console.log(dec);
@@ -32,8 +31,13 @@ router.put("/answer", verify, async (req, res) => {
 
     const quesFound = await Question.findById(Qid);
     if (quesFound) {
+
       for (let i = 0; i < 4; i++) {
-        if (userAnswer === quesFound.options[i].Oid) {
+        if (userAnswer == quesFound.options[i].Oid) {
+          await Answer.findOneAndUpdate(
+            { _id: answer_create._id },
+            { $set: { answer: quesFound.options[i].value  } }
+          );
           const selopt = quesFound.options[i].value;
           await Question.findOneAndUpdate(
             { _id: Qid },
@@ -43,6 +47,7 @@ router.put("/answer", verify, async (req, res) => {
               },
             }
           );
+
           if (quesFound.options[i].isCorrect === true) {
             await Answer.findOneAndUpdate(
               { _id: answer_create._id },

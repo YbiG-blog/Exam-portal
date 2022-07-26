@@ -29,7 +29,11 @@ const UserSchema = new Schema({
   isHosteler: { type: Boolean, default: false, required: true },
   hasAppeared: { type: Boolean, default: false },
   loginAt: {
-    type: Date,
+    type: String,
+    default: null,
+  },
+  logoutAt: {
+    type: String,
     default: null,
   },
   login_user: { type: Boolean, default: false },
