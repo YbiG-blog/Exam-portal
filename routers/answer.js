@@ -25,7 +25,6 @@ router.put("/answer", verify, async (req, res) => {
       Qid,
     });
     await answer_create.save();
-
     await User.findOneAndUpdate(
       { _id: answer_create.userId },
       { $push: { results: answer_create._id } }
@@ -35,23 +34,24 @@ router.put("/answer", verify, async (req, res) => {
     if (quesFound) {
       for (let i = 0; i < 4; i++) {
         if (userAnswer === quesFound.options[i].Oid) {
+          const selopt = quesFound.options[i].value;
+          await Question.findOneAndUpdate(
+            { _id: Qid },
+            {
+              $set: {
+                selectedOpt: selopt
+              },
+            }
+          );
           if (quesFound.options[i].isCorrect === true) {
             await Answer.findOneAndUpdate(
               { _id: answer_create._id },
               { $set: { isCorrect: true } }
             );
-            const selopt = quesFound.options[i].value;
-            await Question.findOneAndUpdate(
-              { _id: Qid },
-              {
-                $set: {
-                  selectedOpt: selopt
-                },
-              }
-            );
             console.log("Correct answer");
           }
         }
+
       }
     }
     const Foundans = await Answer.findById(answer_create._id);
