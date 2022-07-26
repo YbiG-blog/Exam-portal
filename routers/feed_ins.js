@@ -8,7 +8,7 @@ const User = require("../schema_details/user");
 //instruction
 
 router.patch("/instruction", verify, async (req, res) => {
-  try {const isVerified=false;
+  try {const isVerified=true;
     const token = req.body.cookie_token;
 
     const dec = token.split(".")[1];
@@ -21,7 +21,7 @@ router.patch("/instruction", verify, async (req, res) => {
     await User.findByIdAndUpdate(decode, {
       $set: {
         loginAt:  time+ " "+ date  ,
-        hasAppeared: false,
+        hasAppeared: true,
         lang: req.body.lang,
       },
     });
