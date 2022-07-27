@@ -7,7 +7,8 @@ const atob = require("atob");
 const verify = require("../middleware/auth");
 
 router.post("/feedanswer", verify, async (req, res) => {
-  try {const isVerified=true;
+  try {
+    const isVerified = true;
     const token = req.body.cookie_token;
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec)); //contains Userid
@@ -29,7 +30,7 @@ router.post("/feedanswer", verify, async (req, res) => {
     res.status(201).send({
       msg: "Response added for feedeback successfully",
       answer_create,
-      isVerified
+      isVerified,
     });
   } catch (error) {
     console.log(error);

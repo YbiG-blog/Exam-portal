@@ -7,14 +7,14 @@ const atob = require("atob");
 const verify = require("../middleware/auth");
 
 router.put("/answer", verify, async (req, res) => {
-  try {const isVerified=true;
+  try {
+    const isVerified = true;
     const token = req.body.cookie_token;
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec)); //contains Userid
     console.log(dec);
 
-    const { question, category, userAnswer, ansid, Qid } =
-      await req.body;
+    const { question, category, userAnswer, ansid, Qid } = await req.body;
     let answer_create = new Answer({
       userId: decode,
       question,
@@ -24,50 +24,69 @@ router.put("/answer", verify, async (req, res) => {
       Qid,
     });
     await answer_create.save();
+
     await User.findOneAndUpdate(
-      { _id: answer_create.userId },
-      { $push: { results: answer_create._id } }
+      {
+        _id: answer_create.userId,
+      },
+      {
+        $push: { results: answer_create._id },
+      }
     );
 
     const quesFound = await Question.findById(Qid);
-    if (quesFound) {
 
+    if (quesFound) {
       for (let i = 0; i < 4; i++) {
         if (userAnswer == quesFound.options[i].Oid) {
           await Answer.findOneAndUpdate(
-            { _id: answer_create._id },
-            { $set: { answer: quesFound.options[i].value  } }
+            {
+              _id: answer_create._id,
+            },
+            {
+              $set: { answer: quesFound.options[i].value },
+            }
           );
+
           const selopt = quesFound.options[i].value;
           await Question.findOneAndUpdate(
-            { _id: Qid },
+            {
+              _id: Qid,
+            },
             {
               $set: {
-                selectedOpt: selopt
+                selectedOpt: selopt,
               },
             }
           );
 
           if (quesFound.options[i].isCorrect === true) {
             await Answer.findOneAndUpdate(
-              { _id: answer_create._id },
-              { $set: { isCorrect: true } }
+              {
+                _id: answer_create._id,
+              },
+              {
+                $set: {
+                  isCorrect: true,
+                },
+              }
             );
             console.log("Correct answer");
           }
         }
-
       }
     }
     const Foundans = await Answer.findById(answer_create._id);
-    if (Foundans) {  
-      const flag = Foundans.ansid ;
+    if (Foundans) {
+      const flag = Foundans.ansid;
       // console.log(flag);
       await Question.findOneAndUpdate(
-        { _id: Qid },
+        {
+          _id: Qid,
+        },
         {
           $set: {
-            flagMark: flag
+            flagMark: flag,
           },
         }
       );
@@ -80,7 +99,7 @@ router.put("/answer", verify, async (req, res) => {
     } else if (ansid === 4) {
       msg = "marked and not answered successfully added";
     }
-    await res.status(201).send({ msg, ansid,isVerified});
+    await res.status(201).send({ msg, ansid, isVerified });
   } catch (error) {
     res.status(500).send(error);
   }

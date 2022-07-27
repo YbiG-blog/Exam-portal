@@ -8,19 +8,26 @@ const User = require("../schema_details/user");
 //instruction
 
 router.patch("/instruction", verify, async (req, res) => {
-  try {const isVerified=true;
+  try {
+    const isVerified = true;
     const token = req.body.cookie_token;
 
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec));
     console.log(dec);
-    let today = new Date();
-    let date =today.getDate() +'/'+(today.getMonth()+1)+'/'+today.getFullYear();
- let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-   
+    // let today = new Date();
+    // let date =
+    //   today.getDate() +
+    //   "/" +
+    //   (today.getMonth() + 1) +
+    //   "/" +
+    //   today.getFullYear();
+    // let time =
+    //   today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
     await User.findByIdAndUpdate(decode, {
       $set: {
-        loginAt:  time+ " "+ date  ,
+        loginAt: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
         hasAppeared: true,
         lang: req.body.lang,
       },
@@ -108,6 +115,7 @@ router.post("/logintime", async (req, res) => {
   }
 });
 
+//language selected
 router.post("/langselected", async (req, res) => {
   try {
     const token = req.body.cookie_token;

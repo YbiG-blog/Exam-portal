@@ -6,10 +6,12 @@ const jwt = require("jsonwebtoken");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  results: [{
-    type: Schema.Types.ObjectId,
-    ref: "Answer"
-  }],
+  results: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Answer",
+    },
+  ],
   name: { type: String, required: true, minlength: 3 },
   email: { type: String, required: true, unique: true },
   studentNum: { type: Number, required: true, unique: true },
@@ -29,7 +31,7 @@ const UserSchema = new Schema({
   isHosteler: { type: Boolean, default: false, required: true },
   hasAppeared: { type: Boolean, default: false },
   loginAt: {
-    type: String,
+    type: Date,
     default: null,
   },
   logoutAt: {
