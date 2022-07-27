@@ -11,7 +11,7 @@ const questionSchema = new Schema({
     {
       value: {
         type: String,
-        required: true,
+        required: [true, "Please add option field"],
       },
       Oid: {
         type: Number,
@@ -28,10 +28,10 @@ const questionSchema = new Schema({
     type: Number,
     default: 2,
   },
-  selectedOpt:{
+  selectedOpt: {
     type: String,
     default: "",
-  }
+  },
 });
 const Question = new mongoose.model("Question", questionSchema);
 

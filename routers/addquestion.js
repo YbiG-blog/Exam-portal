@@ -40,31 +40,35 @@ router.get("/seequestion", async (req, res) => {
 router.post("/addquestion", async (req, res) => {
   try {
     const { question, category, options } = await req.body;
-    let question_create = new Question({
-      question,
-      category,
-      options,
-    });
-    // for (let i of req.body.options) {
-    //   const question_create = new Question({
-    //     question,
-    //     category,
-    //     options
-    //   });
-    //     { "question":"what is?",
-    // "category":"python",
-    // "options":[{"value":"poiu",
-    // "Oid":"45659",
-    // "isCorrect":false},
-    // {"value":"qwert",
-    // "Oid":"789",
-    // "isCorrect":true}
-    // ]}
+    if (options.length === 4) {
+      let question_create = new Question({
+        question,
+        category,
+        options,
+      });
+      // for (let i of req.body.options) {
+      //   const question_create = new Question({
+      //     question,
+      //     category,
+      //     options
+      //   });
+      //     { "question":"what is?",
+      // "category":"python",
+      // "options":[{"value":"poiu",
+      // "Oid":"45659",
+      // "isCorrect":false},
+      // {"value":"qwert",
+      // "Oid":"789",
+      // "isCorrect":true}
+      // ]}
 
-    await question_create.save();
-    res
-      .status(201)
-      .send({ msg: "Question added successfully", question_create });
+      await question_create.save();
+      res
+        .status(201)
+        .send({ msg: "Question added successfully", question_create });
+    } else {
+      res.status(400).send({ msg: "Please add all Four options" });
+    }
   } catch (error) {
     res.status(400).json(error);
   }
