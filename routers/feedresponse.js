@@ -14,16 +14,16 @@ router.post("/feedanswer", verify, async (req, res) => {
     const decode = JSON.parse(atob(dec)); //contains Userid
     console.log(dec);
 
-    // const { question, Qid, value } = await req.body;
-    const { Quserid, response, feedtext } = await req.body;
+    const { question, Qid, value } = await req.body;
+    // const { Quserid, response, feedtext } = await req.body;
     let answer_create = new FeedAnswer({
       userId: decode,
-      // question,
-      // value,
-      // Qid,
-      Quserid,
-      response,
-      feedtext,
+      question,
+      value,
+      Qid,
+      // Quserid,
+      // response,
+      // feedtext,
     });
     await answer_create.save();
 
