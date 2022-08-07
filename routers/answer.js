@@ -39,15 +39,6 @@ router.put("/answer", verify, async (req, res) => {
     if (quesFound) {
       for (let i = 0; i < 4; i++) {
         if (userAnswer == quesFound.options[i].Oid) {
-          await Answer.findOneAndUpdate(
-            {
-              _id: answer_create._id,
-            },
-            {
-              $set: { answer: quesFound.options[i].value },
-            }
-          );
-
           const selopt = quesFound.options[i].value;
           await Question.findOneAndUpdate(
             {
@@ -96,13 +87,10 @@ router.put("/answer", verify, async (req, res) => {
       msg = "Answer saved successfully";
     } else if (ansid === 3) {
       msg = "marked and review successfully added";
-    } else if (ansid === 4) {
-      
-      msg = "marked and not answered successfully added";
-    }
+    } 
     await res.status(201).send({ msg, ansid, isVerified });
   } catch (error) {
-    res.status(500).send(error);
+  res.status(500).send(error);
   }
 });
 
