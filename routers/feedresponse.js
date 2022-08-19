@@ -5,6 +5,7 @@ const FeedQuestion = require("../schema_details/ins_feed");
 const User = require("../schema_details/user");
 const atob = require("atob");
 const verify = require("../middleware/auth");
+const atob = require("atob");
 
 router.post("/feedanswer", verify, async (req, res) => {
   try {

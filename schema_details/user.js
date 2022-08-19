@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     type: Number,
     required: true,
     unique: true,
-    max: [7, "max length is 7"],
+    max: [8, "max length is 8"],
   },
   rollNum: {
     type: Number,
