@@ -16,7 +16,7 @@ const answerschema = new Schema({
         required: true,
       },
       value: {
-        type: String,
+        type: Number,
         required: true,
         default: 0,
       },

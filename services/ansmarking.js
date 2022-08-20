@@ -15,7 +15,8 @@ let NumHtml = 0,
   TotalNum = 0;
 
 router.patch("/quesansdata", verify, async (req, res) => {
-  try {const isVerified=true;
+  try {
+    const isVerified = true;
     const token = req.body.cookie_token;
     const dec = token.split(".")[1];
     const decode = JSON.parse(atob(dec)); //contains Userid
@@ -25,28 +26,40 @@ router.patch("/quesansdata", verify, async (req, res) => {
 
     for (let i = 0; i < findAns.length; i++) {
       if (findAns[i].category === "HTML" || findAns[i].category === "html") {
-        if (findAns[i].isCorrect === true) {
+        if (
+          (findAns[i].isCorrect === true && findAns[i].ansid === 1) ||
+          (findAns[i].isCorrect === true && findAns[i].ansid === 3)
+        ) {
           NumHtml += 1;
         }
       } else if (
         findAns[i].category === "CSS" ||
         findAns[i].category === "css"
       ) {
-        if (findAns[i].isCorrect === true) {
+        if (
+          (findAns[i].isCorrect === true && findAns[i].ansid === 1) ||
+          (findAns[i].isCorrect === true && findAns[i].ansid === 3)
+        ) {
           NumCss += 1;
         }
       } else if (
         findAns[i].category === "SQL" ||
         findAns[i].category === "sql"
       ) {
-        if (findAns[i].isCorrect === true) {
+        if (
+          (findAns[i].isCorrect === true && findAns[i].ansid === 1) ||
+          (findAns[i].isCorrect === true && findAns[i].ansid === 3)
+        ) {
           NumSql += 1;
         }
       } else if (
         findAns[i].category === "APTITUDE" ||
         findAns[i].category === "aptitude"
       ) {
-        if (findAns[i].isCorrect === true) {
+        if (
+          (findAns[i].isCorrect === true && findAns[i].ansid === 1) ||
+          (findAns[i].isCorrect === true && findAns[i].ansid === 3)
+        ) {
           NumAptitude += 1;
         }
       } else if (
@@ -55,17 +68,27 @@ router.patch("/quesansdata", verify, async (req, res) => {
         findAns[i].category === "JAVA" ||
         findAns[i].category === "PYTHON"
       ) {
-        if (findAns[i].isCorrect === true) {
+        if (
+          (findAns[i].isCorrect === true && findAns[i].ansid === 1) ||
+          (findAns[i].isCorrect === true && findAns[i].ansid === 3)
+        ) {
           NumLang += 1;
         }
       }
     }
     TotalNum = NumHtml + NumCss + NumAptitude + NumSql + NumLang;
     let today = new Date();
-   let date =today.getDate() +'/'+(today.getMonth()+1)+'/'+today.getFullYear();
- let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let date =
+      today.getDate() +
+      "/" +
+      (today.getMonth() + 1) +
+      "/" +
+      today.getFullYear();
+    let time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     await User.findOneAndUpdate(decode, {
-      $set: { logoutAt: time+ " "+ date  ,
+      $set: {
+        logoutAt: time + " " + date,
         userNumCount: {
           NumHtml: NumHtml,
           NumCss: NumCss,
@@ -77,7 +100,7 @@ router.patch("/quesansdata", verify, async (req, res) => {
       },
     });
 
-    res.status(200).send({ msg: "Total sum added",isVerified});
+    res.status(200).send({ msg: "Total sum added", isVerified });
     (NumHtml = 0),
       (NumCss = 0),
       (NumSql = 0),
@@ -89,15 +112,14 @@ router.patch("/quesansdata", verify, async (req, res) => {
   }
 });
 
-router.get("/leaderboard",async (req,res)=>{try{
 
-
-  const leader=await User.find().populate("results").sort({"userNumCount.TotalNum":-1});
-  res.status(200).send(leader);
-  
-  }
-  
-  catch (error) {
+router.get("/leaderboard", async (req, res) => {
+  try {
+    const leader = await User.find()
+      .populate("results")
+      .sort({ "userNumCount.TotalNum": -1 });
+    res.status(200).send(leader);
+  } catch (error) {
     res.status(500).send(error);
   }
 });

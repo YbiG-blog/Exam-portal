@@ -6,14 +6,26 @@ const jwt = require("jsonwebtoken");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  results: [{
-    type: Schema.Types.ObjectId,
-    ref: "Answer"
-  }],
+  results: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Answer",
+    },
+  ],
   name: { type: String, required: true, minlength: 3 },
   email: { type: String, required: true, unique: true },
-  studentNum: { type: Number, required: true, unique: true },
-  rollNum: { type: Number, required: true, unique: true },
+  studentNum: {
+    type: Number,
+    required: true,
+    unique: true,
+    max: [8, "max length is 8"],
+  },
+  rollNum: {
+    type: Number,
+    required: true,
+    unique: true,
+    max: [13, "max length is 13"],
+  },
   mobileNum: {
     type: Number,
     required: true,
@@ -23,28 +35,67 @@ const UserSchema = new Schema({
   },
   password: { type: String },
   adminPassword: { type: String },
-  year: { type: Number, required: true, min: 1, max: 4 },
-  branch: { type: String, required: true },
-  gender: { type: String, required: true },
-  isHosteler: { type: Boolean, default: false, required: true },
-  hasAppeared: { type: Boolean, default: false },
-  loginAt: {
+  year: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 4,
+  },
+  branch: {
     type: String,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  isHosteler: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
+  hasAppeared: {
+    type: Boolean,
+    default: false,
+  },
+  loginAt: {
+    type: Date,
     default: null,
   },
   logoutAt: {
     type: String,
     default: null,
   },
-  login_user: { type: Boolean, default: false },
-  isAdmin: { type: Boolean, default: false },
+  login_user: {
+    type: Boolean,
+    default: false,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   lang: { type: String },
   userNumCount: {
-    NumHtml: { type: Number, default: 0 },
-    NumCss: { type: Number, default: 0 },
-    NumSql: { type: Number, default: 0 },
-    NumAptitude: { type: Number, default: 0 },
-    NumLang: { type: Number, default: 0 },
+    NumHtml: {
+      type: Number,
+      default: 0,
+    },
+    NumCss: {
+      type: Number,
+      default: 0,
+    },
+    NumSql: {
+      type: Number,
+      default: 0,
+    },
+    NumAptitude: {
+      type: Number,
+      default: 0,
+    },
+    NumLang: {
+      type: Number,
+      default: 0,
+    },
     TotalNum: {
       type: Number,
       default: 0,

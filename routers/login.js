@@ -38,18 +38,24 @@ router.post("/login", async (req, res) => {
       if (matchAdmin_password) {
         await User.findOneAndUpdate(
           { _id: user_check._id },
-          { $set: { 
-            isAdmin : true,
-            login_user : true
-          } }
+          {
+            $set: {
+              isAdmin: true,
+              login_user: true,
+            },
+          }
         );
-        res.status(200).send({ isAdmin: "true", token: `${cookie_token}` });
+        res
+          .status(200)
+          .send({ isAdmin: "true", cookie_token: `${cookie_token}` });
       } else if (matchUser_password) {
         await User.findOneAndUpdate(
           { _id: user_check._id },
-          { $set: { 
-            login_user : true
-          } }
+          {
+            $set: {
+              login_user: true,
+            },
+          }
         );
         res.status(200).send({
           message: "User logged in successfully",
