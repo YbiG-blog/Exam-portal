@@ -75,8 +75,20 @@ router.post("/addquestion", async (req, res) => {
   }
 });
 
-// getting the questions based on category
+//  getting the question based on id
+// showing some error
+router.get("/:qid", async (req, res) => {
+  try {
+    const question = await Question.findbyId(req.params.qid);
+    res.status(200).json(question);
+  } catch (err) {
+    res.status(400).json(err);
+    console.log(err);
+  }
+});
 
+// getting the questions based on category
+// showing some error
 router.get("/:category", async (req, res) => {
   try {
     const ques_category = await Question.find({
@@ -85,42 +97,6 @@ router.get("/:category", async (req, res) => {
     res.status(200).json({ result: ques_category });
   } catch (err) {
     console.log(err);
-    res.status(400).json(err);
-  }
-});
-
-//  getting the question based on id
-
-router.get("/:qid", async (req, res) => {
-  try {
-    const question = await Question.findbyId(req.params.qid);
-    res.status(200).json(question);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
-// getting the questions based on category
-
-router.get("/:category", async (req, res) => {
-  try {
-    const ques_category = await Question.find({
-      category: req.params.category,
-    });
-    res.status(200).json({ result: ques_category });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json(err);
-  }
-});
-
-//  getting the question based on id
-
-router.get("/:qid", async (req, res) => {
-  try {
-    const question = await Question.findbyId(req.params.qid);
-    res.status(200).json(question);
-  } catch (err) {
     res.status(400).json(err);
   }
 });

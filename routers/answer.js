@@ -87,14 +87,14 @@ router.put("/answer", verify, async (req, res) => {
       msg = "Answer saved successfully";
     } else if (ansid === 3) {
       msg = "marked and review successfully added";
-    } 
+    }
     await res.status(201).send({ msg, ansid, isVerified });
   } catch (error) {
-  res.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
-router.put("/seeanswer/", async (req, res) => {
+router.put("/seeanswer", async (req, res) => {
   try {
     const userId = req.body.userId;
 
@@ -105,6 +105,7 @@ router.put("/seeanswer/", async (req, res) => {
     res.status(201).send(AnswerData);
   } catch (err) {
     res.status(400).send(err);
+    console.log(err);
   }
 });
 
