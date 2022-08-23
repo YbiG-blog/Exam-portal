@@ -28,8 +28,7 @@ router.patch("/instruction", verify, async (req, res) => {
     await User.findByIdAndUpdate(decode, {
       $set: {
         loginAt: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
-        hasAppeared: true,
-        lang: req.body.lang,
+       lang: req.body.lang,
       },
     });
 
