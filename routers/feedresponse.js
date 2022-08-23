@@ -21,13 +21,16 @@ router.post("/feedanswer", verify, async (req, res) => {
       question,
       value,
       Qid,
-      feedtext,
+      feedtext
       // Quserid,
       // response,
       // feedtext,
     });
     await answer_create.save();
-
+    await User.findByIdAndUpdate(decode, {
+      $set: {
+        hasAppeared: true }
+    });
     res.status(201).send({
       msg: "Response added for feedeback successfully",
       answer_create,
