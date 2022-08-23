@@ -79,7 +79,7 @@ router.post("/addquestion", async (req, res) => {
 // showing some error
 router.get("/:qid", async (req, res) => {
   try {
-    const question = await Question.findbyId(req.params.qid);
+    const question = await Question.findById(req.params.qid);
     res.status(200).json(question);
   } catch (err) {
     res.status(400).json(err);
@@ -89,7 +89,7 @@ router.get("/:qid", async (req, res) => {
 
 // getting the questions based on category
 // showing some error
-router.get("/:category", async (req, res) => {
+router.get("/category/:category", async (req, res) => {
   try {
     const ques_category = await Question.find({
       category: req.params.category,
