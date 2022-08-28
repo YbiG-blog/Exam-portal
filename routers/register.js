@@ -21,6 +21,7 @@ router.post("/register", async (req, res) => {
       year,
       branch,
       gender,
+      domain,
       isHosteler,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
@@ -35,11 +36,12 @@ router.post("/register", async (req, res) => {
       studentNum,
       rollNum,
       mobileNum,
-      password: `Csi@${studentNum}`,
+      password: `${process.env.USERPASSWORD}@${studentNum}`,
       adminPassword: `${process.env.ADMINPASSWORD}@${studentNum}`,
       year,
       branch,
       gender,
+      domain,
       isHosteler,
     });
 
