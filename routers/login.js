@@ -40,8 +40,7 @@ router.post("/login", async (req, res) => {
           { _id: user_check._id },
           {
             $set: {
-              isAdmin: true,
-              login_user: true,
+              isAdmin: true
             },
           }
         );
