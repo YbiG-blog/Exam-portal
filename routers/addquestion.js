@@ -132,25 +132,25 @@ router.get("/shuffle/:category", async (req, res) => {
       category: req.params.category,
     });
     let ques_array = [];
-    for (let i of ques_category) {
-      let OptionResult = await Question.findById(i._id);
-      ques_array.push({
-        Question: {
-          id: i._id,
-          question: i.question,
-          category: i.category,
-        },
-        options: OptionResult,
-      });
-    }
+    // for (let i of ques_category) {
+    //   let OptionResult = await Question.findById(i._id);
+    //   ques_array.push({
+    //     Question: {
+    //       id: i._id,
+    //       question: i.question,
+    //       category: i.category,
+    //     },
+    //     options: OptionResult,
+    //   });
+    // }
 
-    for (var i = ques_array.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var temp = ques_array[i];
-      ques_array[i] = ques_array[j];
-      ques_array[j] = temp;
-    }
-    res.status(200).json({ result: ques_array });
+    // for (var i = ques_array.length - 1; i > 0; i--) {
+    //   var j = Math.floor(Math.random() * (i + 1));
+    //   var temp = ques_array[i];
+    //   ques_array[i] = ques_array[j];
+    //   ques_array[j] = temp;
+    // }
+    res.status(200).json({ result: ques_category });
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
