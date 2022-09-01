@@ -80,6 +80,13 @@ router.post("/addquestion", async (req, res) => {
 router.get("/:qid", async (req, res) => {
   try {
     const question = await Question.findById(req.params.qid);
+      for (let k = 0; k < 4; k++) {
+        var j = Math.floor(Math.random() * (k+1));
+        var temp = question.options[k];
+        // console.log(temp);
+        question.options[k] = question.options[j];
+        question.options[j] = temp;
+      }
     res.status(200).json(question);
   } catch (err) {
     res.status(400).json(err);
@@ -141,14 +148,6 @@ router.get("/shuffle/:category", async (req, res) => {
       var temp = ques_array[i];
       ques_array[i] = ques_array[j];
       ques_array[j] = temp;
-    }
-    for (var i = 0; i< ques_array.length ; i++) {
-      for (let k = 0; k < 4; k++) {
-        var j = Math.floor(Math.random() * (k+1));
-        var temp = ques_array[i].options[k];
-        ques_array[i].options[k] = ques_array[i].options[j];
-        ques_array[i].options[j] = temp;
-      }
     }
     res.status(200).json({ result: ques_array });
   } catch (err) {
