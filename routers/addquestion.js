@@ -142,6 +142,14 @@ router.get("/shuffle/:category", async (req, res) => {
       ques_array[i] = ques_array[j];
       ques_array[j] = temp;
     }
+    for (var i = 0; i< ques_array.length ; i++) {
+      for (let k = 0; k < 4; k++) {
+        var j = Math.floor(Math.random() * (k+1));
+        var temp = ques_array[i].options[k];
+        ques_array[i].options[k] = ques_array[i].options[j];
+        ques_array[i].options[j] = temp;
+      }
+    }
     res.status(200).json({ result: ques_array });
   } catch (err) {
     console.log(err);
