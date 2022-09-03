@@ -298,8 +298,25 @@ router.put("/shuffle/:category", verify, async (req, res) => {
       });
     }
     const shuffleques = await User.findById(userFind._id);
-    const ar = shuffleques.shuffle;
-    res.status(200).send(ar);
+    let qry_array = [];
+    if (type == "HTML" || type == "html") {
+      qry_array = shuffleques.shuffle.Ahtml.val;
+    } else if (type == "CSS" || type == "css") {
+      qry_array = shuffleques.shuffle.Acss.val;
+    } else if (type == "SQL" || type == "sql") {
+      qry_array = shuffleques.shuffle.Asql.val;
+    } else if (type == "APTITUDE" || type == "aptitude") {
+      qry_array = shuffleques.shuffle.Aaptitude.val;
+    } else if (
+      type == "C" ||
+      type == "C++" ||
+      type == "JAVA" ||
+      type == "PYTHON"
+    ) {
+      qry_array = shuffleques.shuffle.Aother.val;
+    }
+
+    res.status(200).json({result : qry_array});
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
