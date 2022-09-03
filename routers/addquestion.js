@@ -134,218 +134,241 @@ router.patch("/:id", async (req, res) => {
     return res.status(400).json(err);
   }
 });
-
-// shuffle category
-router.put("/shuffle/:category", verify, async (req, res) => {
+router.get("/shuffle/:category", async (req, res) => {
   try {
-    const isVerified = true;
-    const token = req.body.cookie_token;
-    const dec = token.split(".")[1];
-    const decode = JSON.parse(atob(dec)); //contains Userid
-    console.log(dec);
-
-    const userFind = await User.findById(decode._id);
-    const type = req.params.category;
     const ques_category = await Question.find({
-      category: type,
+      category: req.params.category,
     });
     let ques_array = [];
     for (let i of ques_category) {
-      ques_array.push(await Question.findById(i._id));
+      ques_array.push(await Question.findById(i._id))
     }
+
     for (var i = ques_array.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var temp = ques_array[i];
       ques_array[i] = ques_array[j];
       ques_array[j] = temp;
     }
-    // condition for shuffling
 
-    if (
-      (type == "HTML" || type == "html") &&
-      userFind.shuffle.Ahtml.f == false
-    ) {
-      await User.findByIdAndUpdate(decode._id, {
-        $set: {
-          shuffle: {
-            Ahtml: { f: true, val: ques_array },
-            Acss: {
-              f: userFind.shuffle.Acss.f,
-              val: userFind.shuffle.Acss.val,
-            },
-            Asql: {
-              f: userFind.shuffle.Asql.f,
-              val: userFind.shuffle.Asql.val,
-            },
-            Aaptitude: {
-              f: userFind.shuffle.Aaptitude.f,
-              val: userFind.shuffle.Aaptitude.val,
-            },
-            Aother: {
-              f: userFind.shuffle.Aother.f,
-              val: userFind.shuffle.Aother.val,
-            },
-          },
-        },
-      });
-    } else if (
-      (type == "CSS" || type == "css") &&
-      userFind.shuffle.Acss.f == false
-    ) {
-      await User.findByIdAndUpdate(decode._id, {
-        $set: {
-          shuffle: {
-            Ahtml: {
-              f: userFind.shuffle.Ahtml.f,
-              val: userFind.shuffle.Ahtml.val,
-            },
-            Acss: { f: true, val: ques_array },
-            Asql: {
-              f: userFind.shuffle.Asql.f,
-              val: userFind.shuffle.Asql.val,
-            },
-            Aaptitude: {
-              f: userFind.shuffle.Aaptitude.f,
-              val: userFind.shuffle.Aaptitude.val,
-            },
-            Aother: {
-              f: userFind.shuffle.Aother.f,
-              val: userFind.shuffle.Aother.val,
-            },
-          },
-        },
-      });
-    } else if (
-      (type == "SQL" || type == "sql") &&
-      userFind.shuffle.Asql.f == false
-    ) {
-      await User.findByIdAndUpdate(decode._id, {
-        $set: {
-          shuffle: {
-            Ahtml: {
-              f: userFind.shuffle.Ahtml.f,
-              val: userFind.shuffle.Ahtml.val,
-            },
-            Acss: {
-              f: userFind.shuffle.Acss.f,
-              val: userFind.shuffle.Acss.val,
-            },
-            Asql: { f: true, val: ques_array },
-            Aaptitude: {
-              f: userFind.shuffle.Aaptitude.f,
-              val: userFind.shuffle.Aaptitude.val,
-            },
-            Aother: {
-              f: userFind.shuffle.Aother.f,
-              val: userFind.shuffle.Aother.val,
-            },
-          },
-        },
-      });
-    } else if (
-      (type == "APTITUDE" || type == "aptitude") &&
-      userFind.shuffle.Aaptitude.f == false
-    ) {
-      await User.findByIdAndUpdate(decode._id, {
-        $set: {
-          shuffle: {
-            Ahtml: {
-              f: userFind.shuffle.Ahtml.f,
-              val: userFind.shuffle.Ahtml.val,
-            },
-            Acss: {
-              f: userFind.shuffle.Acss.f,
-              val: userFind.shuffle.Acss.val,
-            },
-            Asql: {
-              f: userFind.shuffle.Asql.f,
-              val: userFind.shuffle.Asql.val,
-            },
-            Aaptitude: { f: true, val: ques_array },
-            Aother: {
-              f: userFind.shuffle.Aother.f,
-              val: userFind.shuffle.Aother.val,
-            },
-          },
-        },
-      });
-    } else if (
-      (type == "C" || type == "C++" || type == "JAVA" || type == "PYTHON") &&
-      userFind.shuffle.Aother.f == false
-    ) {
-      await User.findByIdAndUpdate(decode._id, {
-        $set: {
-          shuffle: {
-            Ahtml: {
-              f: userFind.shuffle.Ahtml.f,
-              val: userFind.shuffle.Ahtml.val,
-            },
-            Acss: {
-              f: userFind.shuffle.Acss.f,
-              val: userFind.shuffle.Acss.val,
-            },
-            Asql: {
-              f: userFind.shuffle.Asql.f,
-              val: userFind.shuffle.Asql.val,
-            },
-            Aaptitude: {
-              f: userFind.shuffle.Aaptitude.f,
-              val: userFind.shuffle.Aaptitude.val,
-            },
-            Aother: { f: true, val: ques_array },
-          },
-        },
-      });
-    }
-    const shuffleques = await User.findById(userFind._id);
-    let qry_array = [];
-    if (type == "HTML" || type == "html") {
-      qry_array = shuffleques.shuffle.Ahtml.val;
-    } else if (type == "CSS" || type == "css") {
-      qry_array = shuffleques.shuffle.Acss.val;
-    } else if (type == "SQL" || type == "sql") {
-      qry_array = shuffleques.shuffle.Asql.val;
-    } else if (type == "APTITUDE" || type == "aptitude") {
-      qry_array = shuffleques.shuffle.Aaptitude.val;
-    } else if (
-      type == "C" ||
-      type == "C++" ||
-      type == "JAVA" ||
-      type == "PYTHON"
-    ) {
-      qry_array = shuffleques.shuffle.Aother.val;
-    }
-
-    res.status(200).json({result : qry_array});
+    res.status(200).json({ result: ques_array });
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
   }
 });
 
-// router.get("/shuffle/:category", async (req, res) => {
+// shuffle category
+// router.put("/shuffle/:category", verify, async (req, res) => {
 //   try {
+//     const isVerified = true;
+//     const token = req.body.cookie_token;
+//     const dec = token.split(".")[1];
+//     const decode = JSON.parse(atob(dec)); //contains Userid
+//     console.log(dec);
+
+//     const userFind = await User.findById(decode._id);
+//     const type = req.params.category;
 //     const ques_category = await Question.find({
-//       category: req.params.category,
+//       category: type,
 //     });
 //     let ques_array = [];
 //     for (let i of ques_category) {
-//       ques_array.push(await Question.findById(i._id))
+//       ques_array.push(await Question.findById(i._id));
 //     }
-
 //     for (var i = ques_array.length - 1; i > 0; i--) {
 //       var j = Math.floor(Math.random() * (i + 1));
 //       var temp = ques_array[i];
 //       ques_array[i] = ques_array[j];
 //       ques_array[j] = temp;
 //     }
+//     // condition for shuffling
 
-//     // ea5 ebb 8a5 6c
-//     res.status(200).json({ result: ques_array });
+//     if (
+//       (type == "HTML" || type == "html") &&
+//       userFind.shuffle.Ahtml.f == false
+//     ) {
+//       await User.findByIdAndUpdate(decode._id, {
+//         $set: {
+//           shuffle: {
+//             Ahtml: { f: true, val: ques_array },
+//             Acss: {
+//               f: userFind.shuffle.Acss.f,
+//               val: userFind.shuffle.Acss.val,
+//             },
+//             Asql: {
+//               f: userFind.shuffle.Asql.f,
+//               val: userFind.shuffle.Asql.val,
+//             },
+//             Aaptitude: {
+//               f: userFind.shuffle.Aaptitude.f,
+//               val: userFind.shuffle.Aaptitude.val,
+//             },
+//             Aother: {
+//               f: userFind.shuffle.Aother.f,
+//               val: userFind.shuffle.Aother.val,
+//             },
+//           },
+//         },
+//       });
+//     } else if (
+//       (type == "CSS" || type == "css") &&
+//       userFind.shuffle.Acss.f == false
+//     ) {
+//       await User.findByIdAndUpdate(decode._id, {
+//         $set: {
+//           shuffle: {
+//             Ahtml: {
+//               f: userFind.shuffle.Ahtml.f,
+//               val: userFind.shuffle.Ahtml.val,
+//             },
+//             Acss: { f: true, val: ques_array },
+//             Asql: {
+//               f: userFind.shuffle.Asql.f,
+//               val: userFind.shuffle.Asql.val,
+//             },
+//             Aaptitude: {
+//               f: userFind.shuffle.Aaptitude.f,
+//               val: userFind.shuffle.Aaptitude.val,
+//             },
+    //         Aother: {
+    //           f: userFind.shuffle.Aother.f,
+    //           val: userFind.shuffle.Aother.val,
+    //         },
+    //       },
+    //     },
+    //   });
+    // } else if (
+    //   (type == "SQL" || type == "sql") &&
+    //   userFind.shuffle.Asql.f == false
+    // ) {
+    //   await User.findByIdAndUpdate(decode._id, {
+    //     $set: {
+    //       shuffle: {
+    //         Ahtml: {
+    //           f: userFind.shuffle.Ahtml.f,
+    //           val: userFind.shuffle.Ahtml.val,
+    //         },
+    //         Acss: {
+    //           f: userFind.shuffle.Acss.f,
+    //           val: userFind.shuffle.Acss.val,
+    //         },
+    //         Asql: { f: true, val: ques_array },
+    //         Aaptitude: {
+    //           f: userFind.shuffle.Aaptitude.f,
+    //           val: userFind.shuffle.Aaptitude.val,
+    //         },
+    //         Aother: {
+    //           f: userFind.shuffle.Aother.f,
+    //           val: userFind.shuffle.Aother.val,
+    //         },
+    //       },
+    //     },
+    //   });
+    // } else if (
+    //   (type == "APTITUDE" || type == "aptitude") &&
+    //   userFind.shuffle.Aaptitude.f == false
+    // ) {
+    //   await User.findByIdAndUpdate(decode._id, {
+    //     $set: {
+    //       shuffle: {
+    //         Ahtml: {
+    //           f: userFind.shuffle.Ahtml.f,
+    //           val: userFind.shuffle.Ahtml.val,
+    //         },
+    //         Acss: {
+    //           f: userFind.shuffle.Acss.f,
+    //           val: userFind.shuffle.Acss.val,
+    //         },
+    //         Asql: {
+    //           f: userFind.shuffle.Asql.f,
+    //           val: userFind.shuffle.Asql.val,
+    //         },
+    //         Aaptitude: { f: true, val: ques_array },
+//             Aother: {
+//               f: userFind.shuffle.Aother.f,
+//               val: userFind.shuffle.Aother.val,
+//             },
+//           },
+//         },
+//       });
+//     } else if (
+//       (type == "C" || type == "C++" || type == "JAVA" || type == "PYTHON") &&
+//       userFind.shuffle.Aother.f == false
+//     ) {
+//       await User.findByIdAndUpdate(decode._id, {
+//         $set: {
+//           shuffle: {
+//             Ahtml: {
+//               f: userFind.shuffle.Ahtml.f,
+//               val: userFind.shuffle.Ahtml.val,
+//             },
+//             Acss: {
+//               f: userFind.shuffle.Acss.f,
+//               val: userFind.shuffle.Acss.val,
+//             },
+//             Asql: {
+//               f: userFind.shuffle.Asql.f,
+//               val: userFind.shuffle.Asql.val,
+//             },
+//             Aaptitude: {
+//               f: userFind.shuffle.Aaptitude.f,
+//               val: userFind.shuffle.Aaptitude.val,
+//             },
+//             Aother: { f: true, val: ques_array },
+//           },
+//         },
+//       });
+//     }
+//     const shuffleques = await User.findById(userFind._id);
+//     let qry_array = [];
+//     if (type == "HTML" || type == "html") {
+//       qry_array = shuffleques.shuffle.Ahtml.val;
+//     } else if (type == "CSS" || type == "css") {
+//       qry_array = shuffleques.shuffle.Acss.val;
+//     } else if (type == "SQL" || type == "sql") {
+//       qry_array = shuffleques.shuffle.Asql.val;
+//     } else if (type == "APTITUDE" || type == "aptitude") {
+//       qry_array = shuffleques.shuffle.Aaptitude.val;
+//     } else if (
+//       type == "C" ||
+//       type == "C++" ||
+//       type == "JAVA" ||
+//       type == "PYTHON"
+//     ) {
+//       qry_array = shuffleques.shuffle.Aother.val;
+//     }
+
+//     res.status(200).json({result : qry_array});
 //   } catch (err) {
 //     console.log(err);
 //     res.status(400).json(err);
 //   }
 // });
+
+router.get("/shuffle/:category", async (req, res) => {
+  try {
+    const ques_category = await Question.find({
+      category: req.params.category,
+    });
+    let ques_array = [];
+    for (let i of ques_category) {
+      ques_array.push(await Question.findById(i._id))
+    }
+
+    for (var i = ques_array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = ques_array[i];
+      ques_array[i] = ques_array[j];
+      ques_array[j] = temp;
+    }
+
+    // ea5 ebb 8a5 6c
+    res.status(200).json({ result: ques_array });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
 
 module.exports = router;
