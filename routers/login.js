@@ -16,6 +16,9 @@ router.post("/login", async (req, res) => {
     const studentNum = req.body.studentNum;
 
     const user_check = await User.findOne({ studentNum: studentNum });
+    if (!user_check) {
+      res.status(400).send({ msg: "User not registred" });
+    }
     if (user_check) {
       const matchUser_password = await bcrypt.compare(
         password,
@@ -40,13 +43,14 @@ router.post("/login", async (req, res) => {
           { _id: user_check._id },
           {
             $set: {
-              isAdmin: true
+              isAdmin: true,
             },
           }
         );
-        res
-          .status(200)
-          .send({ isAdmin: "true", cookie_token: `${cookie_token}` });
+        res.status(200).send({
+          isAdmin: "true",
+          cookie_token: `${cookie_token}`,
+        });
       } else if (matchUser_password) {
         await User.findOneAndUpdate(
           { _id: user_check._id },
