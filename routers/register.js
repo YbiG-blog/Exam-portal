@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const User = require("../schema_details/user");
+const nodemailer = require("nodemailer");
 
 router.get("/register", async (req, res) => {
   try {
@@ -47,7 +48,36 @@ router.post("/register", async (req, res) => {
 
     const saveUser = await user_create.save();
 
-    res.status(201).send(saveUser);
+    // sending mail
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "testapi277@gmail.com",
+        pass: process.env.pass,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.email,
+      to: req.body.email,
+      subject: "CINE'21",
+      html:
+        "<h3>CONGRATULATION,</h3><br>" +
+        "<h1 style='font-weight:bold;'>You are successfully registered</h1>",
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("OTP sent: " + info.response);
+      }
+    });
+    res.status(200).send({
+      message: "User Successfully Registered",
+      saveUser,
+    });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -70,7 +100,17 @@ router.get("/user/:id", async (req, res) => {
 router.delete("/user/:id", async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
-    res.status(200).json("Account deleted");
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "This user id doesn't exixt",
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        message: "Account deleted",
+      });
+    }
   } catch (err) {
     console.log(err);
     return res.status(400).json(err);
