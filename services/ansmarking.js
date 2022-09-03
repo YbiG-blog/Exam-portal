@@ -96,7 +96,7 @@ router.patch("/quesansdata", verify, async (req, res) => {
           NumAptitude: NumAptitude,
           NumLang: NumLang,
           TotalNum: TotalNum,
-        },
+       },
       },
     });
 

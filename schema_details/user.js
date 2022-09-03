@@ -105,6 +105,28 @@ const UserSchema = new Schema({
       default: 0,
     },
   },
+  shuffle: {
+    Ahtml: {
+      f: { type: Boolean, default: false },
+      val: { type: Array, default: [] },
+    },
+    Acss: {
+      f: { type: Boolean, default: false },
+      val: { type: Array, default: [] },
+    },
+    Asql: {
+      f: { type: Boolean, default: false },
+      val: { type: Array, default: [] },
+    },
+    Aaptitude: {
+      f: { type: Boolean, default: false },
+      val: { type: Array, default: [] },
+    },
+    Aother: {
+      f: { type: Boolean, default: false },
+      val: { type: Array, default: [] },
+    },
+  },
 });
 
 // token generate---------
