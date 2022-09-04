@@ -105,7 +105,6 @@ const UserSchema = new Schema({
       default: 0,
     },
   },
-  shuffle: {
     Ahtml: {
       f: { type: Boolean, default: false },
       val: { type: Array, default: [] },
@@ -125,8 +124,7 @@ const UserSchema = new Schema({
     Aother: {
       f: { type: Boolean, default: false },
       val: { type: Array, default: [] },
-    },
-  },
+    }
 });
 
 // token generate---------

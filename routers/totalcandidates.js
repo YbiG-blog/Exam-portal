@@ -26,7 +26,7 @@ router.get("/total", async (req, res) => {
       total_ques_uploaded,
       total_feedback_ques,
       current_active_users,
-      total_attendees,
+      total_attendees
     };
     console.log(result);
     res.status(200).json({ result });
