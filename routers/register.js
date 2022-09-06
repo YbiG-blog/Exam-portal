@@ -26,9 +26,20 @@ router.post("/register", async (req, res) => {
       isHosteler,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
-
+    const mobile = await User.findOne({ mobileNum });
+    const emailExist = await User.findOne({ email });
+    const student = await User.findOne({ studentNum });
     if (userExist) {
-      return res.status(200).send({ msg: "User already exists." });
+      return res.status(200).send({ msg: "This roll number already exixt" });
+    }
+    if (mobile) {
+      return res.status(200).send({ msg: "This mobile number already exixt" });
+    }
+    if (emailExist) {
+      return res.status(200).send({ msg: "This Email already exixt" });
+    }
+    if (student) {
+      return res.status(200).send({ msg: "This Student number already exixt" });
     }
 
     const user_create = new User({
