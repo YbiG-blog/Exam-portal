@@ -72,7 +72,7 @@ router.post("/register", async (req, res) => {
     const mailOptions = {
       from: process.env.email,
       to: req.body.email,
-      subject: "CINE'21",
+      subject: "CINE'22",
       html:
         "<h3>CONGRATULATION,</h3><br>" +
         "<h1 style='font-weight:bold;'>You are successfully registered</h1>",
