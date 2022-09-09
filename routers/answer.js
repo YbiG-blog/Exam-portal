@@ -40,9 +40,9 @@ router.put("/answer", verify, async (req, res) => {
       for (let i = 0; i < 4; i++) {
         if (userAnswer == quesFound.options[i].Oid) {
           const selopt = quesFound.options[i].value;
-          await Question.findOneAndUpdate(
+          await Answer.findOneAndUpdate(
             {
-              _id: Qid,
+              _id: answer_create._id,
             },
             {
               $set: {
@@ -67,28 +67,30 @@ router.put("/answer", verify, async (req, res) => {
         }
       }
     }
+    // change
     const Foundans = await Answer.findById(answer_create._id);
-    if (Foundans) {
-      const flag = Foundans.ansid;
-      // console.log(flag);
-      await Question.findOneAndUpdate(
-        {
-          _id: Qid,
-        },
-        {
-          $set: {
-            flagMark: flag,
-          },
-        }
-      );
-    }
+    const selopt = Foundans.selectedOpt;
+    // if (Foundans) {
+    //   const flag = Foundans.ansid;
+    //   // console.log(flag);
+    //   await Question.findOneAndUpdate(
+    //     {
+    //       _id: Qid,
+    //     },
+    //     {
+    //       $set: {
+    //         flagMark: flag,
+    //       },
+    //     }
+    //   );
+    // }
     let msg = "Answer added successfully";
     if (ansid === 1) {
       msg = "Answer saved successfully";
     } else if (ansid === 3) {
       msg = "marked and review successfully added";
     }
-    await res.status(201).send({ msg, ansid, isVerified });
+    await res.status(201).send({ msg, ansid, selopt, isVerified, });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -108,29 +110,5 @@ router.put("/seeanswer", async (req, res) => {
     console.log(err);
   }
 });
-
-// router.put("/flags", verify, async (req, res) => {
-//   try {
-//     const token = req.body.cookie_token;
-//     const dec = token.split(".")[1];
-//     const decode = JSON.parse(atob(dec)); //contains Userid
-//     console.log(dec);
-//     const ans_category = await Answer.find({ userId: decode });
-//     // flags status
-//     const result = [];
-//     for (let i = 0; i < ans_category.length; i++) {
-//       let markRev = ans_category[i].markRev;
-//       let saveNext = ans_category[i].saveNext;
-//       let ans_id = ans_category[i]._id;
-//       let ques_id = ans_category[i].Qid;
-//       const obj_flag = { ans_id, ques_id, saveNext, markRev };
-//       result.push(obj_flag);
-//     }
-//     res.status(200).send(result);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(400).json(err);
-//   }
-// });
 
 module.exports = router;
