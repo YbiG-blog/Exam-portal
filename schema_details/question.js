@@ -30,14 +30,14 @@ const questionSchema = new Schema({
       },
     },
   ],
-  flagMark: {
-    type: Number,
-    default: 2,
-  },
-  selectedOpt: {
-    type: String,
-    default: "",
-  },
+  // flagMark: {
+  //   type: Number,
+  //   default: 2,
+  // },
+  // selectedOpt: {
+  //   type: String,
+  //   default: "",
+  // },
 });
 const Question = new mongoose.model("Question", questionSchema);
 

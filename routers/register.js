@@ -1,7 +1,6 @@
 const express = require("express");
 const router = new express.Router();
 const User = require("../schema_details/user");
-const nodemailer = require("nodemailer");
 
 router.get("/register", async (req, res) => {
   try {
@@ -26,20 +25,9 @@ router.post("/register", async (req, res) => {
       isHosteler,
     } = await req.body;
     const userExist = await User.findOne({ rollNum });
-    const mobile = await User.findOne({ mobileNum });
-    const emailExist = await User.findOne({ email });
-    const student = await User.findOne({ studentNum });
+
     if (userExist) {
-      return res.status(200).send({ msg: "This roll number already exixt" });
-    }
-    if (mobile) {
-      return res.status(200).send({ msg: "This mobile number already exixt" });
-    }
-    if (emailExist) {
-      return res.status(200).send({ msg: "This Email already exixt" });
-    }
-    if (student) {
-      return res.status(200).send({ msg: "This Student number already exixt" });
+      return res.status(200).send({ msg: "User already exists." });
     }
 
     const user_create = new User({
@@ -58,6 +46,9 @@ router.post("/register", async (req, res) => {
     });
 
     const saveUser = await user_create.save();
+
+
+    res.status(201).send(saveUser);
 
     // sending mail
 
@@ -111,17 +102,7 @@ router.get("/user/:id", async (req, res) => {
 router.delete("/user/:id", async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: "This user id doesn't exixt",
-      });
-    } else {
-      res.status(200).json({
-        success: true,
-        message: "Account deleted",
-      });
-    }
+    res.status(200).json("Account deleted");
   } catch (err) {
     console.log(err);
     return res.status(400).json(err);

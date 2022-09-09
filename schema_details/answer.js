@@ -16,6 +16,10 @@ const answerSchema = new Schema({
     type: Number,
     default: 2,
   },
+  selectedOpt: {
+    type: String,
+    default: "",
+  },
 });
 
 const Answer = new mongoose.model("Answer", answerSchema);
