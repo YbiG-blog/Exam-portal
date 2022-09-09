@@ -24,6 +24,7 @@ const UserSchema = new Schema({
     type: Number,
     required: true,
     unique: true,
+    minLength: [13, "min length is 13"],
     maxLength: [13, "max length is 13"],
   },
   mobileNum: {
