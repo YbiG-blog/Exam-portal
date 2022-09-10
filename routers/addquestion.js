@@ -203,6 +203,15 @@ router.put("/shuffle/:category", verify, async (req, res) => {
     }
       ques_array.push({quesget ,ans_flagRes});
     }
+
+    for (let i = 0; i < ques_array.length; i++) {
+      for (let k = 0; k < 4; k++) {
+        var j = Math.floor(Math.random() * (k + 1));
+        var temp = ques_array[i].quesget.options[k];
+        ques_array[i].quesget.options[k] = ques_array[i].quesget.options[j];
+        ques_array[i].quesget.options[j] = temp;
+      }
+    }
     // for (var i = ques_array.length - 1; i > 0; i--) {
     //   var j = Math.floor(Math.random() * (i + 1));
     //   var temp = ques_array[i];
