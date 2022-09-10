@@ -60,7 +60,7 @@ router.post("/register", async (req, res) => {
     const saveUser = await user_create.save();
 
     // sending mail
-    s;
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
