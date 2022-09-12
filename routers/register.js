@@ -64,18 +64,30 @@ router.post("/register", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "testapi277@gmail.com",
+        user: "csichapters@gmail.com",
         pass: process.env.pass,
       },
     });
 
     const mailOptions = {
-      from: process.env.email,
+      from: "csichapters@gmail.com",
       to: req.body.email,
       subject: "CINE'22",
+      // html:
+      //   "<h3>CONGRATULATION,</h3><br>" +
+      //   "<h1 style='font-weight:bold;'>You are successfully registered</h1>",
+      // text: "Team CSI congratulates you for being successfully registered for CINE'22. Brace yourself, fasten your seatbelts, polish your skills, and be ready for the most exciting recruitment drive.",
+
       html:
-        "<h3>CONGRATULATION,</h3><br>" +
-        "<h1 style='font-weight:bold;'>You are successfully registered</h1>",
+        "<p>Team CSI congratulates you for being successfully registered for CINE'22. Brace yourself, fasten your seatbelts, polish your skills, and be ready for the most exciting recruitment drive.</p>" +
+        "<h4>Mode: Offline</h4>" +
+        "<h4>Date: 19 Sept 2022</h4>" +
+        "<h4>Time: 4pm-8pm</h4>" +
+        "<h4>Venue: Basic IT Lab( CSIT Block)</h4>" +
+        "<h4>Stay Tuned to our Instagram page for further information.</h4>" +
+        "<h4>https://www.instagram.com/csi_akgec/</h4>" +
+        "<h4>Regards,</h4>" +
+        "<h4>Team CSI</h4>",
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
