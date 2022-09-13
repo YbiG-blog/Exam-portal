@@ -12,7 +12,7 @@ const UserSchema = new Schema({
       ref: "Answer",
     },
   ],
-  name: { type: String, required: true, minlength: 3 },
+  name: { type: String, required: true, minlength: 2 },
   email: { type: String, required: true, unique: true },
   studentNum: {
     type: Number,
@@ -106,26 +106,26 @@ const UserSchema = new Schema({
       default: 0,
     },
   },
-    // Ahtml: {
-    //   f: { type: Boolean, default: false },
-    //   val: { type: Array, default: [] },
-    // },
-    // Acss: {
-    //   f: { type: Boolean, default: false },
-    //   val: { type: Array, default: [] },
-    // },
-    // Asql: {
-    //   f: { type: Boolean, default: false },
-    //   val: { type: Array, default: [] },
-    // },
-    // Aaptitude: {
-    //   f: { type: Boolean, default: false },
-    //   val: { type: Array, default: [] },
-    // },
-    // Aother: {
-    //   f: { type: Boolean, default: false },
-    //   val: { type: Array, default: [] },
-    // }
+  // Ahtml: {
+  //   f: { type: Boolean, default: false },
+  //   val: { type: Array, default: [] },
+  // },
+  // Acss: {
+  //   f: { type: Boolean, default: false },
+  //   val: { type: Array, default: [] },
+  // },
+  // Asql: {
+  //   f: { type: Boolean, default: false },
+  //   val: { type: Array, default: [] },
+  // },
+  // Aaptitude: {
+  //   f: { type: Boolean, default: false },
+  //   val: { type: Array, default: [] },
+  // },
+  // Aother: {
+  //   f: { type: Boolean, default: false },
+  //   val: { type: Array, default: [] },
+  // }
 });
 
 // token generate---------
