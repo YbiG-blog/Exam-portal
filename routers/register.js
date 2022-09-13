@@ -72,11 +72,7 @@ router.post("/register", async (req, res) => {
     const mailOptions = {
       from: "csichapters@gmail.com",
       to: req.body.email,
-      subject: "CINE'22",
-      // html:
-      //   "<h3>CONGRATULATION,</h3><br>" +
-      //   "<h1 style='font-weight:bold;'>You are successfully registered</h1>",
-      // text: "Team CSI congratulates you for being successfully registered for CINE'22. Brace yourself, fasten your seatbelts, polish your skills, and be ready for the most exciting recruitment drive.",
+      subject: "Registered for CINE'22",
 
       html:
         "<p>Team CSI congratulates you for being successfully registered for CINE'22. Brace yourself, fasten your seatbelts, polish your skills, and be ready for the most exciting recruitment drive.</p>" +
