@@ -123,6 +123,26 @@ router.get("/leaderboard", async (req, res) => {
     res.status(500).send(error);
   }
 });
+router.put("/fetchanswer", async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const ansdetails = await User.find({_id: userId })
+      .populate("results")
+      .sort({ "userNumCount.TotalNum": -1 });
+      const data = {
+       name: ansdetails[0].name,
+       studentNum : ansdetails[0].studentNum,
+       Branch : ansdetails[0].branch,
+       score : ansdetails[0].userNumCount.TotalNum,
+       stTime : ansdetails[0].loginAt,
+       enTime : ansdetails[0].logoutAt,
+       AnswerRes : ansdetails[0].results
+      };
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 // get candidate details
 
