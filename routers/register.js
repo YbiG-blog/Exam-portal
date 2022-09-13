@@ -71,7 +71,7 @@ router.post("/register", async (req, res) => {
 
     const mailOptions = {
       from: "csichapters@gmail.com",
-      to: req.body.email,
+      to: user_create.email,
       subject: "Registered for CINE'22",
 
       html:
