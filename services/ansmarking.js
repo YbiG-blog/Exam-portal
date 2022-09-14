@@ -14,7 +14,7 @@ let NumHtml = 0,
   NumLang = 0,
   TotalNum = 0;
 
-router.put("/quesansdata", verify, async (req, res) => {
+router.patch("/quesansdata", verify, async (req, res) => {
   try {
     const isVerified = true;
     const token = req.body.cookie_token;
