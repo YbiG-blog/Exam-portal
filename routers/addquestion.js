@@ -237,6 +237,7 @@ router.put("/shuffle/:category", verify, async (req, res) => {
     for (let i = 0; i < qry_array.length; i++) {
       let quesget = qry_array[i];
       let ansmatch = await Answer.find({ Qid: qry_array[i]._id, userId: shuffleques._id });
+      console.log(ansmatch[ansmatch.length-1]);
       let ans_flagRes = {}
       if (ansmatch.length != 0) {
         let ans_flag = {
