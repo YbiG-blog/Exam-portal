@@ -73,7 +73,7 @@ router.put("/answer", verify, async (req, res) => {
     // if (Foundans) {
     //   const flag = Foundans.ansid;
     //   // console.log(flag);
-    //   await Question.findOneAndUpdate(
+    //   await Question.findOneAndUpdate(gi
     //     {
     //       _id: Qid,
     //     },

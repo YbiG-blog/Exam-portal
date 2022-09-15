@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const login_router = require("./routers/login");
 const register_router = require("./routers/register");
-const allusers = require("./routers/getallusers");
+
 const feedbackIns = require("./routers/feed_ins");
 const addquestion_router = require("./routers/addquestion");
 
@@ -45,7 +45,7 @@ app.use(cookieParser());
 app.use("/", register_router);
 app.use("/", login_router);
 app.use("/", feedbackIns);
-app.use("/all/", allusers);
+
 app.use("/ans/", answer);
 app.use("/question/", addquestion_router);
 
