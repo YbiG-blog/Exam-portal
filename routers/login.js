@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
       //add cookie
       res.cookie("jwt_csi", cookie_token, {
         secure: true,
-        expires: new Date(Date.now() + 864000000),
+        expires: new Date(Date.now() + 10800),
         httpOnly: false,
       });
       if (matchAdmin_password) {

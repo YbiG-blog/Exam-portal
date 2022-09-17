@@ -85,10 +85,13 @@ router.put("/answer", verify, async (req, res) => {
     //   );
     // }
     let msg = "Answer added successfully";
-    if (ansid === 1) {
+    if (ansid === 1 && selopt!="") {
       msg = "Answer saved successfully";
-    } else if (ansid === 3) {
+    } else if (ansid === 3 && selopt!="") {
       msg = "marked and review successfully added";
+    }
+    else if((ansid==1 || ansid==3) && selopt==""){
+      msg = "attempted but not answer";
     }
     await res.status(201).send({ msg, ansid, selopt, isVerified, });
   } catch (error) {

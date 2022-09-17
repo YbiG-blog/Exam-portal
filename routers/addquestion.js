@@ -294,5 +294,45 @@ router.put("/shuffle/:category", verify, async (req, res) => {
     res.status(400).json(err);
   }
 });
+router.put("/shufflee/:category", verify, async (req, res) => {
+  try {
+    const isVerified = true;
+    const token = req.body.cookie_token;
+    const dec = token.split(".")[1];
+    const decode = JSON.parse(atob(dec)); //contains Userid
+    console.log(dec);
+
+    const type = req.params.category;
+    const ques_category = await Question.find({
+      category: type,
+    });
+    let ques_array = [];
+    for (let i of ques_category) {
+      let quesget = await Question.findById(i._id);
+      let ansmatch = await Answer.find({ Qid: i._id, userId : decode._id});
+      let ans_flagRes = {}
+      if(ansmatch.length!=0){
+      let ans_flag = {
+        // userid: ansmatch[ansmatch.length-1].userId,
+        flag : ansmatch[ansmatch.length-1].ansid,
+        setopt : ansmatch[ansmatch.length-1].selectedOpt
+      }
+      ans_flagRes = ans_flag
+    }else
+    {
+      let ans_flag = {
+        flag : 2,
+        setopt : ""
+      }
+      ans_flagRes = ans_flag
+    }
+      ques_array.push({quesget ,ans_flagRes});
+    }
+    res.status(200).json({ result: ques_array });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
 
 module.exports = router;
