@@ -21,7 +21,7 @@ router.post("/feedanswer", verify, async (req, res) => {
       question,
       value,
       Qid,
-      feedtext
+      feedtext,
       // Quserid,
       // response,
       // feedtext,
@@ -29,7 +29,8 @@ router.post("/feedanswer", verify, async (req, res) => {
     await answer_create.save();
     await User.findByIdAndUpdate(decode, {
       $set: {
-        hasAppeared: true }
+        hasAppeared: true,
+      },
     });
     res.status(201).send({
       msg: "Response added for feedeback successfully",
@@ -43,44 +44,3 @@ router.post("/feedanswer", verify, async (req, res) => {
 });
 
 module.exports = router;
-
-// {
-//     "msg": "Response added for feedeback successfully",
-//     "answer_create": {
-//         "userId": "62b448b6c20d541e9d920c74",
-//         "response": [
-//             {
-//                 "question": "How is the portal ?",
-//                 "value": "1",
-//                 "Qid": "62b34e500c3fd54a027beb09",
-//                 "_id": "62b44965c20d541e9d920c78"
-//             },
-//             {
-//                 "question": "How is ?",
-//                 "value": "1",
-//                 "Qid": "62b3580e3d2b6d821de575dd",
-//                 "_id": "62b44965c20d541e9d920c79"
-//             },
-//             {
-//                 "question": "How  ?",
-//                 "value": "1",
-//                 "Qid": "62b358133d2b6d821de575df",
-//                 "_id": "62b44965c20d541e9d920c7a"
-//             },
-//             {
-//                 "question": "Ho ?",
-//                 "value": "1",
-//                 "Qid": "62b358183d2b6d821de575e1",
-//                 "_id": "62b44965c20d541e9d920c7b"
-//             },
-//             {
-//                 "question": "H?",
-//                 "value": "1",
-//                 "Qid": "62b3581e3d2b6d821de575e3",
-//                 "_id": "62b44965c20d541e9d920c7c"
-//             }
-//         ],
-//         "_id": "62b44965c20d541e9d920c77",
-//         "__v": 0
-//     }
-// }
