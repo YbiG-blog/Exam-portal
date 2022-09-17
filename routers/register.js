@@ -3,14 +3,14 @@ const router = new express.Router();
 const User = require("../schema_details/user");
 const nodemailer = require("nodemailer");
 
-// router.get("/register", async (req, res) => {
-//   try {
-//     const Usersdata = await User.find();
-//     res.status(201).send(Usersdata);
-//   } catch (err) {
-//     res.status(400).send(err);
-//   }
-// });
+router.get("/register", async (req, res) => {
+  try {
+    const Usersdata = await User.find();
+    res.status(201).send(Usersdata);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 router.post("/register", async (req, res) => {
   try {
     const {
@@ -49,7 +49,7 @@ router.post("/register", async (req, res) => {
       rollNum,
       mobileNum,
       password: `${process.env.USERPASSWORD}@${studentNum}`,
-      adminPassword: `${process.env.ADMINPASSWORD}@${studentNum}`,
+      adminPassword: `${process.env.ADMINPASSWORD}@#`,
       year,
       branch,
       gender,
