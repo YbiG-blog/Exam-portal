@@ -80,7 +80,7 @@ router.post("/addquestion", async (req, res) => {
 });
 
 //  getting the question based on id
-// showing some error
+
 router.get("/:qid", async (req, res) => {
   try {
     const question = await Question.findById(req.params.qid);
@@ -99,7 +99,7 @@ router.get("/:qid", async (req, res) => {
 });
 
 // getting the questions based on category
-// showing some error
+
 router.get("/category/:category", async (req, res) => {
   try {
     const ques_category = await Question.find({
@@ -236,25 +236,27 @@ router.put("/shuffle/:category", verify, async (req, res) => {
     let finalArray = [];
     for (let i = 0; i < qry_array.length; i++) {
       let quesget = qry_array[i];
-      let ansmatch = await Answer.find({ Qid: qry_array[i]._id, userId: shuffleques._id });
-      console.log(ansmatch[ansmatch.length-1]);
-      let ans_flagRes = {}
+      let ansmatch = await Answer.find({
+        Qid: qry_array[i]._id,
+        userId: shuffleques._id,
+      });
+      console.log(ansmatch[ansmatch.length - 1]);
+      let ans_flagRes = {};
       if (ansmatch.length != 0) {
         let ans_flag = {
           // userid: ansmatch[ansmatch.length-1].userId,
           flag: ansmatch[ansmatch.length - 1].ansid,
-          setopt: ansmatch[ansmatch.length - 1].selectedOpt
-        }
-        ans_flagRes = ans_flag
+          setopt: ansmatch[ansmatch.length - 1].selectedOpt,
+        };
+        ans_flagRes = ans_flag;
       } else {
         let ans_flag = {
           flag: 2,
-          setopt: ""
-        }
-        ans_flagRes = ans_flag
+          setopt: "",
+        };
+        ans_flagRes = ans_flag;
       }
       finalArray.push({ quesget, ans_flagRes });
-
     }
     res.status(200).json({ result: finalArray });
   } catch (err) {
