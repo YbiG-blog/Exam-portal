@@ -38,20 +38,21 @@ router.post("/login", async (req, res) => {
         expires: new Date(Date.now() + 10800),
         httpOnly: false,
       });
-      if (matchAdmin_password) {
-        await User.findOneAndUpdate(
-          { _id: user_check._id },
-          {
-            $set: {
-              isAdmin: true,
-            },
-          }
-        );
-       return res.status(200).send({
-          isAdmin: "true",
-          cookie_token: `${cookie_token}`,
-        });
-      } else if (matchUser_password) {
+      // if (matchAdmin_password ) {
+      //   await User.findOneAndUpdate(
+      //     { _id: user_check._id },
+      //     {
+      //       $set: {
+      //         isAdmin: true,
+      //       },
+      //     }
+      //   );
+      //  return res.status(200).send({
+      //     isAdmin: "true",
+      //     cookie_token: `${cookie_token}`,
+      //   });
+      // } else 
+      if (matchUser_password) {
         await User.findOneAndUpdate(
           { _id: user_check._id },
           {
