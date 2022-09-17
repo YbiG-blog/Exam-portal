@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
             },
           }
         );
-        res.status(200).send({
+       return res.status(200).send({
           isAdmin: "true",
           cookie_token: `${cookie_token}`,
         });
@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
             },
           }
         );
-        res.status(200).send({
+        return  res.status(200).send({
           message: "User logged in successfully",
           cookie_token: cookie_token,
           isAdmin: "false",
