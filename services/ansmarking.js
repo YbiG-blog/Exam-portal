@@ -5,7 +5,6 @@ const express = require("express");
 const verify = require("../middleware/auth");
 const atob = require("atob");
 
-
 const router = new express.Router();
 let NumHtml = 0,
   NumCss = 0,
@@ -24,7 +23,7 @@ router.patch("/quesansdata", verify, async (req, res) => {
 
     const findAns = await Answer.find({ userId: decode });
     // set for unique quesIDs
-    
+
     let quesIDs = new Set();
     for (let i = 0; i < findAns.length; i++) {
       quesIDs.add(findAns[i].Qid.valueOf());
@@ -32,7 +31,7 @@ router.patch("/quesansdata", verify, async (req, res) => {
 
     quesIDs.forEach(async (e) => {
       // let ques = await Question.findById(e);
-      let findcorrectAns = await Answer.find({ Qid: e ,userId: decode._id});
+      let findcorrectAns = await Answer.find({ Qid: e, userId: decode._id });
       let finadcalAns = findcorrectAns[findcorrectAns.length - 1];
       if (finadcalAns.category === "HTML" || finadcalAns.category === "html") {
         if (
@@ -84,30 +83,30 @@ router.patch("/quesansdata", verify, async (req, res) => {
           NumLang += 1;
         }
       }
-    TotalNum = NumHtml + NumCss + NumAptitude + NumSql + NumLang;
-    let today = new Date();
-    let date =
-      today.getDate() +
-      "/" +
-      (today.getMonth() + 1) +
-      "/" +
-      today.getFullYear();
-    let time =
-      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    await User.findByIdAndUpdate(decode._id, {
-      $set: {
-        logoutAt: time + " " + date,
-        userNumCount: {
-          NumHtml: NumHtml,
-          NumCss: NumCss,
-          NumSql: NumSql,
-          NumAptitude: NumAptitude,
-          NumLang: NumLang,
-          TotalNum: TotalNum,
+      TotalNum = NumHtml + NumCss + NumAptitude + NumSql + NumLang;
+      let today = new Date();
+      let date =
+        today.getDate() +
+        "/" +
+        (today.getMonth() + 1) +
+        "/" +
+        today.getFullYear();
+      let time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      await User.findByIdAndUpdate(decode._id, {
+        $set: {
+          logoutAt: time + " " + date,
+          userNumCount: {
+            NumHtml: NumHtml,
+            NumCss: NumCss,
+            NumSql: NumSql,
+            NumAptitude: NumAptitude,
+            NumLang: NumLang,
+            TotalNum: TotalNum,
+          },
         },
-      },
+      });
     });
-  });
     res.status(200).send({ msg: "Total sum added", isVerified });
     (NumHtml = 0),
       (NumCss = 0),
