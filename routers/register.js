@@ -3,14 +3,14 @@ const router = new express.Router();
 const User = require("../schema_details/user");
 const nodemailer = require("nodemailer");
 
-router.get("/register", async (req, res) => {
-  try {
-    const Usersdata = await User.find();
-    res.status(201).send(Usersdata);
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
+// router.get("/register", async (req, res) => {
+//   try {
+//     const Usersdata = await User.find();
+//     res.status(201).send(Usersdata);
+//   } catch (err) {
+//     res.status(400).send(err);
+//   }
+// });
 router.post("/register", async (req, res) => {
   try {
     const {
@@ -151,20 +151,3 @@ router.patch("/user/:id", async (req, res) => {
 });
 
 module.exports = router;
-
-// sample data
-// {
-//         "name": "Parkhi Garg",
-//         "email": "parkhigarg27@gmail.com",
-//         "studentNum":2011103,
-//         "rollNum": 2000270110123,
-//         "mobileNum": 7668043605,
-//         "year": 2,
-//         "branch": "CSIT",
-//         "gender": "female",
-//         "isHosteler":true,
-//         "startTime":10,
-//         "currentTime":15,
-//         "endTime":20,
-//         "lang":"C++"
-// }
