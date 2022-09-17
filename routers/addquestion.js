@@ -202,6 +202,7 @@ router.put("/flags/:category", verify, async (req,res)=>{
     }
       res.status(200).json({ result: finalArray });
   } catch (err) {
+
     res.status(400).json(err);
   }
    
@@ -231,7 +232,7 @@ router.put("/shuffle/:category", verify, async (req, res) => {
       ques_array[j] = temp;
     }
     //     // condition for shuffling
-    if ((type == "HTML" || type == "html") && userFind.Ahtml.f == false) {cdbṭ
+    if ((type == "HTML" || type == "html") && userFind.Ahtml.f == false) {
       await User.findByIdAndUpdate(decode._id, {
         $set: {
           Ahtml: { f: true, val: ques_array },
@@ -286,30 +287,8 @@ router.put("/shuffle/:category", verify, async (req, res) => {
       type == "PYTHON"
     ) {
       qry_array = shuffleques.Aother.val;
-    }
-    let finalArray = [];
-    for (let i = 0; i < qry_array.length; i++) {
-      let quesget = qry_array[i];
-      let ansmatch = await Answer.find({ Qid: qry_array[i]._id, userId: shuffleques._id });
-      console.log(ansmatch[ansmatch.length-1]);
-      let ans_flagRes = {}
-      if (ansmatch.length != 0) {
-        let ans_flag = {
-          // userid: ansmatch[ansmatch.length-1].userId,
-          flag: ansmatch[ansmatch.length - 1].ansid,
-          setopt: ansmatch[ansmatch.length - 1].selectedOpt
-        }
-        ans_flagRes = ans_flag
-      } else {
-        let ans_flag = {
-          flag: 2,
-          setopt: ""
-        }
-        ans_flagRes = ans_flag
-      }
-      finalArray.push({ quesget, ans_flagRes });
-    }
-    res.status(200).json({ result: finalArray });
+    } 
+    res.status(200).json({ result: qry_array });
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
