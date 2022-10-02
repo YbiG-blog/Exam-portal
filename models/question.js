@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("../schema_details/user");
+const User = require("../models/user");
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
@@ -29,16 +29,8 @@ const questionSchema = new Schema({
         // require: true,
       },
     },
-  ],
-  // flagMark: {
-  //   type: Number,
-  //   default: 2,
-  // },
-  // selectedOpt: {
-  //   type: String,
-  //   default: "",
-  // },
-});
+  ]
+},{timestamps:true});
 const Question = new mongoose.model("Question", questionSchema);
 
 module.exports = Question;

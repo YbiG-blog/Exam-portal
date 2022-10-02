@@ -1,50 +1,35 @@
 const express = require("express");
-const Feedback_Ins = require("../schema_details/ins_feed");
+const FeedbackQuestion = require("../models/feedbackQuestion");
 const router = new express.Router();
-const atob = require("atob");
 const verify = require("../middleware/auth");
-const User = require("../schema_details/user");
+const User = require("../models/user");
+const jwtDecode = require("jwt-decode");
 
 //instruction
 
 router.patch("/instruction", verify, async (req, res) => {
-  try {
+  try {const cookie_token = req.body.cookie_token;
+    const userId = jwtDecode(cookie_token);
+    const { _id } = userId;
     const isVerified = true;
-    const token = req.body.cookie_token;
-
-    const dec = token.split(".")[1];
-    const decode = JSON.parse(atob(dec));
-    console.log(dec);
-    // let today = new Date();
-    // let date =
-    //   today.getDate() +
-    //   "/" +
-    //   (today.getMonth() + 1) +
-    //   "/" +
-    //   today.getFullYear();
-    // let time =
-    //   today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-    await User.findByIdAndUpdate(decode, {
+    await User.findByIdAndUpdate(_id, {
       $set: {
         loginAt: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
-       lang: req.body.lang,
+        lang: req.body.lang,
       },
     });
 
     res.status(200).send({ msg: "Language added successfully", isVerified });
   } catch (err) {
-    console.log(err);
-    res.status(500).send("err");
+    res.status(400).send(err);
   }
 });
 
 //feedback
-
 router.post("/addfeedback", async (req, res) => {
   try {
     const { question, queryText } = await req.body;
-    let feedbackques_create = new Feedback_Ins({
+    let feedbackques_create = new FeedbackQuestion({
       question,
       queryText,
       // options,
@@ -63,7 +48,7 @@ router.post("/addfeedback", async (req, res) => {
 
 router.delete("/feedback/:id", async (req, res) => {
   try {
-    await Feedback_Ins.findByIdAndDelete(req.params.id);
+    await FeedbackQuestion.findByIdAndDelete(req.params.id);
     res.status(200).json(" Feedback Question deleted");
   } catch (err) {
     return res.status(400).json(err);
@@ -74,7 +59,7 @@ router.delete("/feedback/:id", async (req, res) => {
 
 router.patch("/feedback/:id", async (req, res) => {
   try {
-    await Feedback_Ins.findByIdAndUpdate(req.params.id, {
+    await FeedbackQuestion.findByIdAndUpdate(req.params.id, {
       $set: req.body,
     });
     res.status(200).json(" Feedback Question got updated");
@@ -87,7 +72,7 @@ router.patch("/feedback/:id", async (req, res) => {
 
 router.get("/feed/seefeedbackques", async (req, res) => {
   try {
-    const feedbackQuestionsData = await Feedback_Ins.find();
+    const feedbackQuestionsData = await FeedbackQuestion.find();
     res.status(201).json(feedbackQuestionsData);
   } catch (err) {
     res.status(400).send(err);
@@ -97,12 +82,11 @@ router.get("/feed/seefeedbackques", async (req, res) => {
 //login time
 router.post("/logintime", async (req, res) => {
   try {
-    const token = req.body.cookie_token;
-    const dec = token.split(".")[1];
-    const decode = JSON.parse(atob(dec));
-    console.log(dec);
+    const cookie_token = req.body.cookie_token;
+    const userId = jwtDecode(cookie_token);
+    const { _id } = userId;
 
-    const time = await User.findById(decode._id, {
+    const time = await User.findById(_id, {
       loginAt: 1,
     });
     console.log(time);
@@ -117,12 +101,11 @@ router.post("/logintime", async (req, res) => {
 //language selected
 router.post("/langselected", async (req, res) => {
   try {
-    const token = req.body.cookie_token;
-    const dec = token.split(".")[1];
-    const decode = JSON.parse(atob(dec));
-    console.log(dec);
+    const cookie_token = req.body.cookie_token;
+    const userId = jwtDecode(cookie_token);
+    const { _id } = userId;
 
-    const language = await User.findById(decode._id, {
+    const language = await User.findById(_id, {
       lang: 1,
     });
     console.log(language);

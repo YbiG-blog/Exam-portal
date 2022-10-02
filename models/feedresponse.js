@@ -30,7 +30,7 @@ const answerschema = new Schema({
     type: String,
     required: true,
   },
-});
+},{timestamps:true});
 
 const FeedbackAnswer = new mongoose.model("FeedbackAnswer", answerschema);
 

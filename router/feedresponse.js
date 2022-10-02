@@ -1,23 +1,20 @@
 const express = require("express");
 const router = new express.Router();
-const FeedAnswer = require("../schema_details/feedresponse");
-const FeedQuestion = require("../schema_details/ins_feed");
-const User = require("../schema_details/user");
-const atob = require("atob");
+const FeedAnswer = require("../models/feedresponse");
+const FeedbackQuestion = require("../models/feedbackQuestion");
+const User = require("../models/user");
 const verify = require("../middleware/auth");
+const jwtDecode = require("jwt-decode");
 
 router.post("/feedanswer", verify, async (req, res) => {
   try {
     const isVerified = true;
-    const token = req.body.cookie_token;
-    const dec = token.split(".")[1];
-    const decode = JSON.parse(atob(dec)); //contains Userid
-    console.log(dec);
 
-    const { question, Qid, value, feedtext } = await req.body;
-    // const { Quserid, response, feedtext } = await req.body;
+    const { question, Qid, value, feedtext, cookie_token } = await req.body;
+    const userId = jwtDecode(cookie_token);
+    const { _id } = userId;
     let answer_create = new FeedAnswer({
-      userId: decode,
+      userId: _id,
       question,
       value,
       Qid,
@@ -27,7 +24,7 @@ router.post("/feedanswer", verify, async (req, res) => {
       // feedtext,
     });
     await answer_create.save();
-    await User.findByIdAndUpdate(decode, {
+    await User.findByIdAndUpdate(_id, {
       $set: {
         hasAppeared: true,
       },
